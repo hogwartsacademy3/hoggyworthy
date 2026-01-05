@@ -1,7 +1,28 @@
 body {
+  margin: 0;
   background: black;
   color: gold;
   font-family: Georgia, serif;
   text-align: center;
-  padding-top: 100px;
+}
+
+nav {
+  background: #111;
+  padding: 15px;
+  border-bottom: 2px solid gold;
+}
+
+nav a {
+  color: gold;
+  margin: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: white;
+}
+
+h1 {
+  margin-top: 80px;
 }
