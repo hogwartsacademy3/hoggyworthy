@@ -17,11 +17,18 @@
 
 <div class="card">
   <h1>Hogwarts Houses</h1>
-  <p>🦁 Gryffindor — Courage & Bravery</p>
-  <p>🐍 Slytherin — Ambition & Cunning</p>
-  <p>🦅 Ravenclaw — Wisdom & Intelligence</p>
-  <p>🦡 Hufflepuff — Loyalty & Hard Work</p>
+
+  <div class="house" onclick="showPoints('Gryffindor',120)">🦁 Gryffindor</div>
+  <div class="house" onclick="showPoints('Slytherin',95)">🐍 Slytherin</div>
+  <div class="house" onclick="showPoints('Ravenclaw',110)">🦅 Ravenclaw</div>
+  <div class="house" onclick="showPoints('Hufflepuff',100)">🦡 Hufflepuff</div>
 </div>
+
+<script>
+function showPoints(house, points){
+  alert(house + " has " + points + " points");
+}
+</script>
 
 <script src="js/auth.js"></script>
 </body>
