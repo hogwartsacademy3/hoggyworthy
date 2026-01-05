@@ -1,3 +1,4 @@
+/* BODY & BACKGROUND */
 body {
   margin: 0;
   font-family: Georgia, serif;
@@ -23,6 +24,7 @@ nav a {
   margin: 0 14px;
   text-decoration: none;
   font-weight: bold;
+  transition: 0.3s;
 }
 
 nav a:hover {
@@ -61,10 +63,63 @@ button {
   color: #f5d76e;
   border: 2px solid #f5d76e;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
   background: #f5d76e;
+  color: black;
+}
+
+/* ANIMATION */
+@keyframes fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* HOUSE CARDS */
+.house {
+  border: 2px solid #f5d76e;
+  margin: 12px auto;
+  padding: 14px;
+  max-width: 420px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.house:hover {
+  background: #f5d76e;
+  color: black;
+  transform: scale(1.03);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .card {
+    width: 92%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    margin: 8px;
+    font-size: 14px;
+  }
+
+  body {
+    background-attachment: scroll;
+  }
+}
   color: black;
 }
 
