@@ -1,9 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hogwarts</title>
+  <title>Hogwarts Institute</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <style>
+    /* CINEMATIC BACKGROUND */
+    body {
+      margin: 0;
+      font-family: 'Uncial Antiqua', serif;
+      background: url('https://images.unsplash.com/photo-1549887534-3c3cfdd0e0a5?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #f5d76e;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: rgba(0,0,0,0.85);
+      padding: 18px;
+      border-bottom: 3px solid #f5d76e;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    nav a {
+      color: #f5d76e;
+      margin: 0 16px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.4s;
+    }
+
+    nav a:hover {
+      color: white;
+      text-shadow: 0 0 12px #f5d76e, 0 0 24px #f5d76e inset;
+    }
+
+    .card {
+      background: rgba(10,10,10,0.9);
+      margin: 120px auto;
+      padding: 40px;
+      width: 80%;
+      max-width: 750px;
+      border-radius: 20px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(245,215,110,0.3);
+      animation: fade 1s ease;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-top: 0;
+      text-shadow: 0 0 10px #f5d76e;
+    }
+
+    p {
+      font-size: 22px;
+      text-shadow: 0 0 5px #f5d76e;
+    }
+
+    button {
+      padding: 12px 28px;
+      background: transparent;
+      color: #f5d76e;
+      border: 2px solid #f5d76e;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 12px;
+      transition: all 0.4s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #f5d76e;
+      color: black;
+      box-shadow: 0 0 20px #f5d76e;
+      transform: scale(1.05);
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 768px){
+      .card { width: 92%; padding: 25px; }
+      h1 { font-size: 32px; }
+      p { font-size: 18px; }
+      nav a { margin: 8px; font-size: 16px; }
+      button { font-size: 16px; padding: 10px 22px; }
+    }
+  </style>
 </head>
 
 <body onload="protect()">
@@ -16,8 +106,10 @@
 </nav>
 
 <div class="card">
-  <h1>Welcome to Hogwarts</h1>
-  <p>School of Witchcraft and Wizardry</p>
+  <h1>Welcome to Hogwarts Institute</h1>
+  <p>The magical school of witchcraft and wizardry.</p>
+  <p>Explore houses, classes, and the legendary Quidditch games.</p>
+  <button onclick="location.href='houses.html'">Enter Hogwarts</button>
 </div>
 
 <script src="js/auth.js"></script>
