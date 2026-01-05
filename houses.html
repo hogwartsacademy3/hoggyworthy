@@ -5,7 +5,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Uncial Antiqua', serif;
+      background: url('https://images.unsplash.com/photo-1549887534-3c3cfdd0e0a5?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #f5d76e;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: rgba(0,0,0,0.85);
+      padding: 18px;
+      border-bottom: 3px solid #f5d76e;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    nav a {
+      color: #f5d76e;
+      margin: 0 16px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.4s;
+    }
+
+    nav a:hover {
+      color: white;
+      text-shadow: 0 0 12px #f5d76e, 0 0 24px #f5d76e inset;
+    }
+
+    .card {
+      background: rgba(10,10,10,0.9);
+      margin: 100px auto;
+      padding: 40px;
+      width: 80%;
+      max-width: 750px;
+      border-radius: 20px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(245,215,110,0.3);
+      animation: fade 1s ease;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-top: 0;
+      text-shadow: 0 0 10px #f5d76e;
+    }
+
+    .house {
+      border: 3px solid #f5d76e;
+      margin: 18px auto;
+      padding: 18px;
+      max-width: 450px;
+      cursor: pointer;
+      border-radius: 16px;
+      transition: all 0.5s ease;
+      position: relative;
+      font-size: 22px;
+    }
+
+    .house:hover {
+      background: #f5d76e;
+      color: black;
+      transform: scale(1.08);
+      box-shadow: 0 0 30px #f5d76e, 0 0 60px #f5d76e inset;
+    }
+
+    .hourglass {
+      width: 50px;
+      height: 80px;
+      margin: 25px auto;
+      border: 4px solid #f5d76e;
+      border-top: 0;
+      border-bottom: 0;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+      position: relative;
+      transform: rotate(45deg);
+      animation: flip 1s infinite linear;
+      display: none;
+      z-index: 1000;
+    }
+
+    .hourglass::before,
+    .hourglass::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+    }
+
+    .hourglass::before { border-bottom: 40px solid #f5d76e; top: -2px; left: -22px; }
+    .hourglass::after { border-top: 40px solid #f5d76e; bottom: -2px; left: -22px; }
+
+    @keyframes flip { 0%{transform:rotate(0deg);}50%{transform:rotate(180deg);}100%{transform:rotate(360deg);} }
+
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #f5d76e;
+      border-radius: 50%;
+      animation: sparkle 1s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0; transform: translate(0,0) scale(0.5);}
+      50%{ opacity:1; transform: translate(15px,-15px) scale(1);}
+      100%{ opacity:0; transform: translate(-15px,15px) scale(0.5);}
+    }
+
+    #house-info { margin-top: 25px; font-size: 20px; position: relative; }
+
+    .points-number { display: inline-block; font-weight: bold; font-size: 28px; color: inherit; animation: rise 1s ease-out forwards; }
+
+    @keyframes rise { 0% { transform: translateY(20px); opacity:0;} 100% { transform: translateY(0); opacity:1;} }
+
+    @keyframes fade { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+
+    @media (max-width: 768px){ .card{width:92%; padding:25px;} h1{font-size:32px;} .house{font-size:18px; max-width:95%; padding:14px;} nav a{margin:8px; font-size:16px;} }
+  </style>
 </head>
+
 <body onload="protect()">
 
 <nav>
@@ -17,25 +145,50 @@
 
 <div class="card">
   <h1>Hogwarts Houses</h1>
-  <p>Discover the magical points and spirit of each house!</p>
 
-  <div class="house" onclick="alert('Gryffindor: Courage, Bravery, Daring!')">
-    Gryffindor - Points: <span class="points-number">150</span>
-  </div>
+  <div class="house" onclick="showHouse('Gryffindor')">🦁 Gryffindor</div>
+  <div class="house" onclick="showHouse('Slytherin')">🐍 Slytherin</div>
+  <div class="house" onclick="showHouse('Ravenclaw')">🦅 Ravenclaw</div>
+  <div class="house" onclick="showHouse('Hufflepuff')">🦡 Hufflepuff</div>
 
-  <div class="house" onclick="alert('Slytherin: Ambition, Cunning, Resourceful!')">
-    Slytherin - Points: <span class="points-number">130</span>
-  </div>
-
-  <div class="house" onclick="alert('Hufflepuff: Loyalty, Patience, Hard Work!')">
-    Hufflepuff - Points: <span class="points-number">120</span>
-  </div>
-
-  <div class="house" onclick="alert('Ravenclaw: Intelligence, Wisdom, Creativity!')">
-    Ravenclaw - Points: <span class="points-number">140</span>
-  </div>
-
+  <div class="hourglass" id="hourglass"></div>
+  <div id="house-info"></div>
 </div>
+
+<script>
+const houseData = {
+  "Gryffindor": {points:120, desc:"Courage & Bravery", color:"#e74c3c"},
+  "Slytherin": {points:95, desc:"Ambition & Cunning", color:"#2ecc71"},
+  "Ravenclaw": {points:110, desc:"Wisdom & Intelligence", color:"#3498db"},
+  "Hufflepuff": {points:100, desc:"Loyalty & Hard Work", color:"#f1c40f"}
+};
+
+function showHouse(house){
+  const info = houseData[house];
+  const container = document.getElementById("house-info");
+  const hourglass = document.getElementById("hourglass");
+
+  container.innerHTML = '';
+  hourglass.style.display = 'block';
+
+  // Sparkles
+  for(let i=0;i<12;i++){
+    let s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.background = info.color;
+    s.style.top = Math.random()*60+'px';
+    s.style.left = Math.random()*400+'px';
+    container.appendChild(s);
+  }
+
+  setTimeout(()=>{
+    hourglass.style.display = 'none';
+    container.innerHTML = `<strong style="color:${info.color}; font-size:26px;">${house}</strong><br>
+                           Points: <span class="points-number">${info.points}</span><br>
+                           Traits: ${info.desc}`;
+  }, 1200);
+}
+</script>
 
 <script src="js/auth.js"></script>
 </body>
