@@ -1,9 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quidditch</title>
+  <title>Hogwarts Quidditch</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Uncial Antiqua', serif;
+      background: url('https://images.unsplash.com/photo-1590058998584-0c1ec7e7a452?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #f5d76e;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: rgba(0,0,0,0.85);
+      padding: 18px;
+      border-bottom: 3px solid #f5d76e;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    nav a {
+      color: #f5d76e;
+      margin: 0 16px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.4s;
+    }
+
+    nav a:hover {
+      color: white;
+      text-shadow: 0 0 12px #f5d76e, 0 0 24px #f5d76e inset;
+    }
+
+    .card {
+      background: rgba(10,10,10,0.9);
+      margin: 100px auto;
+      padding: 40px;
+      width: 80%;
+      max-width: 750px;
+      border-radius: 20px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(245,215,110,0.3);
+      animation: fade 1s ease;
+    }
+
+    h1 { font-size: 48px; margin-top: 0; text-shadow:0 0 10px #f5d76e; }
+    p { font-size: 22px; text-shadow:0 0 5px #f5d76e; margin: 20px 0; }
+
+    button {
+      padding: 12px 28px;
+      background: transparent;
+      color: #f5d76e;
+      border: 2px solid #f5d76e;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 12px;
+      transition: all 0.4s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #f5d76e;
+      color: black;
+      box-shadow: 0 0 20px #f5d76e;
+      transform: scale(1.05);
+    }
+
+    .quidditch-table {
+      width: 100%;
+      max-width: 600px;
+      margin: 30px auto;
+      border-collapse: collapse;
+      color: #f5d76e;
+      text-align: center;
+    }
+
+    .quidditch-table th, .quidditch-table td {
+      padding: 12px;
+      border: 2px solid #f5d76e;
+    }
+
+    .quidditch-table th {
+      background: rgba(245,215,110,0.2);
+      font-size: 20px;
+    }
+
+    @keyframes fade { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+
+    @media (max-width:768px){
+      .card { width:92%; padding:25px; }
+      h1{font-size:32px;} p{font-size:18px;}
+      nav a{margin:8px; font-size:16px;}
+      .quidditch-table th, .quidditch-table td{font-size:14px;padding:8px;}
+    }
+  </style>
 </head>
 
 <body onload="protect()">
@@ -16,11 +112,43 @@
 </nav>
 
 <div class="card">
-  <h1>Quidditch</h1>
-  <p>🏏 7 players per team</p>
-  <p>🧹 Played on flying broomsticks</p>
-  <p>✨ Golden Snitch ends the game</p>
-  <p>🏆 Inter-house competition</p>
+  <h1>Quidditch Info</h1>
+  <p>Explore the legendary Hogwarts Quidditch games, scores, and team points!</p>
+
+  <table class="quidditch-table">
+    <tr>
+      <th>House</th>
+      <th>Wins</th>
+      <th>Losses</th>
+      <th>Points</th>
+    </tr>
+    <tr>
+      <td>Gryffindor</td>
+      <td>12</td>
+      <td>3</td>
+      <td>120</td>
+    </tr>
+    <tr>
+      <td>Slytherin</td>
+      <td>9</td>
+      <td>6</td>
+      <td>95</td>
+    </tr>
+    <tr>
+      <td>Ravenclaw</td>
+      <td>11</td>
+      <td>4</td>
+      <td>110</td>
+    </tr>
+    <tr>
+      <td>Hufflepuff</td>
+      <td>10</td>
+      <td>5</td>
+      <td>100</td>
+    </tr>
+  </table>
+
+  <button onclick="alert('Quidditch rules coming soon!')">Learn More</button>
 </div>
 
 <script src="js/auth.js"></script>
