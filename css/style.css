@@ -3,6 +3,9 @@ body {
   margin: 0;
   font-family: 'Uncial Antiqua', serif;
   background-color: #0a0a0a;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
   color: #f5d76e;
   text-align: center;
   overflow-x: hidden;
@@ -11,7 +14,7 @@ body {
 /* NAVBAR */
 nav {
   background: rgba(0,0,0,0.85);
-  padding: 18px;
+  padding: 14px;
   border-bottom: 3px solid #f5d76e;
   position: sticky;
   top: 0;
@@ -20,215 +23,123 @@ nav {
 
 nav a {
   color: #f5d76e;
-  margin: 0 16px;
+  margin: 0 10px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 18px;
-  transition: 0.4s;
+  font-size: 16px;
+  transition: 0.3s;
 }
 
 nav a:hover {
   color: white;
-  text-shadow: 0 0 12px #f5d76e, 0 0 24px #f5d76e inset;
+  text-shadow: 0 0 8px #f5d76e;
 }
 
 /* CARD CINEMATIC */
 .card {
   background: rgba(10,10,10,0.9);
-  margin: 100px auto;
-  padding: 40px;
-  width: 80%;
-  max-width: 750px;
-  border-radius: 20px;
-  box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(245,215,110,0.3);
+  margin: 80px auto;
+  padding: 30px;
+  width: 90%;
+  max-width: 650px;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(245,215,110,0.3);
   animation: fade 1s ease;
 }
 
 /* TITLES & TEXT */
-h1 {
-  font-size: 48px;
-  margin-top: 0;
-  text-shadow: 0 0 10px #f5d76e;
-}
-p {
-  font-size: 22px;
-  text-shadow: 0 0 5px #f5d76e;
-  margin: 20px 0;
-}
+h1 { font-size: 36px; margin-top:0; text-shadow:0 0 8px #f5d76e; }
+p { font-size: 18px; text-shadow:0 0 5px #f5d76e; margin:16px 0; }
 
 /* BUTTON CINEMATIC */
 button {
-  padding: 12px 28px;
+  padding: 10px 20px;
   background: transparent;
   color: #f5d76e;
   border: 2px solid #f5d76e;
   cursor: pointer;
-  font-size: 18px;
-  border-radius: 12px;
-  transition: all 0.4s;
-  margin-top: 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: all 0.3s;
+  margin-top: 15px;
 }
 
 button:hover {
   background: #f5d76e;
   color: black;
-  box-shadow: 0 0 20px #f5d76e;
-  transform: scale(1.05);
+  box-shadow: 0 0 15px #f5d76e;
+  transform: scale(1.03);
 }
 
 /* HOUSE CARD */
 .house {
-  border: 3px solid #f5d76e;
-  margin: 18px auto;
-  padding: 18px;
-  max-width: 450px;
+  border: 2px solid #f5d76e;
+  margin: 12px auto;
+  padding: 12px;
+  max-width: 90%;
   cursor: pointer;
-  border-radius: 16px;
-  transition: all 0.5s ease;
-  position: relative;
-  font-size: 22px;
+  border-radius: 12px;
+  transition: all 0.4s ease;
+  font-size: 18px;
 }
 
 .house:hover {
   background: #f5d76e;
   color: black;
-  transform: scale(1.08);
-  box-shadow: 0 0 30px #f5d76e, 0 0 60px #f5d76e inset;
-}
-
-/* HOURGLASS ANIMATION */
-.hourglass {
-  width: 50px;
-  height: 80px;
-  margin: 25px auto;
-  border: 4px solid #f5d76e;
-  border-top: 0;
-  border-bottom: 0;
-  border-left: 3px solid transparent;
-  border-right: 3px solid transparent;
-  position: relative;
-  transform: rotate(45deg);
-  animation: flip 1s infinite linear;
-  display: none;
-  z-index: 1000;
-}
-
-.hourglass::before,
-.hourglass::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 22px solid transparent;
-  border-right: 22px solid transparent;
-}
-
-.hourglass::before { border-bottom: 40px solid #f5d76e; top: -2px; left: -22px; }
-.hourglass::after { border-top: 40px solid #f5d76e; bottom: -2px; left: -22px; }
-
-@keyframes flip {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* SPARKLES */
-.sparkle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: #f5d76e;
-  border-radius: 50%;
-  animation: sparkle 1s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes sparkle {
-  0% { opacity:0; transform:translate(0,0) scale(0.5); }
-  50% { opacity:1; transform:translate(15px,-15px) scale(1); }
-  100% { opacity:0; transform:translate(-15px,15px) scale(0.5); }
-}
-
-/* HOUSE INFO POINTS */
-#house-info {
-  margin-top: 25px;
-  font-size: 20px;
-  position: relative;
-}
-
-.points-number {
-  display: inline-block;
-  font-weight: bold;
-  font-size: 28px;
-  color: inherit;
-  animation: rise 1s ease-out forwards;
-}
-
-@keyframes rise {
-  0% { transform: translateY(20px); opacity:0; }
-  100% { transform: translateY(0); opacity:1; }
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #f5d76e, 0 0 40px #f5d76e inset;
 }
 
 /* CLASS LIST */
-.class-list {
-  list-style:none;
-  padding:0;
-  margin-top:30px;
-}
-
 .class-list li {
   background: rgba(245,215,110,0.1);
-  border:2px solid #f5d76e;
-  padding:16px;
-  margin:14px auto;
-  max-width:450px;
-  border-radius:14px;
-  font-size:20px;
-  transition:all 0.4s;
-  cursor:pointer;
-  position:relative;
+  border: 2px solid #f5d76e;
+  padding: 12px;
+  margin: 10px auto;
+  max-width: 90%;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 .class-list li:hover {
-  background:#f5d76e;
-  color:black;
-  transform: scale(1.05);
-  box-shadow:0 0 30px #f5d76e, 0 0 60px #f5d76e inset;
+  background: #f5d76e;
+  color: black;
+  transform: scale(1.03);
+  box-shadow:0 0 20px #f5d76e, 0 0 40px #f5d76e inset;
 }
 
 /* QUIDDITCH TABLE */
 .quidditch-table {
-  width:100%;
-  max-width:600px;
-  margin:30px auto;
+  width: 95%;
+  max-width: 100%;
+  margin: 20px auto;
   border-collapse: collapse;
   color: #f5d76e;
-  text-align:center;
+  text-align: center;
+  font-size: 14px;
 }
 
 .quidditch-table th, .quidditch-table td {
-  padding:12px;
-  border:2px solid #f5d76e;
-}
-
-.quidditch-table th {
-  background: rgba(245,215,110,0.2);
-  font-size:20px;
+  padding: 8px;
+  border: 2px solid #f5d76e;
 }
 
 /* ANIMATIONS */
 @keyframes fade {
-  from { opacity:0; transform:translateY(20px); }
+  from { opacity:0; transform:translateY(10px); }
   to { opacity:1; transform:translateY(0); }
 }
 
 /* MOBILE RESPONSIVE */
-@media (max-width:768px){
-  .card { width:92%; padding:25px; }
-  h1{font-size:32px;}
-  p{font-size:18px;}
-  nav a{margin:8px; font-size:16px;}
-  .house{font-size:18px; max-width:95%; padding:14px;}
-  .class-list li{font-size:18px; padding:12px; max-width:95%;}
-  .quidditch-table th, .quidditch-table td{font-size:14px; padding:8px;}
+@media(max-width:600px){
+  h1{font-size:28px;}
+  p{font-size:16px;}
+  nav a{font-size:14px; margin:5px;}
+  button{font-size:14px; padding:8px 16px;}
+  .house{font-size:16px; padding:10px;}
+  .class-list li{font-size:14px; padding:8px;}
+  .quidditch-table th, .quidditch-table td{font-size:12px; padding:6px;}
+  .card{padding:20px; margin:60px auto;}
 }
