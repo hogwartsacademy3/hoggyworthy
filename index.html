@@ -1,76 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hogwarts Login</title>
+  <title>Hogwarts Institute</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
-  <style>
-    /* Login card khusus */
-    .login-card {
-      background: rgba(10,10,10,0.9);
-      max-width: 400px;
-      margin: 120px auto;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(245,215,110,0.3);
-      text-align: center;
-      animation: fade 1s ease;
-    }
-
-    .login-card h1 {
-      font-size: 36px;
-      margin-bottom: 25px;
-      text-shadow: 0 0 12px #f5d76e;
-    }
-
-    .login-card input {
-      width: 80%;
-      padding: 12px;
-      margin: 12px 0;
-      border-radius: 12px;
-      border: 2px solid #f5d76e;
-      font-size: 18px;
-      background: rgba(0,0,0,0.8);
-      color: #f5d76e;
-      text-align: center;
-    }
-
-    .login-card input::placeholder {
-      color: #f5d76e;
-    }
-
-    .login-card button {
-      padding: 12px 28px;
-      margin-top: 16px;
-      border-radius: 12px;
-      border: 2px solid #f5d76e;
-      background: transparent;
-      color: #f5d76e;
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.4s;
-    }
-
-    .login-card button:hover {
-      background: #f5d76e;
-      color: black;
-      box-shadow: 0 0 20px #f5d76e;
-      transform: scale(1.05);
-    }
-
-    /* Mobile */
-    @media(max-width:480px){
-      .login-card{width:90%; padding:30px; margin:80px auto;}
-      .login-card h1{font-size:28px;}
-      .login-card input{font-size:16px;}
-      .login-card button{font-size:16px;}
-    }
-  </style>
 </head>
-<body>
+<body onload="protect()">
 
-<div class="login-card">
+<nav>
+  <a href="index.html">Home</a>
+  <a href="houses.html">Houses</a>
+  <a href="quidditch.html">Quidditch</a>
+  <a href="classes.html">Classes</a>
+</nav>
+
+<div class="card login-card">
   <h1>Enter Hogwarts</h1>
   <input type="password" id="password" placeholder="Enter password">
   <br>
@@ -83,7 +28,7 @@
     let pwd = document.getElementById("password").value;
     if(pwd === "hogwarts123"){
       alert("Welcome to Hogwarts!");
-      window.location.href = "index.html"; // arah ke homepage
+      window.location.href = "index.html";
     } else {
       alert("Wrong password!");
     }
