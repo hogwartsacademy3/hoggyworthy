@@ -17,16 +17,23 @@
 
 <div class="card">
   <h1>Hogwarts Houses</h1>
-
-  <div class="house" onclick="showPoints('Gryffindor',120)">🦁 Gryffindor</div>
-  <div class="house" onclick="showPoints('Slytherin',95)">🐍 Slytherin</div>
-  <div class="house" onclick="showPoints('Ravenclaw',110)">🦅 Ravenclaw</div>
-  <div class="house" onclick="showPoints('Hufflepuff',100)">🦡 Hufflepuff</div>
+  
+  <div class="house" onclick="showHouse('Gryffindor')">🦁 Gryffindor</div>
+  <div class="house" onclick="showHouse('Slytherin')">🐍 Slytherin</div>
+  <div class="house" onclick="showHouse('Ravenclaw')">🦅 Ravenclaw</div>
+  <div class="house" onclick="showHouse('Hufflepuff')">🦡 Hufflepuff</div>
 </div>
 
 <script>
-function showPoints(house, points){
-  alert(house + " has " + points + " points");
+function showHouse(house){
+  let info = {
+    "Gryffindor": {points:120, desc:"Courage & Bravery"},
+    "Slytherin": {points:95, desc:"Ambition & Cunning"},
+    "Ravenclaw": {points:110, desc:"Wisdom & Intelligence"},
+    "Hufflepuff": {points:100, desc:"Loyalty & Hard Work"}
+  };
+  let h = info[house];
+  alert(house + "\nPoints: " + h.points + "\nTraits: " + h.desc);
 }
 </script>
 
