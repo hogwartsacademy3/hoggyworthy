@@ -1,39 +1,810 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Hogwarts Institute</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogwarts Institute</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        magic: {
+                            dark: '#0a0a0f',
+                            gold: '#d4af37',
+                            goldHover: '#f9d77e',
+                            parchment: '#f1e5ce',
+                            gryffindor: '#740001',
+                            hufflepuff: '#eeba30',
+                            ravenclaw: '#0e1a40',
+                            slytherin: '#1a472a',
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        lora: ['Lora', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Magical Styles */
+        body {
+            background-color: #0a0a0f;
+            color: #f1e5ce;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at center, #151522 0%, #0a0a0f 100%);
+            background-attachment: fixed;
+        }
+        
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-lora { font-family: 'Lora', serif; }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 1.5s ease-in-out forwards; }
+        .fade-out { animation: fadeOut 1s ease-in-out forwards; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; display: none; } }
+        
+        /* Floating Candles */
+        .candle {
+            position: absolute;
+            width: 10px;
+            height: 40px;
+            background: #e2e2e2;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+        .candle::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 15px;
+            background: radial-gradient(ellipse at center, #ffeb99 0%, #ff9900 50%, transparent 100%);
+            border-radius: 50%;
+            animation: flicker 0.5s infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-20px); }
+        }
+        @keyframes flicker {
+            0% { opacity: 0.8; transform: translateX(-50%) scale(0.9); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* Glassmorphism & Gold Borders */
+        .magic-panel {
+            background: rgba(15, 15, 20, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            transition: all 0.4s ease;
+        }
+        .magic-panel:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f9d77e; }
+
+        /* Hourglass CSS Art for House Points */
+        .hourglass-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .hourglass {
+            width: 100px;
+            height: 220px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .glass-bulb {
+            width: 80px;
+            height: 100px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.2);
+        }
+        .glass-neck {
+            width: 20px;
+            height: 20px;
+            border-left: 3px solid rgba(255,255,255,0.3);
+            border-right: 3px solid rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+        .sand {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            transition: height 1s ease-in-out;
+        }
+        .sand-flow {
+            width: 4px;
+            height: 20px;
+            position: absolute;
+            top: 100px;
+            z-index: 5;
+            animation: flow 1s linear infinite;
+        }
+        @keyframes flow {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+
+        .gryffindor-sand { background: linear-gradient(to bottom, #ff4040, #740001); }
+        .hufflepuff-sand { background: linear-gradient(to bottom, #ffdf00, #eeba30); }
+        .ravenclaw-sand { background: linear-gradient(to bottom, #4d88ff, #0e1a40); }
+        .slytherin-sand { background: linear-gradient(to bottom, #2ecc71, #1a472a); }
+
+        /* Interactive Map Area */
+        .map-point {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #d4af37;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px #d4af37;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        /* Sparkle effect for clicks */
+        .sparkle {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: spark 0.6s linear forwards;
+        }
+        @keyframes spark {
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            100% { transform: scale(0) translateY(-50px); opacity: 0; }
+        }
+    </style>
 </head>
-<body onload="protect()">
+<body class="font-lora text-magic-parchment antialiased select-none" onclick="createSparkle(event)">
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="houses.html">Houses</a>
-  <a href="quidditch.html">Quidditch</a>
-  <a href="classes.html">Classes</a>
-</nav>
+    <!-- Audio Element (Optional BG Music) -->
+    <audio id="bgMusic" loop>
+        <!-- Fallback silent source if no magic track available, but ready to play -->
+        <source src="https://assets.mixkit.co/music/preview/mixkit-mystique-163.mp3" type="audio/mpeg">
+    </audio>
 
-<div class="card login-card">
-  <h1>Enter Hogwarts</h1>
-  <input type="password" id="password" placeholder="Enter password">
-  <br>
-  <button onclick="checkLogin()">Login</button>
-</div>
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-magic-dark transition-opacity duration-1000">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618944847023-38aa001235f0?q=80&w=2069&auto=format&fit=crop')] bg-cover bg-center opacity-20"></div>
+        <div class="relative z-10 magic-panel p-10 max-w-md w-full text-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Hogwarts_coat_of_arms_colored_with_shading.svg/512px-Hogwarts_coat_of_arms_colored_with_shading.svg.png" alt="Crest" class="w-24 h-24 mx-auto mb-6 opacity-80" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRhZjM3IiBzdHJva2Utd2lkdGg9IjUiLz48L3N2Zz4='">
+            <h1 class="font-cinzel text-3xl text-magic-gold mb-2">Hogwarts Institute</h1>
+            <p class="text-sm mb-8 italic text-gray-400">Masukkan identitas penyihir Anda</p>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="mb-4 text-left">
+                    <label class="block text-magic-gold text-sm mb-2 font-cinzel">Username</label>
+                    <input type="text" id="username" class="w-full bg-transparent border-b border-magic-gold/50 text-white focus:outline-none focus:border-magic-gold py-2 transition-colors" required autocomplete="off">
+                </div>
+                <div class="mb-6 text-left">
+                    <label class="block text-magic-gold text-sm mb-2 font-cinzel">Kata Sandi (Password)</label>
+                    <input type="password" id="password" class="w-full bg-transparent border-b border-magic-gold/50 text-white focus:outline-none focus:border-magic-gold py-2 transition-colors" required>
+                </div>
+                <button type="submit" class="w-full py-3 border border-magic-gold text-magic-gold font-cinzel hover:bg-magic-gold hover:text-magic-dark transition-all duration-300">
+                    Masuk ke Gerbang Utama
+                </button>
+            </form>
+            <p id="loginError" class="text-red-500 text-sm mt-4 hidden">Akses Ditolak. Kata sandi salah.</p>
+        </div>
+    </div>
 
-<script src="js/auth.js"></script>
-<script>
-  function checkLogin(){
-    let pwd = document.getElementById("password").value;
-    if(pwd === "hogwarts123"){
-      alert("Welcome to Hogwarts!");
-      window.location.href = "index.html";
-    } else {
-      alert("Wrong password!");
-    }
-  }
-</script>
+    <!-- MAIN INTERFACE (Hidden initially) -->
+    <div id="mainApp" class="hidden min-h-screen flex flex-col">
+        
+        <!-- Navigation Bar -->
+        <nav class="fixed top-0 w-full z-40 bg-magic-dark/90 backdrop-blur-md border-b border-magic-gold/30 p-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <i class="fa-solid fa-hat-wizard text-magic-gold text-2xl"></i>
+                    <span class="font-cinzel text-xl text-magic-gold hidden sm:block">Hogwarts Institute</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex flex-wrap justify-center gap-6 font-cinzel text-sm">
+                    <button onclick="navigateTo('home')" class="hover:text-magic-gold transition-colors">Home</button>
+                    <button onclick="navigateTo('houses')" class="hover:text-magic-gold transition-colors">Asrama</button>
+                    <button onclick="navigateTo('housepoints')" class="hover:text-magic-gold transition-colors">Poin Asrama</button>
+                    <button onclick="navigateTo('spells')" class="hover:text-magic-gold transition-colors">Mantra</button>
+                    <button onclick="navigateTo('potions')" class="hover:text-magic-gold transition-colors">Ramuan</button>
+                    <button onclick="navigateTo('creatures')" class="hover:text-magic-gold transition-colors">Makhluk Sihir</button>
+                    <button onclick="navigateTo('map')" class="hover:text-magic-gold transition-colors">Peta Kastil</button>
+                    <button onclick="navigateTo('directory')" class="hover:text-magic-gold transition-colors">Direktori Lengkap <i class="fa-solid fa-caret-down"></i></button>
+                </div>
 
+                <!-- Controls -->
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleMusic()" class="text-magic-gold hover:text-white transition-colors" title="Toggle Music">
+                        <i id="musicIcon" class="fa-solid fa-volume-xmark"></i>
+                    </button>
+                    <button id="adminBtn" onclick="openAdminPanel()" class="hidden text-magic-gold hover:text-white transition-colors" title="Panel Kepala Sekolah">
+                        <i class="fa-solid fa-cog"></i>
+                    </button>
+                    <button onclick="logout()" class="text-gray-400 hover:text-white transition-colors" title="Keluar">
+                        <i class="fa-solid fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="contentArea" class="flex-grow pt-24 pb-12 px-4 max-w-7xl mx-auto w-full relative">
+            <!-- Content gets injected here by JS -->
+        </main>
+        
+        <!-- Footer -->
+        <footer class="border-t border-magic-gold/20 py-6 text-center text-sm text-gray-500 font-cinzel">
+            <p>&copy; <span id="currentYear"></span> Hogwarts Institute. Ensiklopedia Interaktif Tersembunyi.</p>
+        </footer>
+    </div>
+
+    <!-- GLOBAL MODAL (For Info Popups) -->
+    <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="magic-panel max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto relative p-8">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-magic-gold hover:text-white text-xl">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <div id="modalContent">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="adminModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
+        <div class="magic-panel max-w-md w-full mx-4 p-8 relative">
+            <button onclick="closeAdminPanel()" class="absolute top-4 right-4 text-magic-gold hover:text-white">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <h2 class="font-cinzel text-2xl text-magic-gold mb-6 text-center">Panel Pengaturan Poin</h2>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <label class="text-magic-gryffindor font-bold font-cinzel">Gryffindor</label>
+                    <input type="number" id="input-gryffindor" class="w-24 bg-transparent border-b border-magic-gryffindor text-right focus:outline-none">
+                </div>
+                <div class="flex justify-between items-center">
+                    <label class="text-magic-hufflepuff font-bold font-cinzel">Hufflepuff</label>
+                    <input type="number" id="input-hufflepuff" class="w-24 bg-transparent border-b border-magic-hufflepuff text-right focus:outline-none">
+                </div>
+                <div class="flex justify-between items-center">
+                    <label class="text-magic-ravenclaw font-bold font-cinzel">Ravenclaw</label>
+                    <input type="number" id="input-ravenclaw" class="w-24 bg-transparent border-b border-magic-ravenclaw text-right focus:outline-none">
+                </div>
+                <div class="flex justify-between items-center">
+                    <label class="text-magic-slytherin font-bold font-cinzel">Slytherin</label>
+                    <input type="number" id="input-slytherin" class="w-24 bg-transparent border-b border-magic-slytherin text-right focus:outline-none">
+                </div>
+                <button onclick="saveHousePoints()" class="w-full mt-6 py-2 bg-magic-gold text-magic-dark font-cinzel font-bold hover:bg-magic-goldHover transition-colors">
+                    Perbarui Jam Pasir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- STATE & DATA ---
+        let isAdmin = false;
+        let isMusicPlaying = false;
+        
+        // Default House Points (Max usually 1000 for visuals)
+        let housePoints = {
+            gryffindor: 450,
+            hufflepuff: 380,
+            ravenclaw: 420,
+            slytherin: 470
+        };
+
+        const maxPoints = 600;
+
+        // Magical Database (Lore)
+        const database = {
+            houses: [
+                { id: 'gryffindor', name: 'Gryffindor', founder: 'Godric Gryffindor', color: 'text-magic-gryffindor', bg: 'bg-magic-gryffindor', icon: 'fa-hippo', traits: 'Keberanian, Kepahlawanan, Tekad', ghost: 'Nearly Headless Nick', element: 'Api' },
+                { id: 'hufflepuff', name: 'Hufflepuff', founder: 'Helga Hufflepuff', color: 'text-magic-hufflepuff', bg: 'bg-magic-hufflepuff', icon: 'fa-paw', traits: 'Kesetiaan, Kesabaran, Kerja Keras', ghost: 'Fat Friar', element: 'Bumi' },
+                { id: 'ravenclaw', name: 'Ravenclaw', founder: 'Rowena Ravenclaw', color: 'text-magic-ravenclaw', bg: 'bg-magic-ravenclaw', icon: 'fa-crow', traits: 'Kecerdasan, Pengetahuan, Kebijaksanaan', ghost: 'The Grey Lady', element: 'Udara' },
+                { id: 'slytherin', name: 'Slytherin', founder: 'Salazar Slytherin', color: 'text-magic-slytherin', bg: 'bg-magic-slytherin', icon: 'fa-snake', traits: 'Ambisi, Kelicikan, Kepemimpinan', ghost: 'The Bloody Baron', element: 'Air' }
+            ],
+            spells: [
+                { name: 'Expecto Patronum', type: 'Mantra Pertahanan', effect: 'Memanggil pelindung energi positif.', icon: 'fa-shield-halved' },
+                { name: 'Lumos', type: 'Mantra Penerang', effect: 'Menciptakan cahaya di ujung tongkat sihir.', icon: 'fa-lightbulb' },
+                { name: 'Alohomora', type: 'Mantra Pembuka', effect: 'Membuka pintu atau jendela yang terkunci.', icon: 'fa-key' },
+                { name: 'Expelliarmus', type: 'Mantra Pelucut Senjata', effect: 'Memaksa lawan melepaskan apa pun yang dipegangnya.', icon: 'fa-wand-sparkles' },
+                { name: 'Accio', type: 'Mantra Pemanggil', effect: 'Membawa objek yang jauh ke arah perapal mantra.', icon: 'fa-magnet' },
+                { name: 'Wingardium Leviosa', type: 'Mantra Levitasi', effect: 'Membuat objek melayang di udara.', icon: 'fa-feather' }
+            ],
+            potions: [
+                { name: 'Felix Felicis', aka: 'Cairan Keberuntungan', effect: 'Membuat peminumnya beruntung untuk sementara waktu.', color: '#FFD700' },
+                { name: 'Polyjuice Potion', aka: 'Ramuan Polijus', effect: 'Memungkinkan peminumnya mengambil wujud orang lain.', color: '#556B2F' },
+                { name: 'Amortentia', aka: 'Ramuan Cinta', effect: 'Menciptakan kegilaan atau obsesi kuat pada seseorang.', color: '#FF69B4' },
+                { name: 'Veritaserum', aka: 'Serum Kebenaran', effect: 'Memaksa peminumnya untuk mengatakan kebenaran.', color: '#E0FFFF' }
+            ],
+            creatures: [
+                { name: 'Hippogriff', class: 'XXX', desc: 'Makhluk dengan kepala elang raksasa dan tubuh kuda. Sangat bangga.' },
+                { name: 'Thestral', class: 'XXXX', desc: 'Kuda bersayap kerangka yang hanya bisa dilihat oleh mereka yang pernah melihat kematian.' },
+                { name: 'Phoenix', class: 'XXXX', desc: 'Burung merah anggun yang terbakar saat mati dan lahir kembali dari abunya.' },
+                { name: 'Niffler', class: 'XXX', desc: 'Makhluk berbulu hitam dengan moncong panjang, tertarik pada benda berkilau.' }
+            ],
+            directory: [
+                { id: 'history', name: 'Sejarah Institute', icon: 'fa-scroll' },
+                { id: 'founders', name: 'Para Pendiri', icon: 'fa-users' },
+                { id: 'wandhall', name: 'Aula Tongkat Sihir', icon: 'fa-wand-magic' },
+                { id: 'patronushall', name: 'Galeri Patronus', icon: 'fa-horse-head' },
+                { id: 'herbology', name: 'Rumah Kaca Herbologi', icon: 'fa-leaf' },
+                { id: 'library', name: 'Perpustakaan Terlarang', icon: 'fa-book-journal-whills' },
+                { id: 'quidditch', name: 'Lapangan Quidditch', icon: 'fa-broom' },
+                { id: 'professors', name: 'Staf & Profesor', icon: 'fa-chalkboard-user' },
+                { id: 'gallery', name: 'Galeri Lukisan Bergerak', icon: 'fa-image' },
+                { id: 'student', name: 'Profil Siswa', icon: 'fa-id-badge' }
+            ]
+        };
+
+        // --- CORE LOGIC ---
+
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value.toLowerCase().trim();
+            const pass = document.getElementById('password').value;
+
+            if (pass === 'caputdraconis') {
+                if (user === 'headmaster') {
+                    isAdmin = true;
+                    document.getElementById('adminBtn').classList.remove('hidden');
+                }
+                
+                // Animate transition
+                const loginScreen = document.getElementById('loginScreen');
+                loginScreen.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    document.getElementById('mainApp').classList.remove('hidden');
+                    document.getElementById('mainApp').classList.add('fade-in');
+                    generateCandles();
+                    navigateTo('home');
+                    
+                    // Attempt to play music automatically (might be blocked by browser policy)
+                    const audio = document.getElementById('bgMusic');
+                    audio.volume = 0.2;
+                    audio.play().then(() => {
+                        isMusicPlaying = true;
+                        document.getElementById('musicIcon').classList.replace('fa-volume-xmark', 'fa-volume-up');
+                    }).catch(e => console.log("Audio autoplay prevented by browser"));
+                }, 1000);
+            } else {
+                const err = document.getElementById('loginError');
+                err.classList.remove('hidden');
+                err.classList.add('animate-pulse');
+                setTimeout(() => err.classList.remove('animate-pulse'), 1000);
+            }
+        }
+
+        function logout() {
+            document.getElementById('mainApp').classList.add('fade-out');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const icon = document.getElementById('musicIcon');
+            if (isMusicPlaying) {
+                audio.pause();
+                icon.classList.replace('fa-volume-up', 'fa-volume-xmark');
+            } else {
+                audio.play();
+                icon.classList.replace('fa-volume-xmark', 'fa-volume-up');
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        function createSparkle(e) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 600);
+        }
+
+        // --- NAVIGATION & RENDERING ---
+
+        function navigateTo(pageId) {
+            const content = document.getElementById('contentArea');
+            content.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                content.innerHTML = '';
+                
+                switch(pageId) {
+                    case 'home': renderHome(content); break;
+                    case 'houses': renderHouses(content); break;
+                    case 'housepoints': renderHousePoints(content); break;
+                    case 'spells': renderGrid(content, 'Mantra & Sihir', database.spells, renderSpellCard); break;
+                    case 'potions': renderGrid(content, 'Ruang Ramuan', database.potions, renderPotionCard); break;
+                    case 'creatures': renderGrid(content, 'Pemeliharaan Satwa Gaib', database.creatures, renderCreatureCard); break;
+                    case 'map': renderMap(content); break;
+                    case 'directory': renderDirectory(content); break;
+                    default: renderPlaceholder(content, pageId); break;
+                }
+                
+                content.classList.remove('opacity-0');
+                content.classList.add('transition-opacity', 'duration-500');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 300);
+        }
+
+        function generateCandles() {
+            const container = document.createElement('div');
+            container.id = 'floating-candles';
+            container.className = 'fixed inset-0 pointer-events-none z-0 overflow-hidden';
+            for (let i = 0; i < 20; i++) {
+                const candle = document.createElement('div');
+                candle.className = 'candle';
+                candle.style.left = Math.random() * 100 + 'vw';
+                candle.style.top = Math.random() * 100 + 'vh';
+                candle.style.animationDelay = Math.random() * 4 + 's';
+                candle.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(candle);
+            }
+            document.body.appendChild(container);
+        }
+
+        // --- PAGE RENDERERS ---
+
+        function renderHome(container) {
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center min-h-[70vh] text-center z-10 relative">
+                    <h1 class="font-cinzel text-5xl md:text-7xl text-magic-gold mb-6 tracking-wider shadow-black drop-shadow-2xl">
+                        Hogwarts Institute
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-12 italic shadow-black drop-shadow-md">
+                        "Draco Dormiens Nunquam Titillandus"
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+                        <div onclick="navigateTo('housepoints')" class="magic-panel p-6 cursor-pointer text-center group">
+                            <i class="fa-solid fa-hourglass-half text-4xl text-magic-gold mb-4 group-hover:rotate-180 transition-transform duration-700"></i>
+                            <h3 class="font-cinzel text-xl text-white mb-2">Poin Asrama</h3>
+                            <p class="text-sm text-gray-400">Lihat persaingan real-time antar asrama.</p>
+                        </div>
+                        <div onclick="navigateTo('map')" class="magic-panel p-6 cursor-pointer text-center group">
+                            <i class="fa-solid fa-map-location-dot text-4xl text-magic-gold mb-4 group-hover:scale-110 transition-transform duration-300"></i>
+                            <h3 class="font-cinzel text-xl text-white mb-2">Peta Kastil</h3>
+                            <p class="text-sm text-gray-400">Jelajahi setiap sudut tersembunyi institute.</p>
+                        </div>
+                        <div onclick="navigateTo('directory')" class="magic-panel p-6 cursor-pointer text-center group">
+                            <i class="fa-solid fa-book-open text-4xl text-magic-gold mb-4 group-hover:text-white transition-colors duration-300"></i>
+                            <h3 class="font-cinzel text-xl text-white mb-2">Ensiklopedia</h3>
+                            <p class="text-sm text-gray-400">Pelajari mantra, ramuan, dan sejarah.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderHouses(container) {
+            let html = `<h2 class="font-cinzel text-4xl text-magic-gold text-center mb-12">Asrama Hogwarts Institute</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">`;
+            
+            database.houses.forEach(h => {
+                html += `
+                    <div class="magic-panel p-8 flex flex-col items-center text-center cursor-pointer relative overflow-hidden group" 
+                         onclick="showHouseDetails('${h.id}')">
+                        <div class="absolute inset-0 ${h.bg} opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                        <i class="fa-solid ${h.icon} text-6xl ${h.color} mb-6 z-10"></i>
+                        <h3 class="font-cinzel text-2xl text-white mb-2 z-10">${h.name}</h3>
+                        <p class="text-sm text-gray-400 z-10">Klik untuk melihat detail ruang rekreasi & sejarah.</p>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function renderHousePoints(container) {
+            container.innerHTML = `
+                <h2 class="font-cinzel text-4xl text-magic-gold text-center mb-4">Jam Pasir Poin Asrama</h2>
+                <p class="text-center text-gray-400 mb-16 italic">Poin tercatat secara magis dan berfluktuasi berdasarkan prestasi siswa.</p>
+                <div class="flex flex-wrap justify-center gap-12 md:gap-24" id="hourglasses-container">
+                    ${generateHourglassHTML('Gryffindor', 'gryffindor')}
+                    ${generateHourglassHTML('Hufflepuff', 'hufflepuff')}
+                    ${generateHourglassHTML('Ravenclaw', 'ravenclaw')}
+                    ${generateHourglassHTML('Slytherin', 'slytherin')}
+                </div>
+            `;
+            // Trigger animation after render
+            setTimeout(() => {
+                updateHourglassVisuals();
+            }, 100);
+        }
+
+        function generateHourglassHTML(name, id) {
+            return `
+                <div class="hourglass-container">
+                    <h3 class="font-cinzel text-xl ${database.houses.find(h=>h.id===id).color} mb-4">${name}</h3>
+                    <div class="hourglass">
+                        <div class="glass-bulb top-bulb">
+                            <!-- Sand dropping from top -->
+                        </div>
+                        <div class="glass-neck">
+                            <div class="sand-flow ${id}-sand"></div>
+                        </div>
+                        <div class="glass-bulb bottom-bulb">
+                            <div id="sand-${id}" class="sand ${id}-sand" style="height: 0%;"></div>
+                        </div>
+                    </div>
+                    <div class="mt-6 font-cinzel text-2xl text-white" id="score-${id}">${housePoints[id]}</div>
+                </div>
+            `;
+        }
+
+        function updateHourglassVisuals() {
+            ['gryffindor', 'hufflepuff', 'ravenclaw', 'slytherin'].forEach(house => {
+                const sandEl = document.getElementById(`sand-${house}`);
+                const scoreEl = document.getElementById(`score-${house}`);
+                if (sandEl && scoreEl) {
+                    const percentage = Math.min((housePoints[house] / maxPoints) * 100, 100);
+                    sandEl.style.height = `${percentage}%`;
+                    scoreEl.innerText = housePoints[house];
+                }
+            });
+        }
+
+        function renderMap(container) {
+            container.innerHTML = `
+                <h2 class="font-cinzel text-4xl text-magic-gold text-center mb-8">Peta Kastil Institute</h2>
+                <div class="relative w-full max-w-4xl mx-auto h-[600px] border-2 border-magic-gold/50 bg-[url('https://www.transparenttextures.com/patterns/old-map.png')] bg-magic-parchment/10 rounded-lg overflow-hidden shadow-2xl shadow-magic-gold/20">
+                    <!-- Decorative background to look like a map -->
+                    <div class="absolute inset-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1601662528567-526cd06f3531?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
+                    
+                    <!-- Map Points -->
+                    <div class="map-point" style="top: 20%; left: 50%; transform: translate(-50%, -50%);" onclick="showModal('Aula Besar', 'Tempat para siswa berkumpul untuk makan dan perayaan. Plafonnya disihir menyerupai langit di luar.')"></div>
+                    <div class="map-point" style="top: 40%; left: 70%;" onclick="showModal('Menara Astronomi', 'Titik tertinggi di kastil, tempat kelas Astronomi diadakan pada tengah malam.')"></div>
+                    <div class="map-point" style="top: 60%; left: 20%;" onclick="showModal('Ruang Bawah Tanah', 'Suhu di sini selalu dingin. Kelas Ramuan dan Ruang Rekreasi Slytherin berada di area ini.')"></div>
+                    <div class="map-point" style="top: 75%; left: 80%;" onclick="showModal('Pondok Hagrid & Hutan Terlarang', 'Terletak di pinggiran halaman belakang. Hutan Terlarang sangat dilarang bagi semua siswa tanpa pengawasan.')"></div>
+                    <div class="map-point" style="top: 30%; left: 30%;" onclick="showModal('Perpustakaan', 'Berisi puluhan ribu buku sihir. Terdapat Area Terlarang yang membutuhkan tanda tangan guru untuk masuk.')"></div>
+                    
+                    <div class="absolute bottom-4 right-4 font-cinzel text-magic-dark font-bold text-lg bg-magic-gold px-4 py-2 rounded shadow-lg">
+                        Klik titik bercahaya untuk menjelajah
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generic Grid Renderer
+        function renderGrid(container, title, items, cardRenderer) {
+            let html = `<h2 class="font-cinzel text-4xl text-magic-gold text-center mb-12">${title}</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
+            
+            items.forEach(item => {
+                html += cardRenderer(item);
+            });
+            
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function renderSpellCard(spell) {
+            return `
+                <div class="magic-panel p-6 cursor-pointer hover:bg-white/5 transition-colors group" onclick="castSpell('${spell.name}', '${spell.effect}')">
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="w-12 h-12 rounded-full bg-magic-gold/20 flex items-center justify-center text-magic-gold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${spell.icon} text-xl"></i>
+                        </div>
+                        <h3 class="font-cinzel text-xl text-white">${spell.name}</h3>
+                    </div>
+                    <p class="text-sm text-magic-gold/80 mb-2">${spell.type}</p>
+                    <p class="text-sm text-gray-400 line-clamp-2">${spell.effect}</p>
+                </div>
+            `;
+        }
+
+        function renderPotionCard(potion) {
+            return `
+                <div class="magic-panel p-6 cursor-pointer hover:bg-white/5 transition-colors flex items-center gap-6" onclick="showModal('${potion.name}', '${potion.effect}<br><br><i>Juga dikenal sebagai: ${potion.aka}</i>')">
+                    <div class="relative w-16 h-20">
+                        <!-- CSS Potion Bottle -->
+                        <div class="absolute bottom-0 w-12 h-12 rounded-full left-2" style="background-color: ${potion.color}; box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px ${potion.color};"></div>
+                        <div class="absolute top-2 w-4 h-8 border-x-2 border-white/30 left-6 bg-white/10"></div>
+                        <div class="absolute top-0 w-6 h-2 rounded left-5 bg-orange-900"></div> <!-- Cork -->
+                    </div>
+                    <div>
+                        <h3 class="font-cinzel text-xl text-white mb-1">${potion.name}</h3>
+                        <p class="text-xs text-gray-400">${potion.aka}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCreatureCard(c) {
+            return `
+                <div class="magic-panel p-6 cursor-pointer hover:bg-white/5 transition-colors" onclick="showModal('${c.name}', '<b>Klasifikasi Kementerian Sihir:</b> ${c.class}<br><br>${c.desc}')">
+                    <h3 class="font-cinzel text-2xl text-magic-gold mb-2">${c.name}</h3>
+                    <span class="inline-block px-2 py-1 bg-red-900/50 text-red-200 text-xs rounded mb-3">${c.class}</span>
+                    <p class="text-sm text-gray-400">${c.desc}</p>
+                </div>
+            `;
+        }
+
+        function renderDirectory(container) {
+            let html = `<h2 class="font-cinzel text-4xl text-magic-gold text-center mb-12">Direktori Institute</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">`;
+            
+            database.directory.forEach(dir => {
+                html += `
+                    <div class="magic-panel p-4 flex flex-col items-center text-center cursor-pointer hover:bg-magic-gold hover:text-magic-dark transition-all duration-300 group"
+                         onclick="showGenericPage('${dir.name}')">
+                        <i class="fa-solid ${dir.icon} text-3xl mb-3 text-magic-gold group-hover:text-magic-dark"></i>
+                        <h3 class="font-cinzel text-sm font-bold">${dir.name}</h3>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function renderPlaceholder(container, pageId) {
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center min-h-[50vh] text-center">
+                    <i class="fa-solid fa-wand-magic-sparkles text-6xl text-magic-gold mb-6 animate-pulse"></i>
+                    <h2 class="font-cinzel text-3xl text-white mb-4">Halaman ${pageId} sedang disihir...</h2>
+                    <p class="text-gray-400 max-w-md">Para pustakawan sedang mengumpulkan arsip dari penjuru kastil. Silakan kembali lagi nanti.</p>
+                </div>
+            `;
+        }
+
+        // --- INTERACTIVITY & MODALS ---
+
+        function showHouseDetails(houseId) {
+            const house = database.houses.find(h => h.id === houseId);
+            const content = `
+                <div class="text-center">
+                    <i class="fa-solid ${house.icon} text-6xl ${house.color} mb-4"></i>
+                    <h2 class="font-cinzel text-4xl ${house.color} mb-2">${house.name}</h2>
+                    <h3 class="font-lora text-xl text-white mb-6">Didirikan oleh ${house.founder}</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4 text-left border-t border-magic-gold/30 pt-6 mt-6">
+                        <div><strong class="text-magic-gold font-cinzel">Nilai Utama:</strong><br><span class="text-gray-300">${house.traits}</span></div>
+                        <div><strong class="text-magic-gold font-cinzel">Hantu Asrama:</strong><br><span class="text-gray-300">${house.ghost}</span></div>
+                        <div><strong class="text-magic-gold font-cinzel">Elemen:</strong><br><span class="text-gray-300">${house.element}</span></div>
+                        <div><strong class="text-magic-gold font-cinzel">Poin Saat Ini:</strong><br><span class="text-xl text-white">${housePoints[house.id]}</span></div>
+                    </div>
+                </div>
+            `;
+            showModal('', content);
+        }
+
+        function castSpell(name, effect) {
+            // Visual feedback on screen
+            const flash = document.createElement('div');
+            flash.className = 'fixed inset-0 bg-white z-50 pointer-events-none transition-opacity duration-500 flex items-center justify-center';
+            flash.innerHTML = `<h2 class="font-cinzel text-6xl text-magic-dark drop-shadow-lg">${name.toUpperCase()}!</h2>`;
+            document.body.appendChild(flash);
+            
+            setTimeout(() => flash.classList.add('opacity-0'), 100);
+            setTimeout(() => {
+                flash.remove();
+                showModal('Mantra Berhasil Dirapal', `<b>${name}</b><br><br>${effect}`);
+            }, 600);
+        }
+
+        function showGenericPage(title) {
+            showModal(title, `<div class="text-center p-6"><i class="fa-solid fa-scroll text-4xl text-magic-gold mb-4"></i><p>Arsip untuk bagian <b>${title}</b> sedang dalam peninjauan oleh Kementerian Sihir. Konten akan segera tersedia.</p></div>`);
+        }
+
+        function showModal(title, htmlContent) {
+            const modal = document.getElementById('infoModal');
+            const contentDiv = document.getElementById('modalContent');
+            
+            let finalHtml = '';
+            if (title) finalHtml += `<h2 class="font-cinzel text-3xl text-magic-gold mb-4 border-b border-magic-gold/30 pb-2">${title}</h2>`;
+            finalHtml += `<div class="text-lg leading-relaxed text-gray-200">${htmlContent}</div>`;
+            
+            contentDiv.innerHTML = finalHtml;
+            
+            modal.classList.remove('hidden');
+            // small delay for transition
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        // --- ADMIN PANEL LOGIC ---
+
+        function openAdminPanel() {
+            if (!isAdmin) return;
+            
+            document.getElementById('input-gryffindor').value = housePoints.gryffindor;
+            document.getElementById('input-hufflepuff').value = housePoints.hufflepuff;
+            document.getElementById('input-ravenclaw').value = housePoints.ravenclaw;
+            document.getElementById('input-slytherin').value = housePoints.slytherin;
+
+            const modal = document.getElementById('adminModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeAdminPanel() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function saveHousePoints() {
+            housePoints.gryffindor = parseInt(document.getElementById('input-gryffindor').value) || 0;
+            housePoints.hufflepuff = parseInt(document.getElementById('input-hufflepuff').value) || 0;
+            housePoints.ravenclaw = parseInt(document.getElementById('input-ravenclaw').value) || 0;
+            housePoints.slytherin = parseInt(document.getElementById('input-slytherin').value) || 0;
+            
+            closeAdminPanel();
+            
+            // If currently on house points page, update visually
+            if (document.getElementById('hourglasses-container')) {
+                updateHourglassVisuals();
+            }
+            
+            // Notification
+            showModal('Pembaruan Magis', 'Poin asrama telah berhasil diperbarui oleh Kepala Sekolah. Jam pasir telah menyesuaikan.');
+        }
+
+        // Close modals on click outside
+        window.onclick = function(event) {
+            const infoModal = document.getElementById('infoModal');
+            const adminModal = document.getElementById('adminModal');
+            
+            if (event.target == infoModal) {
+                closeModal();
+            }
+            if (event.target == adminModal) {
+                closeAdminPanel();
+            }
+        }
+    </script>
 </body>
 </html>
+
+```
