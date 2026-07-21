@@ -51,6 +51,7 @@
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
             background: #0a0a0f; 
@@ -75,6 +76,13 @@
             background: rgba(21, 21, 30, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Inner Tabs active state */
+        .rule-tab-btn.active {
+            color: #D4AF37;
+            border-bottom: 2px solid #D4AF37;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -209,116 +217,301 @@
             </div>
         </section>
 
-        <!-- ==================== RULES SECTION (CARA BERMAIN) ==================== -->
+        <!-- ==================== RULES SECTION (CARA BERMAIN) - REVISED ==================== -->
         <section id="rules" class="page-section hidden">
-            <div class="text-center mb-10">
-                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Cara Bermain</h2>
-                <div class="h-1 w-24 bg-magic-gold mx-auto rounded mb-6"></div>
-                <p class="text-magic-textMuted max-w-2xl mx-auto text-sm md:text-base bg-magic-panel p-4 rounded-lg border border-white/5">
-                    Permainan Quidditch Hogwarts Institute mengadaptasi mekanisme permainan <strong>Werewolf</strong> dengan sistem <em>choice-based</em>. Seluruh permainan dipandu oleh Wasit Quidditch, dan setiap pemain akan bergantian memilih opsi yang telah disediakan sesuai dengan role masing-masing.
+            <div class="text-center mb-8">
+                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-magic-gold mb-2 tracking-wider">Cara Bermain Quidditch</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded mb-4"></div>
+            </div>
+
+            <!-- Sub-Page Navigation / Tabs -->
+            <div class="flex overflow-x-auto gap-2 md:gap-6 pb-3 mb-8 border-b border-white/10 no-scrollbar whitespace-nowrap px-2">
+                <button onclick="switchRuleTab('rule-intro')" class="rule-tab-btn active text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors">Pengenalan</button>
+                <button onclick="switchRuleTab('rule-roles')" class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors">Role Pemain</button>
+                <button onclick="switchRuleTab('rule-system')" class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors">Sistem Permainan</button>
+                <button onclick="switchRuleTab('rule-flow')" class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors">Urutan Ronde</button>
+                <button onclick="switchRuleTab('rule-terms')" class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors">Ketentuan</button>
+            </div>
+
+            <!-- Tab Content: Pengenalan -->
+            <div id="rule-intro" class="rule-content fade-in block bg-magic-panel p-6 md:p-8 rounded-2xl border border-white/5 shadow-lg">
+                <h3 class="font-cinzel text-2xl text-magic-gold mb-4">Quidditch Hogwarts Institute</h3>
+                <p class="text-magic-text mb-4 leading-relaxed">
+                    Quidditch Hogwarts Institute adalah permainan berbasis <em class="text-magic-gold">choice-based</em> yang mengadaptasi sistem permainan <strong>Werewolf</strong>.
                 </p>
+                <p class="text-magic-text mb-6 leading-relaxed">
+                    Setiap pemain akan diberikan pilihan aksi sesuai dengan role masing-masing. Seluruh jalannya pertandingan dipandu oleh <strong>Wasit Quidditch</strong>, yang bertugas memberikan pilihan, memproses aksi pemain, serta mengumumkan hasil pertandingan.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div class="bg-black/40 p-5 rounded-xl border border-white/10">
+                        <h4 class="font-cinzel text-lg text-white mb-3 border-b border-gray-700 pb-2">Komposisi Tim</h4>
+                        <p class="text-sm text-gray-400 mb-2">Setiap tim terdiri dari 7 pemain:</p>
+                        <ul class="list-disc list-inside space-y-1 text-magic-gold font-bold">
+                            <li>1 Seeker</li>
+                            <li>3 Chasers</li>
+                            <li>2 Beaters</li>
+                            <li>1 Keeper</li>
+                        </ul>
+                    </div>
+                    <div class="bg-black/40 p-5 rounded-xl border border-white/10">
+                        <h4 class="font-cinzel text-lg text-white mb-3 border-b border-gray-700 pb-2">Akhir Pertandingan</h4>
+                        <p class="text-sm text-gray-400 mb-2">Pertandingan berlangsung sampai:</p>
+                        <ul class="list-disc list-inside space-y-2 text-white">
+                            <li>Seeker berhasil menangkap <span class="text-magic-gold">Golden Snitch</span>, <strong class="text-gray-500 italic">atau</strong></li>
+                            <li>Batas ronde pertandingan (maksimal 10 ronde) telah berakhir.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <div class="space-y-12">
-                <!-- Role Pemain -->
-                <div>
-                    <h3 class="font-cinzel text-2xl text-magic-gold border-b border-magic-gold/30 pb-2 mb-6">Role Pemain</h3>
+            <!-- Tab Content: Role Pemain -->
+            <div id="rule-roles" class="rule-content hidden fade-in space-y-6">
+                <!-- Seeker -->
+                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-yellow-500 shadow-md">
+                    <h3 class="font-cinzel text-2xl font-bold text-yellow-500 mb-2">Seeker</h3>
+                    <p class="text-magic-text mb-4">Bertugas mencari dan menangkap <strong>Golden Snitch</strong>.</p>
+                    <div class="text-sm text-magic-textMuted space-y-3 mb-4">
+                        <p>Berbeda dengan role lainnya, Seeker tidak ikut dalam permainan lapangan. Seeker hanya fokus mencari Golden Snitch melalui website khusus yang telah disediakan. Sebelum pertandingan dimulai, Wasit memberikan akses website pencarian Golden Snitch kepada Seeker.</p>
+                        <p>Jika berhasil menemukan Golden Snitch, Seeker wajib memberitahu Wasit. Wasit kemudian akan mengumumkan: <br>
+                        <em class="text-magic-gold block mt-2">«"Golden Snitch telah berhasil ditangkap!"»</em></p>
+                        <p>Tim tersebut mendapatkan <strong class="text-yellow-400">+150 poin</strong> dan pertandingan dihentikan untuk menghitung skor akhir.</p>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded-lg border border-yellow-500/20">
+                        <strong class="text-yellow-500 text-sm block mb-1">Aturan Seeker:</strong>
+                        <ul class="list-disc list-inside text-xs text-gray-300 space-y-1">
+                            <li>Tidak memiliki aksi Attack maupun Defense.</li>
+                            <li>Tidak ikut dalam strategi permainan lapangan.</li>
+                            <li>Tidak dapat menjadi target serangan Beaters.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chasers -->
+                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-red-500 shadow-md">
+                    <h3 class="font-cinzel text-2xl font-bold text-red-500 mb-2">Chasers</h3>
+                    <p class="text-magic-text mb-4">Bertugas mencetak gol menggunakan <strong>Quaffle</strong>.</p>
+                    <div class="text-sm text-magic-textMuted space-y-3 mb-4">
+                        <p>Chasers hanya dapat menyerang ketika timnya berada dalam posisi <strong class="text-white">Menyerang</strong>. Saat menyerang, Chasers berdiskusi menentukan <strong>1 gawang lawan</strong> yang akan ditembak. Pilihan dikirim kepada Wasit.</p>
+                        <p>Jika Keeper gagal menahan tembakan, tim mendapat <strong class="text-red-400">+10 poin</strong>.</p>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded-lg border border-red-500/20">
+                        <strong class="text-red-400 text-sm block mb-1">Efek Bludger:</strong>
+                        <ul class="list-disc list-inside text-xs text-gray-300 space-y-1">
+                            <li>Jika Chaser terkena Bludger: <em>Tidak dapat ikut menentukan serangan pada ronde tersebut.</em></li>
+                            <li>Jika seluruh Chasers terkena Bludger: <em>Tim kehilangan kesempatan menyerang.</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Beaters -->
+                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-gray-400 shadow-md">
+                    <h3 class="font-cinzel text-2xl font-bold text-gray-300 mb-2">Beaters</h3>
+                    <p class="text-magic-text mb-4">Bertugas menggunakan <strong>Bludger</strong> untuk mengganggu lawan dan membantu strategi tim.</p>
+                    <p class="text-sm text-gray-400 mb-3">Setiap Beater memilih salah satu aksi:</p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Seeker -->
-                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-magic-gold shadow-md hover:shadow-gold/20 transition-all">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                                </div>
-                                <h4 class="font-cinzel text-xl font-bold text-white">Seeker <span class="text-sm font-sans font-normal text-magic-textMuted">(1 Orang)</span></h4>
-                            </div>
-                            <p class="text-sm text-magic-text mb-3">Bertugas mencari dan menangkap Golden Snitch yang terbang sangat cepat dan lincah.</p>
-                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
-                                <li>Di awal permainan, diberikan sebuah link rahasia.</li>
-                                <li>Harus menebak angka yang menyembunyikan Golden Snitch. Berlangsung hingga Snitch ditemukan.</li>
-                                <li><span class="text-magic-gold font-bold">Immune Ability:</span> Kebal dan tidak dapat menjadi target serangan Bludger. Serangan Chasers/Beaters ke Seeker tidak dihitung.</li>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-red-900/20 p-3 rounded border border-red-900/50">
+                            <strong class="text-red-400 block mb-1">Attack</strong>
+                            <p class="text-xs text-gray-300 mb-2">Menyerang 1 pemain lawan menggunakan Bludger.</p>
+                            <p class="text-xs text-gray-400 border-b border-gray-600 pb-1 mb-1">Efek Bludger:</p>
+                            <ul class="text-xs text-gray-300 space-y-1">
+                                <li>- Chaser &rarr; Tidak dapat menyerang.</li>
+                                <li>- Keeper &rarr; Tidak dapat menjaga gawang.</li>
+                                <li>- Beater &rarr; Tidak dapat melakukan aksi.</li>
+                                <li>- Seeker &rarr; Tidak dapat diserang.</li>
                             </ul>
                         </div>
-
-                        <!-- Chasers -->
-                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-red-500 shadow-md transition-all">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
-                                </div>
-                                <h4 class="font-cinzel text-xl font-bold text-white">Chasers <span class="text-sm font-sans font-normal text-magic-textMuted">(3 Orang)</span></h4>
-                            </div>
-                            <p class="text-sm text-magic-text mb-3">Bertugas mencetak gol menggunakan Quaffle ke gawang lawan.</p>
-                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
-                                <li>Pada setiap ronde, diberikan pilihan gawang untuk ditembak.</li>
-                                <li>Setiap gol yang berhasil dicetak akan memberikan <strong class="text-white">10 poin</strong> kepada tim.</li>
-                            </ul>
+                        <div class="bg-blue-900/20 p-3 rounded border border-blue-900/50">
+                            <strong class="text-blue-400 block mb-1">Protect</strong>
+                            <p class="text-xs text-gray-300">Melindungi 1 pemain dari tim sendiri.</p>
+                            <p class="text-xs text-gray-400 mt-2">Jika pemain tersebut terkena Attack pada ronde yang sama, serangan akan dibatalkan.</p>
                         </div>
-
-                        <!-- Beaters -->
-                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-gray-400 shadow-md transition-all">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-gray-500/20 flex items-center justify-center text-gray-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6l4.5-4.5 11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 22l6-6"/><path d="M20 22l-6-6"/></svg>
-                                </div>
-                                <h4 class="font-cinzel text-xl font-bold text-white">Beaters <span class="text-sm font-sans font-normal text-magic-textMuted">(2 Orang)</span></h4>
-                            </div>
-                            <p class="text-sm text-magic-text mb-3">Bertugas melindungi rekan satu tim dan menjatuhkan lawan menggunakan Bludger.</p>
-                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
-                                <li>Memilih <strong class="text-white">satu rekan</strong> yang ingin dilindungi.</li>
-                                <li>Memilih <strong class="text-white">satu lawan</strong> yang ingin diserang.</li>
-                                <li>Pemain terkena Bludger absen 1 putaran. Jika berhasil dilindungi, pemain tersebut aman dan lanjut bermain.</li>
-                            </ul>
-                        </div>
-
-                        <!-- Keeper -->
-                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-blue-500 shadow-md transition-all">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                </div>
-                                <h4 class="font-cinzel text-xl font-bold text-white">Keeper <span class="text-sm font-sans font-normal text-magic-textMuted">(1 Orang)</span></h4>
-                            </div>
-                            <p class="text-sm text-magic-text mb-3">Bertugas menjaga gawang dan menghalau Chasers lawan agar tidak dapat mencetak gol.</p>
-                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
-                                <li>Pada setiap ronde, diberikan pilihan untuk menebak gawang sasaran Chasers lawan.</li>
-                                <li>Jika tebakan benar, tembakan lawan berhasil digagalkan (poin tidak bertambah).</li>
-                            </ul>
-                        </div>
+                    </div>
+                    <div class="bg-black/30 p-3 rounded-lg border border-gray-500/20">
+                        <strong class="text-gray-300 text-sm block mb-1">Aturan Beaters:</strong>
+                        <ul class="list-disc list-inside text-xs text-gray-300 space-y-1">
+                            <li>Setiap Beater hanya dapat melakukan 1 aksi per ronde.</li>
+                            <li>Tidak boleh menyerang pemain yang sama selama 2 ronde berturut-turut.</li>
+                            <li>Tidak boleh melindungi pemain yang sama selama 2 ronde berturut-turut.</li>
+                            <li>Aksi Beaters diproses <strong>sebelum</strong> aksi Chasers dan Keeper.</li>
+                        </ul>
                     </div>
                 </div>
 
-                <!-- Jalannya Permainan -->
-                <div>
-                    <h3 class="font-cinzel text-2xl text-magic-gold border-b border-magic-gold/30 pb-2 mb-6">Jalannya Permainan</h3>
-                    <div class="bg-magic-panel p-6 md:p-8 rounded-xl border border-white/5 shadow-lg relative overflow-hidden">
-                        
-                        <p class="text-magic-text mb-6 leading-relaxed">
-                            Setelah Golden Snitch dilepaskan ke udara oleh Wasit Quidditch, Seeker dipersilakan mulai mencari Golden Snitch melalui link yang telah diberikan. Sementara itu, permainan dimulai secara berurutan sebagai berikut:
-                        </p>
-
-                        <ol class="space-y-4 mb-6 relative z-10 text-magic-text text-sm md:text-base">
-                            <li class="flex gap-4">
-                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">1</span>
-                                <div class="pt-1"><strong class="text-white">Beaters</strong> memilih rekan yang akan dilindungi dan lawan yang akan diserang.</div>
-                            </li>
-                            <li class="flex gap-4">
-                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">2</span>
-                                <div class="pt-1"><strong class="text-white">Chasers</strong> memilih gawang yang akan ditembak.</div>
-                            </li>
-                            <li class="flex gap-4">
-                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">3</span>
-                                <div class="pt-1"><strong class="text-white">Keeper</strong> memilih gawang yang diperkirakan menjadi sasaran tembakan Chasers lawan.</div>
-                            </li>
-                            <li class="flex gap-4">
-                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">4</span>
-                                <div class="pt-1"><strong class="text-white">Wasit Quidditch</strong> memproses seluruh pilihan pemain, menghitung poin, dan mengumumkan hasil putaran.</div>
-                            </li>
-                        </ol>
+                <!-- Keeper -->
+                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-blue-500 shadow-md">
+                    <h3 class="font-cinzel text-2xl font-bold text-blue-400 mb-2">Keeper</h3>
+                    <p class="text-magic-text mb-4">Bertugas menjaga gawang dari serangan Chasers lawan.</p>
+                    <div class="text-sm text-magic-textMuted space-y-3 mb-4">
+                        <p>Keeper hanya aktif ketika timnya berada dalam posisi <strong class="text-white">Bertahan</strong>. Saat bertahan, Keeper memilih <strong>1 gawang</strong> yang ingin dijaga.</p>
+                        <ul class="list-disc list-inside text-gray-300">
+                            <li>Jika pilihan Keeper benar, tembakan lawan berhasil digagalkan.</li>
+                            <li>Jika pilihan Keeper salah, lawan mendapatkan poin.</li>
+                        </ul>
+                        <p>Jika Keeper terkena Bludger: <em>Keeper tidak dapat menjaga gawang pada ronde tersebut.</em></p>
+                    </div>
+                    <div class="bg-blue-900/30 p-3 rounded-lg border border-blue-500/40 text-sm">
+                        <span class="text-blue-300 font-bold block mb-1">Catatan Penting:</span>
+                        Jika Keeper berhasil melakukan <strong class="text-white">3 save berturut-turut</strong>, tim mendapatkan <strong>1 Bonus Momentum</strong>.
                     </div>
                 </div>
             </div>
+
+            <!-- Tab Content: Sistem Permainan -->
+            <div id="rule-system" class="rule-content hidden fade-in space-y-8">
+                <!-- Sistem Menyerang & Bertahan -->
+                <div class="bg-magic-panel p-6 md:p-8 rounded-2xl border border-white/5 shadow-lg">
+                    <h3 class="font-cinzel text-2xl text-magic-gold border-b border-magic-gold/30 pb-2 mb-4">Sistem Menyerang & Bertahan</h3>
+                    <p class="text-magic-text mb-4">Setiap ronde, hanya ada <strong>1 tim</strong> yang berada dalam posisi Menyerang dan <strong>1 tim</strong> dalam posisi Bertahan. Posisi akan bergantian setiap ronde.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        <div class="bg-black/40 p-4 rounded-xl border border-gray-700">
+                            <h4 class="font-cinzel font-bold text-white mb-2 text-lg">Contoh Ronde 1</h4>
+                            <p class="text-red-400 font-bold text-sm">Gryffindor &rarr; Menyerang</p>
+                            <p class="text-green-500 font-bold text-sm mb-2">Slytherin &rarr; Bertahan</p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>- Chasers Gryffindor menyerang.</li>
+                                <li>- Keeper Slytherin bertahan.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-black/40 p-4 rounded-xl border border-gray-700">
+                            <h4 class="font-cinzel font-bold text-white mb-2 text-lg">Contoh Ronde 2</h4>
+                            <p class="text-green-500 font-bold text-sm">Slytherin &rarr; Menyerang</p>
+                            <p class="text-red-400 font-bold text-sm mb-2">Gryffindor &rarr; Bertahan</p>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>- Chasers Slytherin menyerang.</li>
+                                <li>- Keeper Gryffindor bertahan.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bonus Momentum -->
+                <div class="bg-magic-panel p-6 md:p-8 rounded-2xl border border-magic-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)] relative overflow-hidden">
+                    <!-- Deco bg -->
+                    <div class="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                        <svg class="w-32 h-32 text-magic-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046A12.014 12.014 0 012.75 8a1 1 0 01-1.5 0A12.014 12.014 0 019.8 1.046c.5-.22 1.06-.22 1.5 0zM2.5 10a1 1 0 011 1 10.015 10.015 0 008.5-8.5 1 1 0 112 0A12.014 12.014 0 015.454 18.954 1 1 0 013.954 17.5a1 1 0 011.5 0z"/></svg>
+                    </div>
+
+                    <h3 class="font-cinzel text-2xl text-magic-gold border-b border-magic-gold/30 pb-2 mb-4">Bonus Momentum</h3>
+                    <p class="text-sm text-gray-300 mb-2">Bonus Momentum diperoleh ketika Keeper berhasil melakukan <strong>3 save berturut-turut</strong>. (Jika gagal save, hitungan kembali menjadi 0).</p>
+                    <p class="text-sm text-gray-300 mb-6">Captain tim dapat memilih menggunakan Bonus Momentum sebelum ronde dimulai. <em>Setelah digunakan, Bonus Momentum hilang.</em></p>
+
+                    <h4 class="font-cinzel font-bold text-white mb-3">Pilihan Bonus:</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3 bg-black/30 p-3 rounded-lg border border-white/5">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold flex-shrink-0 text-sm">1</div>
+                            <div>
+                                <strong class="text-yellow-400 block text-sm">Eagle Eye</strong>
+                                <span class="text-xs text-gray-400">Seeker mendapatkan kesempatan tambahan untuk mencari Golden Snitch.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-black/30 p-3 rounded-lg border border-white/5">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold flex-shrink-0 text-sm">2</div>
+                            <div>
+                                <strong class="text-blue-400 block text-sm">Iron Defense</strong>
+                                <span class="text-xs text-gray-400">Keeper dapat menjaga 2 gawang dalam 1 ronde.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-black/30 p-3 rounded-lg border border-white/5">
+                            <div class="w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold flex-shrink-0 text-sm">3</div>
+                            <div>
+                                <strong class="text-red-400 block text-sm">Perfect Pass</strong>
+                                <span class="text-xs text-gray-400">Jika Chasers berhasil mencetak gol, gol tersebut bernilai 20 poin.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Urutan Ronde -->
+            <div id="rule-flow" class="rule-content hidden fade-in bg-magic-panel p-6 md:p-8 rounded-2xl border border-white/5 shadow-lg">
+                <h3 class="font-cinzel text-2xl text-magic-gold border-b border-magic-gold/30 pb-2 mb-6">Urutan Permainan Setiap Ronde</h3>
+                
+                <ol class="space-y-6 relative z-10 text-magic-text text-sm md:text-base border-l-2 border-magic-gold/20 pl-4 md:pl-6 ml-2 md:ml-4">
+                    
+                    <li class="relative">
+                        <span class="absolute -left-[29px] md:-left-[41px] top-0 flex-shrink-0 w-8 h-8 rounded-full bg-magic-dark border-2 border-magic-gold text-magic-gold font-bold flex items-center justify-center font-cinzel text-sm">1</span>
+                        <h4 class="font-bold text-white text-lg mb-1">Seeker</h4>
+                        <p class="text-gray-400 mb-2">Seeker mencoba mencari Golden Snitch melalui website.</p>
+                        <div class="bg-black/30 p-3 rounded text-xs text-gray-300">
+                            <strong class="text-yellow-500 block mb-1">Jika berhasil:</strong>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Seeker memberitahu Wasit.</li>
+                                <li>Wasit mengumumkan Snitch tertangkap.</li>
+                                <li>Tim mendapatkan +150 poin.</li>
+                                <li>Pertandingan selesai.</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="relative">
+                        <span class="absolute -left-[29px] md:-left-[41px] top-0 flex-shrink-0 w-8 h-8 rounded-full bg-magic-dark border-2 border-magic-gold text-magic-gold font-bold flex items-center justify-center font-cinzel text-sm">2</span>
+                        <h4 class="font-bold text-white text-lg mb-1">Beaters</h4>
+                        <p class="text-gray-400">Kedua tim mengirim pilihan Beaters: <span class="text-red-400">Attack</span> atau <span class="text-blue-400">Protect</span>. Wasit memproses seluruh aksi Beaters.</p>
+                    </li>
+
+                    <li class="relative">
+                        <span class="absolute -left-[29px] md:-left-[41px] top-0 flex-shrink-0 w-8 h-8 rounded-full bg-magic-dark border-2 border-magic-gold text-magic-gold font-bold flex items-center justify-center font-cinzel text-sm">3</span>
+                        <h4 class="font-bold text-white text-lg mb-1">Pemrosesan Bludger</h4>
+                        <p class="text-gray-400 mb-1">Wasit menentukan:</p>
+                        <ul class="list-disc list-inside text-gray-400 text-sm">
+                            <li>Pemain yang berhasil dilindungi.</li>
+                            <li>Pemain yang terkena Bludger.</li>
+                            <li>Pemain yang kehilangan aksi.</li>
+                        </ul>
+                    </li>
+
+                    <li class="relative">
+                        <span class="absolute -left-[29px] md:-left-[41px] top-0 flex-shrink-0 w-8 h-8 rounded-full bg-magic-dark border-2 border-magic-gold text-magic-gold font-bold flex items-center justify-center font-cinzel text-sm">4</span>
+                        <h4 class="font-bold text-white text-lg mb-1">Chasers</h4>
+                        <p class="text-gray-400">Tim yang sedang <strong>Menyerang</strong> menentukan gawang yang akan ditembak.</p>
+                    </li>
+
+                    <li class="relative">
+                        <span class="absolute -left-[29px] md:-left-[41px] top-0 flex-shrink-0 w-8 h-8 rounded-full bg-magic-dark border-2 border-magic-gold text-magic-gold font-bold flex items-center justify-center font-cinzel text-sm">5</span>
+                        <h4 class="font-bold text-white text-lg mb-1">Keeper</h4>
+                        <p class="text-gray-400">Tim yang sedang <strong>Bertahan</strong> memilih gawang yang akan dijaga.</p>
+                    </li>
+
+                    <li class="relative">
+                        <span class="absolute -left-[29px] md:-left-[41px] top-0 flex-shrink-0 w-8 h-8 rounded-full bg-magic-dark border-2 border-magic-gold text-magic-gold font-bold flex items-center justify-center font-cinzel text-sm">6</span>
+                        <h4 class="font-bold text-white text-lg mb-1">Pengumuman Hasil</h4>
+                        <p class="text-gray-400 mb-2">Wasit mengumumkan: Apakah gol berhasil atau gagal, poin yang diperoleh, skor sementara, dan perolehan Bonus Momentum.</p>
+                        <div class="bg-magic-gold/10 p-3 rounded text-sm text-magic-gold italic">
+                            Jika Snitch belum ditemukan, ronde berikutnya dimulai dengan posisi menyerang dan bertahan yang berganti.
+                        </div>
+                    </li>
+
+                </ol>
+            </div>
+
+            <!-- Tab Content: Ketentuan -->
+            <div id="rule-terms" class="rule-content hidden fade-in space-y-6">
+                
+                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-magic-gold shadow-md">
+                    <h3 class="font-cinzel text-2xl font-bold text-white mb-2">Batas Pertandingan</h3>
+                    <p class="text-magic-text mb-2">Pertandingan memiliki batas maksimal <strong>10 ronde</strong>.</p>
+                    <p class="text-sm text-gray-400 mb-2">Jika Seeker belum menemukan Golden Snitch hingga ronde terakhir:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+                        <li>Pertandingan dihentikan.</li>
+                        <li>Tidak ada tambahan poin Snitch.</li>
+                        <li>Wasit menghitung skor akhir.</li>
+                    </ul>
+                    <p class="mt-3 font-bold text-magic-gold">Tim dengan skor tertinggi menjadi pemenang.</p>
+                </div>
+
+                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-red-500 shadow-md">
+                    <h3 class="font-cinzel text-2xl font-bold text-white mb-2">Batas Waktu</h3>
+                    <p class="text-magic-text mb-2">Setiap pemain memiliki waktu <strong>1 menit</strong> untuk mengirim pilihan kepada Wasit.</p>
+                    <div class="bg-red-900/20 text-red-300 p-3 rounded border border-red-900/50 text-sm">
+                        Jika tidak memberikan pilihan, pemain dianggap <strong>tidak melakukan aksi</strong> pada ronde tersebut.
+                    </div>
+                </div>
+
+            </div>
+
         </section>
 
         <!-- ==================== HALL OF FAME SECTION ==================== -->
@@ -631,6 +824,33 @@
 
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Inner Rules Tab Logic
+        function switchRuleTab(tabId) {
+            // Hide all rule contents
+            const contents = document.querySelectorAll('.rule-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('block');
+            });
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.rule-tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show target content
+            const activeContent = document.getElementById(tabId);
+            activeContent.classList.remove('hidden');
+            activeContent.classList.add('block');
+
+            // Set active class to clicked button
+            const activeButton = document.querySelector(`button[onclick="switchRuleTab('${tabId}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
         }
     </script>
 </body>
