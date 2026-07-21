@@ -1,42 +1,32 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perpustakaan Hogwarts Institute</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Hogwarts Institute Quidditch</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Cinzel & Quicksand -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Magical Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        magical: ['Cinzel', 'serif'],
-                        sans: ['Quicksand', 'sans-serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        lato: ['Lato', 'sans-serif'],
                     },
                     colors: {
-                        gryffindor: {
-                            gold: '#FFD700',
-                            red: '#7F0909',
-                        },
-                        slytherin: {
-                            green: '#1A472A',
-                            silver: '#AAAAAA',
-                        },
-                        ravenclaw: {
-                            blue: '#0E1A40',
-                            bronze: '#946B2D',
-                        },
-                        hufflepuff: {
-                            yellow: '#ECB939',
-                            black: '#372E29',
+                        magic: {
+                            dark: '#0a0a0f',
+                            panel: '#15151e',
+                            gold: '#D4AF37',
+                            goldHover: '#f9d77e',
+                            text: '#e2e8f0',
+                            textMuted: '#94a3b8'
                         }
+                    },
+                    boxShadow: {
+                        'gold': '0 4px 14px 0 rgba(212, 175, 55, 0.39)',
+                        'red': '0 4px 14px 0 rgba(185, 28, 28, 0.39)',
                     }
                 }
             }
@@ -44,685 +34,604 @@
     </script>
     <style>
         body {
-            font-family: 'Quicksand', sans-serif;
-            background: radial-gradient(circle, #2d1b4e 0%, #0f081d 100%);
+            background-color: #0a0a0f;
+            color: #e2e8f0;
             overflow-x: hidden;
         }
         
-        .magic-heading {
-            font-family: 'Cinzel', serif;
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1e1135;
+            background: #0a0a0f; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #e0a916;
-            border-radius: 5px;
+            background: #D4AF37; 
+            border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #ffcf40;
+            background: #f9d77e; 
         }
 
-        /* Sparkle Animations */
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+        .drawer {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
         }
-        .animate-float {
-            animation: float 4s ease-in-out infinite;
+        .drawer.open {
+            transform: translateX(0);
         }
-
-        @keyframes pulse-gold {
-            0%, 100% { box-shadow: 0 0 15px rgba(250, 204, 21, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(250, 204, 21, 0.8); }
-        }
-        .glow-gold {
-            animation: pulse-gold 3s infinite;
+        
+        .glass-panel {
+            background: rgba(21, 21, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
     </style>
 </head>
-<body class="text-white min-h-screen flex flex-col justify-between">
+<body class="font-lato antialiased min-h-screen flex flex-col">
 
-    <!-- Backgound Sparks Decor -->
-    <div class="fixed pointer-events-none inset-0 z-0 overflow-hidden opacity-30">
-        <div class="absolute text-yellow-300 text-lg animate-bounce" style="top: 10%; left: 8%; animation-duration: 5s;"><i class="fa-solid fa-sparkles"></i> ✨</div>
-        <div class="absolute text-purple-400 text-2xl animate-pulse" style="top: 30%; right: 12%; animation-duration: 4s;">✨</div>
-        <div class="absolute text-pink-400 text-xl animate-bounce" style="bottom: 20%; left: 15%; animation-duration: 6s;">✨</div>
-        <div class="absolute text-yellow-200 text-md animate-pulse" style="bottom: 10%; right: 25%; animation-duration: 3s;">✨</div>
-    </div>
-
-    <!-- Notification Toast Container -->
-    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm pointer-events-none"></div>
-
-    <!-- SPELL CASTING LOADING MODAL (For downloading) -->
-    <div id="spell-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-85 hidden transition-opacity duration-300">
-        <div class="bg-gradient-to-br from-indigo-950 via-purple-900 to-indigo-900 p-8 rounded-3xl border-4 border-yellow-400 text-center max-w-md w-11/12 shadow-2xl relative glow-gold">
-            <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-yellow-400 text-indigo-950 p-4 rounded-full text-3xl shadow-lg border-4 border-indigo-950">
-                <i class="fa-solid fa-wand-magic-sparkles animate-spin"></i>
-            </div>
-            <h3 class="magic-heading text-2xl text-yellow-300 font-bold mt-6 mb-2" id="spell-title">Accio Libro!</h3>
-            <p class="text-gray-200 text-sm mb-6" id="spell-desc">Mengeja mantra pemanggil untuk mengambil buku Anda dari rak penyimpanan magis...</p>
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-40 glass-panel border-b-0 border-magic-gold/20">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="font-cinzel text-xl md:text-2xl font-bold text-magic-gold cursor-pointer" onclick="navigate('home')">
+                HI Quidditch
+            </h1>
             
-            <!-- Progress Bar -->
-            <div class="w-full bg-indigo-950 rounded-full h-4 mb-4 overflow-hidden p-0.5 border border-purple-500">
-                <div id="spell-progress" class="bg-gradient-to-r from-yellow-400 via-pink-500 to-yellow-400 h-full rounded-full transition-all duration-100" style="width: 0%"></div>
-            </div>
-            <span class="text-yellow-400 font-bold text-sm tracking-widest animate-pulse" id="spell-percent">0% MEMBACA MANTRA</span>
+            <!-- Hamburger Button -->
+            <button id="menu-btn" class="text-magic-gold hover:text-magic-goldHover focus:outline-none transition-colors" onclick="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Overlay & Drawer Menu -->
+    <div id="overlay" class="fixed inset-0 bg-black/60 z-40 hidden transition-opacity" onclick="toggleMenu()"></div>
+    <div id="drawer" class="drawer fixed top-0 right-0 w-64 md:w-80 h-full glass-panel z-50 border-l border-magic-gold/20 shadow-2xl flex flex-col overflow-y-auto">
+        <div class="flex justify-end p-4">
+            <button class="text-magic-gold hover:text-magic-goldHover focus:outline-none transition-colors" onclick="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-5 px-8 mt-4 pb-8">
+            <button onclick="navigate('home')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Halaman Utama</button>
+            <button onclick="navigate('teams')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Teams</button>
+            <button onclick="navigate('rules')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Cara Bermain</button>
+            <button onclick="navigate('hall-of-fame')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Hall of Fame</button>
+            <button onclick="navigate('klasemen')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Klasemen</button>
+            <button onclick="navigate('jadwal')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Jadwal Pertandingan</button>
+            <button onclick="navigate('peraturan')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Peraturan</button>
+        </nav>
+        <div class="mt-auto p-8 opacity-50">
+            <p class="text-xs text-center font-cinzel">Hogwarts Institute &copy; 2026</p>
         </div>
     </div>
 
-    <!-- 1. LOGIN PORTAL SECTION -->
-    <main id="login-section" class="relative z-10 flex-grow flex items-center justify-center px-4 py-12">
-        <div class="bg-slate-900/90 backdrop-blur-md rounded-3xl p-8 max-w-lg w-full border-4 border-indigo-500 shadow-2xl relative overflow-hidden">
-            <!-- Decorative border lines -->
-            <div class="absolute inset-2 border border-yellow-400/30 rounded-2xl pointer-events-none"></div>
+    <!-- Main Content Area -->
+    <main class="flex-grow pt-24 pb-12 px-4 max-w-5xl mx-auto w-full">
+        
+        <!-- ==================== HOME SECTION ==================== -->
+        <section id="home" class="page-section fade-in block">
+            <div class="text-center mb-10">
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-magic-gold mb-4 tracking-wider">Hogwarts Institute Quidditch</h2>
+                <h3 class="font-cinzel text-lg md:text-xl text-magic-textMuted italic">Sejarah Singkat Quidditch – Hogwarts Institute</h3>
+            </div>
             
-            <div class="text-center mb-8 relative">
-                <div class="text-yellow-400 text-6xl mb-3 animate-float inline-block">
-                    <i class="fa-solid fa-school"></i>
-                </div>
-                <h1 class="magic-heading text-3xl md:text-4xl text-yellow-400 font-black tracking-wider uppercase">Hogwarts Institute</h1>
-                <p class="text-pink-300 font-semibold tracking-widest mt-1">SISTEM INTEGRASI PERPUSTAKAAN</p>
-                <div class="h-1 w-24 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mt-4"></div>
+            <div class="rounded-xl overflow-hidden shadow-gold mb-10 mx-auto border border-magic-gold/30">
+                <img src="https://cdnpro.eraspace.com/media/mageplaza/blog/post/g/a/gameharrypotter.jpg" alt="[Gambar Quidditch Hogwarts]" class="w-full h-auto object-cover object-center max-h-[500px]" onerror="this.src='https://placehold.co/800x400/15151e/D4AF37?text=Quidditch+Image+Not+Found'">
             </div>
 
-            <!-- Role Selection Buttons -->
-            <div class="grid grid-cols-2 gap-4 mb-6">
-                <button type="button" id="role-siswa-btn" onclick="selectRole('siswa')" class="py-3 px-4 rounded-xl font-bold border-2 border-dashed transition-all duration-300 flex flex-col items-center gap-2 bg-gradient-to-b from-purple-800 to-indigo-900 border-yellow-400 text-yellow-300 shadow-lg glow-gold">
-                    <span class="text-3xl"><i class="fa-solid fa-wand-magic"></i></span>
-                    <span>Siswa Hogwarts</span>
-                </button>
-                <button type="button" id="role-professor-btn" onclick="selectRole('professor')" class="py-3 px-4 rounded-xl font-bold border-2 border-dashed transition-all duration-300 flex flex-col items-center gap-2 bg-slate-800/50 border-gray-600 text-gray-400 hover:text-white hover:border-purple-400">
-                    <span class="text-3xl"><i class="fa-solid fa-graduation-cap"></i></span>
-                    <span>Profesor Agung</span>
-                </button>
+            <div class="space-y-6 text-base md:text-lg text-magic-text leading-relaxed text-justify bg-magic-panel p-6 md:p-10 rounded-2xl border border-white/5">
+                <p>
+                    Olahraga Quidditch di Hogwarts Institute pertama kali diperkenalkan oleh <span class="text-magic-gold font-semibold">Sir Hercule Poirot</span>, salah satu penyihir yang menyukai permainan menyusun strategi dan semangatnya terhadap persaingan yang adil. Melihat para siswa membutuhkan kegiatan yang dapat melatih keberanian, kerja sama, dan kepemimpinan, ia menciptakan permainan yang menggabungkan kemampuan terbang, taktik, dan keterampilan sihir.
+                </p>
+                <p>
+                    Pada awalnya, pertandingan Quidditch hanya dimainkan sebagai latihan antar kelompok kecil. Seiring waktu, popularitasnya terus meningkat hingga akhirnya menjadi kompetisi resmi antarrumah di Hogwarts Institute. Setiap musim, para pemain bertanding untuk memperebutkan Piala Quidditch, yang menjadi simbol kehormatan, sportivitas, dan kebanggaan rumah masing-masing.
+                </p>
+                <p>
+                    Hingga saat ini, Quidditch tetap menjadi salah satu tradisi paling bergengsi di Hogwarts Institute, mengajarkan bahwa kemenangan bukan hanya ditentukan oleh bakat, tetapi juga oleh keberanian, kerja sama tim, dan tekad yang kuat.
+                </p>
+            </div>
+        </section>
+
+        <!-- ==================== TEAMS SECTION ==================== -->
+        <section id="teams" class="page-section hidden">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">The Teams</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
             </div>
 
-            <!-- Instruction Box -->
-            <div class="bg-indigo-950/80 p-3 rounded-xl border border-indigo-800 text-center mb-6 text-xs text-indigo-300">
-                <span id="role-instruction-text">
-                    💡 <strong class="text-yellow-400">Akses Siswa Terpilih:</strong> Gunakan kata sandi manisan favorit Kepala Sekolah! (<code class="text-pink-300 font-mono">sherbetlemon</code>)
-                </span>
-            </div>
-
-            <!-- Form -->
-            <form onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-semibold text-yellow-400 mb-2 uppercase tracking-wider">Mantra Sandi Rahasia</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-yellow-500/80">
-                            <i class="fa-solid fa-key animate-pulse"></i>
-                        </span>
-                        <input type="password" id="password-input" placeholder="Ketik kata sandi di sini..." class="w-full bg-slate-950 border-2 border-purple-800 rounded-xl py-3 pl-10 pr-10 text-white focus:outline-none focus:border-yellow-400 placeholder-indigo-300/40 transition duration-300 font-mono text-center tracking-widest text-lg" required>
-                        <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-indigo-400 hover:text-yellow-400">
-                            <i id="eye-icon" class="fa-solid fa-eye"></i>
-                        </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Gryffindor -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-red-900/50 shadow-lg hover:shadow-red-900/50 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://i.pinimg.com/736x/39/b2/12/39b2126bca6d09b6afb740baf7084aca.jpg" alt="[Lambang Gryffindor]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-red-500 mb-3">Gryffindor</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Mengutamakan keberanian, kegigihan, dan jiwa ksatria di atas segalanya. Tim Gryffindor dikenal dengan gaya permainan mereka yang berani mengambil risiko, tak kenal takut, dan selalu siap menghadapi tantangan terberat di lapangan.
+                        </p>
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-600 text-indigo-950 font-black py-4 px-6 rounded-xl hover:from-yellow-400 hover:to-yellow-500 transition duration-300 shadow-xl border-b-4 border-yellow-700 text-lg uppercase tracking-widest flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-door-open"></i> Buka Gerbang Magis
-                </button>
-            </form>
-        </div>
+                <!-- Hufflepuff -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-yellow-600/50 shadow-lg hover:shadow-yellow-600/50 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://sw6.elbenwald.de/media/80/b0/59/1695768417/E1078690_2.jpg" alt="[Lambang Hufflepuff]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-yellow-500 mb-3">Hufflepuff</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Mengedepankan kerja sama tim yang solid, kesetiaan, dan sportivitas tinggi. Tim Hufflepuff adalah tim yang paling konsisten dan tangguh dalam bertahan, menjadikan mereka lawan yang pantang menyerah hingga peluit akhir berbunyi.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slytherin -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-green-800/50 shadow-lg hover:shadow-green-800/50 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://i.pinimg.com/736x/c8/6d/f4/c86df485a96c6b4d21371f324e22eea6.jpg" alt="[Lambang Slytherin]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-green-500 mb-3">Slytherin</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Bermain dengan ambisi, kecerdikan, dan taktik yang tajam. Tim Slytherin seringkali menggunakan strategi yang sulit ditebak namun brilian, mengutamakan kemenangan mutlak dengan memanfaatkan setiap kelemahan lawan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ravenclaw -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-blue-800/50 shadow-lg hover:shadow-blue-800/50 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://image-cdn.neatoshop.com/styleimg/56134/none/navy/default/346204-20;1487588570y.jpg" alt="[Lambang Ravenclaw]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-blue-400 mb-3">Ravenclaw</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Mengandalkan kecerdasan, analisis permainan, dan taktik terbang yang kreatif. Ravenclaw dikenal sebagai tim yang strategis dan inovatif, selalu selangkah lebih maju dari lawan-lawannya dengan perencanaan yang matang.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== RULES SECTION (CARA BERMAIN) ==================== -->
+        <section id="rules" class="page-section hidden">
+            <div class="text-center mb-10">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Cara Bermain</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded mb-6"></div>
+                <p class="text-magic-textMuted max-w-2xl mx-auto text-sm md:text-base bg-magic-panel p-4 rounded-lg border border-white/5">
+                    Permainan Quidditch Hogwarts Institute mengadaptasi mekanisme permainan <strong>Werewolf</strong> dengan sistem <em>choice-based</em>. Seluruh permainan dipandu oleh Wasit Quidditch, dan setiap pemain akan bergantian memilih opsi yang telah disediakan sesuai dengan role masing-masing.
+                </p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- Role Pemain -->
+                <div>
+                    <h3 class="font-cinzel text-2xl text-magic-gold border-b border-magic-gold/30 pb-2 mb-6">Role Pemain</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Seeker -->
+                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-magic-gold shadow-md hover:shadow-gold/20 transition-all">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                                </div>
+                                <h4 class="font-cinzel text-xl font-bold text-white">Seeker <span class="text-sm font-sans font-normal text-magic-textMuted">(1 Orang)</span></h4>
+                            </div>
+                            <p class="text-sm text-magic-text mb-3">Bertugas mencari dan menangkap Golden Snitch yang terbang sangat cepat dan lincah.</p>
+                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
+                                <li>Di awal permainan, diberikan sebuah link rahasia.</li>
+                                <li>Harus menebak angka yang menyembunyikan Golden Snitch. Berlangsung hingga Snitch ditemukan.</li>
+                                <li><span class="text-magic-gold font-bold">Immune Ability:</span> Kebal dan tidak dapat menjadi target serangan Bludger. Serangan Chasers/Beaters ke Seeker tidak dihitung.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Chasers -->
+                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-red-500 shadow-md transition-all">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+                                </div>
+                                <h4 class="font-cinzel text-xl font-bold text-white">Chasers <span class="text-sm font-sans font-normal text-magic-textMuted">(3 Orang)</span></h4>
+                            </div>
+                            <p class="text-sm text-magic-text mb-3">Bertugas mencetak gol menggunakan Quaffle ke gawang lawan.</p>
+                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
+                                <li>Pada setiap ronde, diberikan pilihan gawang untuk ditembak.</li>
+                                <li>Setiap gol yang berhasil dicetak akan memberikan <strong class="text-white">10 poin</strong> kepada tim.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Beaters -->
+                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-gray-400 shadow-md transition-all">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-full bg-gray-500/20 flex items-center justify-center text-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6l4.5-4.5 11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 22l6-6"/><path d="M20 22l-6-6"/></svg>
+                                </div>
+                                <h4 class="font-cinzel text-xl font-bold text-white">Beaters <span class="text-sm font-sans font-normal text-magic-textMuted">(2 Orang)</span></h4>
+                            </div>
+                            <p class="text-sm text-magic-text mb-3">Bertugas melindungi rekan satu tim dan menjatuhkan lawan menggunakan Bludger.</p>
+                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
+                                <li>Memilih <strong class="text-white">satu rekan</strong> yang ingin dilindungi.</li>
+                                <li>Memilih <strong class="text-white">satu lawan</strong> yang ingin diserang.</li>
+                                <li>Pemain terkena Bludger absen 1 putaran. Jika berhasil dilindungi, pemain tersebut aman dan lanjut bermain.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Keeper -->
+                        <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-blue-500 shadow-md transition-all">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <h4 class="font-cinzel text-xl font-bold text-white">Keeper <span class="text-sm font-sans font-normal text-magic-textMuted">(1 Orang)</span></h4>
+                            </div>
+                            <p class="text-sm text-magic-text mb-3">Bertugas menjaga gawang dan menghalau Chasers lawan agar tidak dapat mencetak gol.</p>
+                            <ul class="text-sm text-magic-textMuted space-y-2 list-disc list-inside">
+                                <li>Pada setiap ronde, diberikan pilihan untuk menebak gawang sasaran Chasers lawan.</li>
+                                <li>Jika tebakan benar, tembakan lawan berhasil digagalkan (poin tidak bertambah).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jalannya Permainan -->
+                <div>
+                    <h3 class="font-cinzel text-2xl text-magic-gold border-b border-magic-gold/30 pb-2 mb-6">Jalannya Permainan</h3>
+                    <div class="bg-magic-panel p-6 md:p-8 rounded-xl border border-white/5 shadow-lg relative overflow-hidden">
+                        
+                        <p class="text-magic-text mb-6 leading-relaxed">
+                            Setelah Golden Snitch dilepaskan ke udara oleh Wasit Quidditch, Seeker dipersilakan mulai mencari Golden Snitch melalui link yang telah diberikan. Sementara itu, permainan dimulai secara berurutan sebagai berikut:
+                        </p>
+
+                        <ol class="space-y-4 mb-6 relative z-10 text-magic-text text-sm md:text-base">
+                            <li class="flex gap-4">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">1</span>
+                                <div class="pt-1"><strong class="text-white">Beaters</strong> memilih rekan yang akan dilindungi dan lawan yang akan diserang.</div>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">2</span>
+                                <div class="pt-1"><strong class="text-white">Chasers</strong> memilih gawang yang akan ditembak.</div>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">3</span>
+                                <div class="pt-1"><strong class="text-white">Keeper</strong> memilih gawang yang diperkirakan menjadi sasaran tembakan Chasers lawan.</div>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-magic-gold text-magic-dark font-bold flex items-center justify-center font-cinzel">4</span>
+                                <div class="pt-1"><strong class="text-white">Wasit Quidditch</strong> memproses seluruh pilihan pemain, menghitung poin, dan mengumumkan hasil putaran.</div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HALL OF FAME SECTION ==================== -->
+        <section id="hall-of-fame" class="page-section hidden">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Hall of Fame</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
+                <p class="text-magic-textMuted mt-4 italic">Sejarah gemilang pencapaian para atlet Quidditch Hogwarts Institute.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Daftar Juara -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col items-center">
+                    <h3 class="font-cinzel text-xl text-magic-gold mb-4 text-center">Daftar Juara</h3>
+                    <!-- Placeholder Gambar -->
+                    <div class="w-full aspect-square bg-black/40 rounded-xl border border-dashed border-gray-600 flex items-center justify-center mb-4">
+                        <span class="text-gray-500 font-cinzel text-sm">Tempat Gambar</span>
+                    </div>
+                    <!-- Ruang untuk text / deskripsi -->
+                    <div class="w-full h-12 bg-gray-800/50 rounded animate-pulse"></div>
+                </div>
+
+                <!-- Pencapaian Tim -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col items-center">
+                    <h3 class="font-cinzel text-xl text-magic-gold mb-4 text-center">Pencapaian Tim</h3>
+                    <!-- Placeholder Gambar -->
+                    <div class="w-full aspect-square bg-black/40 rounded-xl border border-dashed border-gray-600 flex items-center justify-center mb-4">
+                        <span class="text-gray-500 font-cinzel text-sm">Tempat Gambar</span>
+                    </div>
+                    <!-- Ruang untuk text / deskripsi -->
+                    <div class="w-full h-12 bg-gray-800/50 rounded animate-pulse"></div>
+                </div>
+
+                <!-- MVP of the Season -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col items-center">
+                    <h3 class="font-cinzel text-xl text-magic-gold mb-4 text-center">MVP of the Season</h3>
+                    <!-- Placeholder Gambar -->
+                    <div class="w-full aspect-square bg-black/40 rounded-xl border border-dashed border-gray-600 flex items-center justify-center mb-4">
+                        <span class="text-gray-500 font-cinzel text-sm">Tempat Gambar</span>
+                    </div>
+                    <!-- Ruang untuk text / deskripsi -->
+                    <div class="w-full h-12 bg-gray-800/50 rounded animate-pulse"></div>
+                </div>
+
+                <!-- Seeker of the Season -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col items-center">
+                    <h3 class="font-cinzel text-xl text-magic-gold mb-4 text-center">Seeker of the Season</h3>
+                    <!-- Placeholder Gambar -->
+                    <div class="w-full aspect-square bg-black/40 rounded-xl border border-dashed border-gray-600 flex items-center justify-center mb-4">
+                        <span class="text-gray-500 font-cinzel text-sm">Tempat Gambar</span>
+                    </div>
+                    <!-- Ruang untuk text / deskripsi -->
+                    <div class="w-full h-12 bg-gray-800/50 rounded animate-pulse"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== KLASEMEN SECTION ==================== -->
+        <section id="klasemen" class="page-section hidden">
+            <div class="text-center mb-10">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Klasemen</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
+            </div>
+
+            <div class="bg-magic-panel border border-white/10 rounded-2xl p-4 md:p-8 shadow-xl max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    
+                    <!-- Tim 1 (Contoh) -->
+                    <div class="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-magic-gold/50 shadow-gold">
+                        <div class="font-cinzel text-2xl text-magic-gold font-bold w-8 text-center">1</div>
+                        <img src="https://i.pinimg.com/736x/39/b2/12/39b2126bca6d09b6afb740baf7084aca.jpg" alt="[Lambang Gryffindor]" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1">
+                        <div class="flex-grow">
+                            <h3 class="font-cinzel text-xl text-white font-bold">Gryffindor</h3>
+                            <p class="text-xs text-magic-textMuted">Pertandingan: 0 | Menang: 0</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="block font-bold text-2xl text-magic-gold">0</span>
+                            <span class="text-xs text-magic-textMuted uppercase">Points</span>
+                        </div>
+                    </div>
+
+                    <!-- Tim 2 (Contoh) -->
+                    <div class="flex items-center gap-4 bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition-colors">
+                        <div class="font-cinzel text-2xl text-gray-400 font-bold w-8 text-center">2</div>
+                        <img src="https://image-cdn.neatoshop.com/styleimg/56134/none/navy/default/346204-20;1487588570y.jpg" alt="[Lambang Ravenclaw]" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1">
+                        <div class="flex-grow">
+                            <h3 class="font-cinzel text-xl text-white font-bold">Ravenclaw</h3>
+                            <p class="text-xs text-magic-textMuted">Pertandingan: 0 | Menang: 0</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="block font-bold text-2xl text-white">0</span>
+                            <span class="text-xs text-magic-textMuted uppercase">Points</span>
+                        </div>
+                    </div>
+
+                    <!-- Tim 3 (Contoh) -->
+                    <div class="flex items-center gap-4 bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition-colors">
+                        <div class="font-cinzel text-2xl text-yellow-700 font-bold w-8 text-center">3</div>
+                        <img src="https://sw6.elbenwald.de/media/80/b0/59/1695768417/E1078690_2.jpg" alt="[Lambang Hufflepuff]" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1">
+                        <div class="flex-grow">
+                            <h3 class="font-cinzel text-xl text-white font-bold">Hufflepuff</h3>
+                            <p class="text-xs text-magic-textMuted">Pertandingan: 0 | Menang: 0</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="block font-bold text-2xl text-white">0</span>
+                            <span class="text-xs text-magic-textMuted uppercase">Points</span>
+                        </div>
+                    </div>
+
+                    <!-- Tim 4 (Contoh) -->
+                    <div class="flex items-center gap-4 bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition-colors">
+                        <div class="font-cinzel text-2xl text-gray-500 font-bold w-8 text-center">4</div>
+                        <img src="https://i.pinimg.com/736x/c8/6d/f4/c86df485a96c6b4d21371f324e22eea6.jpg" alt="[Lambang Slytherin]" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1">
+                        <div class="flex-grow">
+                            <h3 class="font-cinzel text-xl text-white font-bold">Slytherin</h3>
+                            <p class="text-xs text-magic-textMuted">Pertandingan: 0 | Menang: 0</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="block font-bold text-2xl text-white">0</span>
+                            <span class="text-xs text-magic-textMuted uppercase">Points</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== JADWAL PERTANDINGAN SECTION ==================== -->
+        <section id="jadwal" class="page-section hidden">
+            <div class="text-center mb-10">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Jadwal Pertandingan</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
+                <p class="text-magic-textMuted mt-4 italic">Turnamen Antar Asrama (Sistem Knockout)</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-magic-panel border border-white/10 rounded-2xl p-6 md:p-10 shadow-xl">
+                
+                <!-- Bracket Sederhana -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                    
+                    <!-- Semifinal Kolom -->
+                    <div class="space-y-8">
+                        <h3 class="font-cinzel text-xl text-magic-gold text-center border-b border-magic-gold/30 pb-2">Semi Final</h3>
+                        
+                        <!-- Match 1 -->
+                        <div class="bg-black/40 border border-gray-700 rounded-lg p-4">
+                            <p class="text-xs text-magic-textMuted mb-2">Match 1 - [Tanggal]</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-white">Tim A</span>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white">Tim B</span>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Match 2 -->
+                        <div class="bg-black/40 border border-gray-700 rounded-lg p-4">
+                            <p class="text-xs text-magic-textMuted mb-2">Match 2 - [Tanggal]</p>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-white">Tim C</span>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white">Tim D</span>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Kolom -->
+                    <div class="flex flex-col justify-center">
+                        <h3 class="font-cinzel text-xl text-magic-gold text-center border-b border-magic-gold/30 pb-2 mb-8">Grand Final</h3>
+                        
+                        <!-- Final Match -->
+                        <div class="bg-black/60 border-2 border-magic-gold/50 shadow-gold rounded-lg p-6">
+                            <p class="text-xs text-magic-gold text-center mb-4">Ultimate Match - [Tanggal]</p>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="font-bold text-lg text-white">Pemenang Match 1</span>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg text-white">Pemenang Match 2</span>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PERATURAN SECTION ==================== -->
+        <section id="peraturan" class="page-section hidden">
+            <div class="text-center mb-10">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Peraturan Resmi</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-8">
+                
+                <!-- List Peraturan Umum -->
+                <div class="bg-magic-panel border border-white/10 rounded-2xl p-6 md:p-8 shadow-lg">
+                    <ul class="space-y-4 text-magic-text text-base md:text-lg">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Setiap tim terdiri dari <strong>7 pemain</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Setiap pemain hanya boleh menjalankan tugas sesuai <strong>role yang dimiliki</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Semua pilihan dikirim secara <strong>pribadi</strong> kepada Wasit Quidditch.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Setiap ronde memiliki batas waktu <strong>1 menit</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Pemain yang tidak mengirim pilihan dianggap <strong>tidak melakukan aksi</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Keputusan Wasit Quidditch bersifat <strong>mutlak</strong> dan tidak dapat diganggu gugat.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Permainan berakhir ketika Golden Snitch berhasil <strong>ditemukan oleh Seeker</strong>.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Aturan Mutlak Box -->
+                <div class="bg-red-950/40 border-2 border-red-600 rounded-2xl p-6 md:p-8 shadow-red relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <svg class="w-32 h-32 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-cinzel text-2xl font-bold text-red-500 mb-4 flex items-center gap-2">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            Aturan Mutlak
+                        </h3>
+                        <p class="text-white text-lg leading-relaxed font-semibold">
+                            Seeker <span class="text-red-400 underline">harus bekerja mencari snitch sendirian</span>, dan tidak boleh dibantu oleh siapapun. Apabila ada tindak kecurangan yang dilakukan, maka asrama tersebut akan <span class="text-red-400">didiskualifikasi selama 3 season</span>, dan mendapatkan <span class="text-red-400">pengurangan poin asrama sebesar 300 points</span>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center pt-8">
+                    <p class="font-cinzel text-2xl md:text-3xl text-magic-gold tracking-widest uppercase" style="text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);">
+                        "Junjung Tinggi Permainan Adil dan Sportif!"
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
-    <!-- 2. MAIN APP SECTION (HIDDEN INITIALLY) -->
-    <div id="main-app" class="hidden relative z-10 w-full flex-grow flex flex-col">
-        <!-- Top Magical Header -->
-        <header class="bg-slate-900/90 border-b-4 border-yellow-400 shadow-2xl relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-900/50 via-pink-900/50 to-indigo-900/50 opacity-50"></div>
-            <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
-                <!-- Library Identity -->
-                <div class="flex items-center gap-4 text-center md:text-left">
-                    <div class="bg-yellow-400 text-indigo-950 p-3 rounded-2xl text-3xl shadow-lg border-2 border-white animate-float">
-                        <i class="fa-solid fa-book-journal-whills"></i>
-                    </div>
-                    <div>
-                        <h1 class="magic-heading text-2xl md:text-3xl font-black text-yellow-400 tracking-wider">PERPUSTAKAAN HOGWARTS</h1>
-                        <p class="text-xs text-pink-300 font-bold uppercase tracking-widest">Pusat Pengetahuan Sihir & Ilmu Gaib</p>
-                    </div>
-                </div>
+    <!-- Footer -->
+    <footer class="mt-auto py-6 text-center border-t border-magic-gold/20 bg-magic-panel">
+        <p class="font-cinzel text-magic-textMuted text-sm">&copy; 2026 Hogwarts Institute. Hak Cipta Dilindungi.</p>
+    </footer>
 
-                <!-- Navigation Tabs -->
-                <nav class="flex flex-wrap justify-center gap-2">
-                    <button onclick="switchTab('home')" id="tab-home" class="py-2.5 px-5 rounded-full font-bold text-sm tracking-wider transition-all duration-300 bg-yellow-400 text-indigo-950 shadow-md">
-                        <i class="fa-solid fa-house-chimney mr-1.5"></i> Beranda
-                    </button>
-                    <button onclick="switchTab('koleksi')" id="tab-koleksi" class="py-2.5 px-5 rounded-full font-bold text-sm tracking-wider transition-all duration-300 text-purple-200 hover:bg-slate-800">
-                        <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Koleksi Buku
-                    </button>
-                    <button onclick="logout()" class="py-2.5 px-5 rounded-full font-bold text-sm tracking-wider transition-all duration-300 bg-red-600 hover:bg-red-700 text-white shadow-md">
-                        <i class="fa-solid fa-right-from-bracket mr-1.5"></i> Keluar Portal
-                    </button>
-                </nav>
-
-                <!-- Active User Badge -->
-                <div class="bg-indigo-950/90 border-2 border-indigo-700 py-2 px-4 rounded-full flex items-center gap-2.5 shadow-md">
-                    <span id="user-badge-icon" class="text-yellow-400 text-lg"><i class="fa-solid fa-wand-magic"></i></span>
-                    <div class="text-left">
-                        <p class="text-[10px] text-indigo-400 uppercase tracking-widest leading-none">Akses Aktif</p>
-                        <p id="user-badge-name" class="text-xs font-black text-white uppercase tracking-wider">Siswa Hogwarts</p>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Workspace -->
-        <main class="max-w-7xl mx-auto w-full px-4 py-8 flex-grow">
-
-            <!-- TAB 1: HOME PAGE -->
-            <section id="tab-content-home" class="space-y-8 animate-fade-in">
-                <!-- Welcome Banner with Madam Pince character -->
-                <div class="bg-gradient-to-r from-purple-900 via-pink-800 to-indigo-900 rounded-3xl p-8 border-4 border-yellow-400 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center gap-8">
-                    <div class="absolute -right-20 -bottom-20 text-white/5 text-[200px] pointer-events-none">
-                        <i class="fa-solid fa-feather-pointed"></i>
-                    </div>
-                    
-                    <!-- Avatar/Illustration Placeholder -->
-                    <div class="w-36 h-36 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex-shrink-0 border-4 border-white shadow-xl flex items-center justify-center text-6xl text-indigo-950 relative">
-                        <i class="fa-solid fa-hat-wizard animate-float"></i>
-                        <span class="absolute -bottom-1 -right-1 bg-purple-700 text-white p-2 rounded-full border-2 border-white text-xs"><i class="fa-solid fa-feather"></i></span>
-                    </div>
-
-                    <div class="space-y-4 text-center md:text-left">
-                        <span class="bg-yellow-400 text-indigo-950 text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-widest shadow-md">Kutipan Hari Ini oleh Madam Pince</span>
-                        <h2 class="magic-heading text-2xl md:text-4xl text-yellow-300 font-extrabold leading-tight">"Buku Adalah Teman Magis Paling Setia"</h2>
-                        <p class="text-sm md:text-base text-purple-100 max-w-2xl leading-relaxed">
-                            Selamat datang di <strong class="text-yellow-400">Perpustakaan Hogwarts Institute</strong>. Di sini tersimpan beribu-ribu manuskrip kuno, gulungan mantra, dan buku-buku sihir legendaris yang membentang melintasi berabad-abad peradaban dunia sihir. Kami menjaga agar pengetahuan ini tetap lestari bagi para calon penyihir hebat masa depan.
-                        </p>
-                        <p class="text-xs text-pink-300 italic">
-                            ⚠️ Peringatan: Buku-buku di Seksi Terlarang dilarang keras dibaca tanpa surat izin resmi bertanda tangan Guru Kepala!
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Info Cards Grid (Colorful UI) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-gradient-to-b from-red-950 to-red-900 rounded-2xl p-6 border-2 border-red-500 shadow-lg text-center transform hover:scale-[1.02] transition duration-300">
-                        <div class="text-4xl text-yellow-400 mb-3"><i class="fa-solid fa-clock-rotate-left animate-pulse"></i></div>
-                        <h3 class="magic-heading text-lg font-bold text-red-200 mb-2">Jam Operasional</h3>
-                        <p class="text-xs text-red-300">Setiap hari dari matahari terbit hingga jam malam berbunyi. Buku harus dikembalikan sebelum hantu kastil berpatroli!</p>
-                    </div>
-                    
-                    <div class="bg-gradient-to-b from-emerald-950 to-emerald-900 rounded-2xl p-6 border-2 border-emerald-500 shadow-lg text-center transform hover:scale-[1.02] transition duration-300">
-                        <div class="text-4xl text-yellow-400 mb-3"><i class="fa-solid fa-wand-sparkles"></i></div>
-                        <h3 class="magic-heading text-lg font-bold text-emerald-200 mb-2">Seksi Terlarang</h3>
-                        <p class="text-xs text-emerald-300">Hanya untuk para Profesor dan siswa tingkat lanjut yang memiliki izin tertulis khusus. Mantra pelindung sangat ketat!</p>
-                    </div>
-
-                    <div class="bg-gradient-to-b from-blue-950 to-blue-900 rounded-2xl p-6 border-2 border-blue-500 shadow-lg text-center transform hover:scale-[1.02] transition duration-300">
-                        <div class="text-4xl text-yellow-400 mb-3"><i class="fa-solid fa-scroll"></i></div>
-                        <h3 class="magic-heading text-lg font-bold text-blue-200 mb-2">Peraturan Mantra</h3>
-                        <p class="text-xs text-blue-300">Dilarang keras melontarkan mantra pemanggil api atau mantra transformatif di dalam ruang baca utama demi keselamatan buku.</p>
-                    </div>
-                </div>
-
-                <!-- Featured Action Box -->
-                <div class="bg-slate-900/80 rounded-2xl p-6 border-2 border-indigo-700 text-center">
-                    <h3 class="magic-heading text-xl font-bold text-yellow-300 mb-2">Penasaran dengan Kisah Penyelamat Dunia Sihir?</h3>
-                    <p class="text-xs text-gray-300 mb-4 max-w-xl mx-auto">Kami baru saja menambahkan seluruh arsip laporan resmi petualangan legendaris Harry Potter ke dalam koleksi digital perpustakaan. Akses sekarang juga!</p>
-                    <button onclick="switchTab('koleksi')" class="bg-gradient-to-r from-yellow-500 to-amber-500 text-indigo-950 font-black py-2.5 px-6 rounded-full hover:from-yellow-400 hover:to-amber-400 transition shadow-lg inline-flex items-center gap-2 text-sm uppercase tracking-wider">
-                        <i class="fa-solid fa-sparkles"></i> Masuk Koleksi Harry Potter <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-
-            <!-- TAB 2: KOLEKSI BUKU (HARRY POTTER SUBPAGE) -->
-            <section id="tab-content-koleksi" class="hidden space-y-8 animate-fade-in">
-                <!-- Header of the subpage -->
-                <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-purple-800 pb-5">
-                    <div>
-                        <span class="text-xs font-black text-pink-400 uppercase tracking-widest">Koleksi Spesial Perpustakaan</span>
-                        <h2 class="magic-heading text-2xl md:text-3xl font-extrabold text-yellow-400"><i class="fa-solid fa-bolt mr-2"></i> KRONIK HARRY POTTER</h2>
-                        <p class="text-xs text-gray-300">Tersedia 7 jilid buku petualangan lengkap yang menceritakan pertempuran melawan Lord Voldemort.</p>
-                    </div>
-                    <!-- Quick Search Input inside subpage -->
-                    <div class="relative w-full md:w-80">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-purple-400"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <input type="text" id="book-search-input" oninput="searchBooks()" placeholder="Cari buku Harry Potter..." class="w-full bg-slate-950 border-2 border-purple-800 rounded-full py-2 pl-9 pr-4 text-xs text-white focus:outline-none focus:border-yellow-400 placeholder-purple-300/40 transition">
-                    </div>
-                </div>
-
-                <!-- Book Cards Grid (7 Harry Potter Books) -->
-                <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Book 1 -->
-                    <div class="book-card bg-slate-900 rounded-2xl p-5 border-2 border-yellow-500 shadow-xl flex flex-col justify-between transform hover:scale-[1.03] transition duration-300 relative overflow-hidden group" data-title="Harry Potter and the Sorcerer's Stone">
-                        <div class="absolute top-2 right-2 bg-yellow-400 text-indigo-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Jilid 1</div>
-                        <div>
-                            <!-- Custom Colorful SVG Cover -->
-                            <div class="w-full h-48 bg-gradient-to-br from-red-800 to-amber-950 rounded-xl mb-4 shadow-inner flex items-center justify-center relative overflow-hidden border border-yellow-500/30">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/20 via-transparent to-transparent"></div>
-                                <div class="text-center p-3 relative z-10 flex flex-col items-center">
-                                    <div class="text-5xl text-yellow-400 mb-2 drop-shadow-[0_2px_8px_rgba(250,204,21,0.5)] group-hover:scale-110 transition duration-300"><i class="fa-solid fa-gem"></i></div>
-                                    <div class="magic-heading text-sm font-black tracking-wider text-yellow-300 uppercase leading-snug">Sorcerer's Stone</div>
-                                    <div class="text-[9px] text-red-300 mt-1 uppercase font-bold tracking-widest">Batu Bertuah</div>
-                                </div>
-                            </div>
-                            <h3 class="magic-heading text-base font-black text-white line-clamp-2">Harry Potter and the Sorcerer's Stone</h3>
-                            <p class="text-[11px] text-gray-400 mt-1">Tahun Rilis: 1997</p>
-                            <p class="text-[11px] text-gray-300 mt-2 line-clamp-3">Awal mula perjalanan sang anak lelaki yang bertahan hidup di dunia sihir Hogwarts.</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-purple-900">
-                            <!-- Filename here EXACTLY matches the uploaded file name: 'Harry Potter 1.epub' -->
-                            <a href="Harry Potter 1.epub" download="Harry Potter 1.epub" onclick="triggerMagicDownload(event, 'Harry Potter 1.epub', 'Harry Potter and the Sorcerer\'s Stone')" class="w-full bg-gradient-to-r from-red-600 to-yellow-500 hover:from-red-500 hover:to-yellow-400 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                                <i class="fa-solid fa-wand-magic"></i> Mantra Accio (Unduh)
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Book 2 -->
-                    <div class="book-card bg-slate-900 rounded-2xl p-5 border-2 border-emerald-500 shadow-xl flex flex-col justify-between transform hover:scale-[1.03] transition duration-300 relative overflow-hidden group" data-title="Harry Potter and the Chamber of Secrets">
-                        <div class="absolute top-2 right-2 bg-emerald-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Jilid 2</div>
-                        <div>
-                            <!-- Custom Colorful SVG Cover -->
-                            <div class="w-full h-48 bg-gradient-to-br from-emerald-800 to-slate-950 rounded-xl mb-4 shadow-inner flex items-center justify-center relative overflow-hidden border border-emerald-500/30">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-500/20 via-transparent to-transparent"></div>
-                                <div class="text-center p-3 relative z-10 flex flex-col items-center">
-                                    <div class="text-5xl text-emerald-400 mb-2 drop-shadow-[0_2px_8px_rgba(52,211,153,0.5)] group-hover:scale-110 transition duration-300"><i class="fa-solid fa-dragon"></i></div>
-                                    <div class="magic-heading text-sm font-black tracking-wider text-emerald-300 uppercase leading-snug">Chamber of Secrets</div>
-                                    <div class="text-[9px] text-emerald-200 mt-1 uppercase font-bold tracking-widest">Kamar Rahasia</div>
-                                </div>
-                            </div>
-                            <h3 class="magic-heading text-base font-black text-white line-clamp-2">Harry Potter and the Chamber of Secrets</h3>
-                            <p class="text-[11px] text-gray-400 mt-1">Tahun Rilis: 1998</p>
-                            <p class="text-[11px] text-gray-300 mt-2 line-clamp-3">Kamar Rahasia terbuka kembali. Teror monster Basilisk mengintai seluruh penghuni kastil Hogwarts.</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-purple-900">
-                            <!-- Filename here EXACTLY matches the uploaded file name: 'Harry Potter book 2.epub' -->
-                            <a href="Harry Potter book 2.epub" download="Harry Potter book 2.epub" onclick="triggerMagicDownload(event, 'Harry Potter book 2.epub', 'Harry Potter and the Chamber of Secrets')" class="w-full bg-gradient-to-r from-emerald-600 to-yellow-500 hover:from-emerald-500 hover:to-yellow-400 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                                <i class="fa-solid fa-wand-magic"></i> Mantra Accio (Unduh)
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Book 3 -->
-                    <div class="book-card bg-slate-900 rounded-2xl p-5 border-2 border-purple-500 shadow-xl flex flex-col justify-between transform hover:scale-[1.03] transition duration-300 relative overflow-hidden group" data-title="Harry Potter and the Prisoner of Azkaban">
-                        <div class="absolute top-2 right-2 bg-purple-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Jilid 3</div>
-                        <div>
-                            <!-- Custom Colorful SVG Cover -->
-                            <div class="w-full h-48 bg-gradient-to-br from-purple-800 to-violet-950 rounded-xl mb-4 shadow-inner flex items-center justify-center relative overflow-hidden border border-purple-500/30">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-500/20 via-transparent to-transparent"></div>
-                                <div class="text-center p-3 relative z-10 flex flex-col items-center">
-                                    <div class="text-5xl text-purple-400 mb-2 drop-shadow-[0_2px_8px_rgba(192,132,252,0.5)] group-hover:scale-110 transition duration-300"><i class="fa-solid fa-ghost"></i></div>
-                                    <div class="magic-heading text-sm font-black tracking-wider text-purple-300 uppercase leading-snug">Prisoner of Azkaban</div>
-                                    <div class="text-[9px] text-purple-200 mt-1 uppercase font-bold tracking-widest">Tahanan Azkaban</div>
-                                </div>
-                            </div>
-                            <h3 class="magic-heading text-base font-black text-white line-clamp-2">Harry Potter and the Prisoner of Azkaban</h3>
-                            <p class="text-[11px] text-gray-400 mt-1">Tahun Rilis: 1999</p>
-                            <p class="text-[11px] text-gray-300 mt-2 line-clamp-3">Sirius Black kabur dari Azkaban, membawa rahasia masa lalu kelam tentang kematian orang tua Harry.</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-purple-900">
-                            <!-- Filename here EXACTLY matches the uploaded file name: 'Harry Potter book 3.epub' -->
-                            <a href="Harry Potter book 3.epub" download="Harry Potter book 3.epub" onclick="triggerMagicDownload(event, 'Harry Potter book 3.epub', 'Harry Potter and the Prisoner of Azkaban')" class="w-full bg-gradient-to-r from-purple-600 to-yellow-500 hover:from-purple-500 hover:to-yellow-400 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                                <i class="fa-solid fa-wand-magic"></i> Mantra Accio (Unduh)
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Book 4 -->
-                    <div class="book-card bg-slate-900 rounded-2xl p-5 border-2 border-blue-500 shadow-xl flex flex-col justify-between transform hover:scale-[1.03] transition duration-300 relative overflow-hidden group" data-title="Harry Potter and the Goblet of Fire">
-                        <div class="absolute top-2 right-2 bg-blue-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Jilid 4</div>
-                        <div>
-                            <!-- Custom Colorful SVG Cover -->
-                            <div class="w-full h-48 bg-gradient-to-br from-blue-800 to-sky-950 rounded-xl mb-4 shadow-inner flex items-center justify-center relative overflow-hidden border border-blue-500/30">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent"></div>
-                                <div class="text-center p-3 relative z-10 flex flex-col items-center">
-                                    <div class="text-5xl text-blue-300 mb-2 drop-shadow-[0_2px_8px_rgba(96,165,250,0.5)] group-hover:scale-110 transition duration-300"><i class="fa-solid fa-fire-burner"></i></div>
-                                    <div class="magic-heading text-sm font-black tracking-wider text-blue-300 uppercase leading-snug">Goblet of Fire</div>
-                                    <div class="text-[9px] text-blue-200 mt-1 uppercase font-bold tracking-widest">Piala Api</div>
-                                </div>
-                            </div>
-                            <h3 class="magic-heading text-base font-black text-white line-clamp-2">Harry Potter and the Goblet of Fire</h3>
-                            <p class="text-[11px] text-gray-400 mt-1">Tahun Rilis: 2000</p>
-                            <p class="text-[11px] text-gray-300 mt-2 line-clamp-3">Turnamen Triwizard berbahaya menanti, dibarengi kebangkitan kegelapan di balik bayang-bayang.</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-purple-900">
-                            <!-- Filename here EXACTLY matches the uploaded file name: 'Harry Potter book 4.epub' -->
-                            <a href="Harry Potter book 4.epub" download="Harry Potter book 4.epub" onclick="triggerMagicDownload(event, 'Harry Potter book 4.epub', 'Harry Potter and the Goblet of Fire')" class="w-full bg-gradient-to-r from-blue-600 to-yellow-500 hover:from-blue-500 hover:to-yellow-400 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                                <i class="fa-solid fa-wand-magic"></i> Mantra Accio (Unduh)
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Book 5 -->
-                    <div class="book-card bg-slate-900 rounded-2xl p-5 border-2 border-pink-500 shadow-xl flex flex-col justify-between transform hover:scale-[1.03] transition duration-300 relative overflow-hidden group" data-title="Harry Potter and the Order of the Phoenix">
-                        <div class="absolute top-2 right-2 bg-pink-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Jilid 5</div>
-                        <div>
-                            <!-- Custom Colorful SVG Cover -->
-                            <div class="w-full h-48 bg-gradient-to-br from-pink-800 to-amber-950 rounded-xl mb-4 shadow-inner flex items-center justify-center relative overflow-hidden border border-pink-500/30">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-pink-500/20 via-transparent to-transparent"></div>
-                                <div class="text-center p-3 relative z-10 flex flex-col items-center">
-                                    <div class="text-5xl text-pink-400 mb-2 drop-shadow-[0_2px_8px_rgba(244,114,182,0.5)] group-hover:scale-110 transition duration-300"><i class="fa-solid fa-dove"></i></div>
-                                    <div class="magic-heading text-sm font-black tracking-wider text-pink-300 uppercase leading-snug">Order of Phoenix</div>
-                                    <div class="text-[9px] text-pink-200 mt-1 uppercase font-bold tracking-widest">Orde Phoenix</div>
-                                </div>
-                            </div>
-                            <h3 class="magic-heading text-base font-black text-white line-clamp-2">Harry Potter and the Order of the Phoenix</h3>
-                            <p class="text-[11px] text-gray-400 mt-1">Tahun Rilis: 2003</p>
-                            <p class="text-[11px] text-gray-300 mt-2 line-clamp-3">Perlawanan bawah tanah dimulai seiring kembalinya ancaman kegelapan yang tak diakui Kementerian.</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-purple-900">
-                            <!-- Filename here EXACTLY matches the uploaded file name: 'Harry Potter book 5.epub' -->
-                            <a href="Harry Potter book 5.epub" download="Harry Potter book 5.epub" onclick="triggerMagicDownload(event, 'Harry Potter book 5.epub', 'Harry Potter and the Order of the Phoenix')" class="w-full bg-gradient-to-r from-pink-600 to-yellow-500 hover:from-pink-500 hover:to-yellow-400 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                                <i class="fa-solid fa-wand-magic"></i> Mantra Accio (Unduh)
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Book 6 -->
-                    <div class="book-card bg-slate-900 rounded-2xl p-5 border-2 border-orange-500 shadow-xl flex flex-col justify-between transform hover:scale-[1.03] transition duration-300 relative overflow-hidden group" data-title="Harry Potter and the Half-Blood Prince">
-                        <div class="absolute top-2 right-2 bg-orange-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Jilid 6</div>
-                        <div>
-                            <!-- Custom Colorful SVG Cover -->
-                            <div class="w-full h-48 bg-gradient-to-br from-orange-800 to-amber-950 rounded-xl mb-4 shadow-inner flex items-center justify-center relative overflow-hidden border border-orange-500/30">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-500/20 via-transparent to-transparent"></div>
-                                <div class="text-center p-3 relative z-10 flex flex-col items-center">
-                                    <div class="text-5xl text-orange-400 mb-2 drop-shadow-[0_2px_8px_rgba(251,146,60,0.5)] group-hover:scale-110 transition duration-300"><i class="fa-solid fa-flask-vial"></i></div>
-                                    <div class="magic-heading text-sm font-black tracking-wider text-orange-300 uppercase leading-snug">Half-Blood Prince</div>
-                                    <div class="text-[9px] text-orange-200 mt-1 uppercase font-bold tracking-widest">Pangeran Berdarah Campuran</div>
-                                </div>
-                            </div>
-                            <h3 class="magic-heading text-base font-black text-white line-clamp-2">Harry Potter and the Half-Blood Prince</h3>
-                            <p class="text-[11px] text-gray-400 mt-1">Tahun Rilis: 2005</p>
-                            <p class="text-[11px] text-gray-300 mt-2 line-clamp-3">Menelusuri masa lalu terdalam Lord Voldemort demi menemukan kunci kelemahannya.</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-purple-900">
-                            <!-- Filename here EXACTLY matches the uploaded file name: 'Harry Potter book 6.epub' -->
-                            <a href="Harry Potter book 6.epub" download="Harry Potter book 6.epub" onclick="triggerMagicDownload(event, 'Harry Potter book 6.epub', 'Harry Potter and the Half-Blood Prince')" class="w-full bg-gradient-to-r from-orange-600 to-yellow-500 hover:from-orange-500 hover:to-yellow-400 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                                <i class="fa-solid fa-wand-magic"></i> Mantra Accio (Unduh)
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Book 7 -->
-                    <div class="book-card bg-slate-900 rounded-2xl p-5 border-2 border-indigo-500 shadow-xl flex flex-col justify-between transform hover:scale-[1.03] transition duration-300 relative overflow-hidden group" data-title="Harry Potter and the Deathly Hallows">
-                        <div class="absolute top-2 right-2 bg-indigo-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">Jilid 7</div>
-                        <div>
-                            <!-- Custom Colorful SVG Cover -->
-                            <div class="w-full h-48 bg-gradient-to-br from-indigo-800 to-slate-950 rounded-xl mb-4 shadow-inner flex items-center justify-center relative overflow-hidden border border-indigo-500/30">
-                                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500/20 via-transparent to-transparent"></div>
-                                <div class="text-center p-3 relative z-10 flex flex-col items-center">
-                                    <div class="text-5xl text-indigo-400 mb-2 drop-shadow-[0_2px_8px_rgba(129,140,248,0.5)] group-hover:scale-110 transition duration-300"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                                    <div class="magic-heading text-sm font-black tracking-wider text-indigo-300 uppercase leading-snug">Deathly Hallows</div>
-                                    <div class="text-[9px] text-indigo-200 mt-1 uppercase font-bold tracking-widest">Relikui Kematian</div>
-                                </div>
-                            </div>
-                            <h3 class="magic-heading text-base font-black text-white line-clamp-2">Harry Potter and the Deathly Hallows</h3>
-                            <p class="text-[11px] text-gray-400 mt-1">Tahun Rilis: 2007</p>
-                            <p class="text-[11px] text-gray-300 mt-2 line-clamp-3">Pertempuran puncak demi menghancurkan sisa-sisa Horcrux dan mengalahkan Voldemort selamanya.</p>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-purple-900">
-                            <!-- Filename here EXACTLY matches the uploaded file name: 'Harry Potter book 7.epub' -->
-                            <a href="Harry Potter book 7.epub" download="Harry Potter book 7.epub" onclick="triggerMagicDownload(event, 'Harry Potter book 7.epub', 'Harry Potter and the Deathly Hallows')" class="w-full bg-gradient-to-r from-indigo-600 to-yellow-500 hover:from-indigo-500 hover:to-yellow-400 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                                <i class="fa-solid fa-wand-magic"></i> Mantra Accio (Unduh)
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Empty State Search -->
-                <div id="empty-state" class="hidden text-center py-12 bg-slate-900/50 rounded-2xl border-2 border-dashed border-purple-950">
-                    <span class="text-5xl text-purple-600 block mb-3"><i class="fa-solid fa-face-frown-open animate-bounce"></i></span>
-                    <h3 class="magic-heading text-lg font-bold text-yellow-400">Buku Tidak Ditemukan</h3>
-                    <p class="text-xs text-purple-200">Mungkin buku tersebut tersembunyi di Seksi Terlarang dengan mantra penyulapan!</p>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-slate-950/95 border-t border-purple-900/50 py-6 text-center mt-12 relative z-10">
-            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-purple-300/60">&copy; 2026 Hogwarts Institute Library. Dikelola secara magis oleh Kementerian Sihir & Madam Pince.</p>
-                <div class="flex gap-4 text-purple-400 text-sm">
-                    <span class="hover:text-yellow-400 transition cursor-help" title="Mantra Pengaman Kastil Aktif"><i class="fa-solid fa-shield-halved"></i> Protego Maxima</span>
-                    <span class="hover:text-yellow-400 transition cursor-help" title="Sistem Dipantau Melalui Peta Marauder"><i class="fa-solid fa-shoe-prints"></i> Peta Terpantau</span>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- JavaScript For Wizarding Interactivity -->
+    <!-- Script for Navigation and Drawer -->
     <script>
-        // Default role state
-        let currentRole = 'siswa';
-
-        // Select Role Functionality
-        function selectRole(role) {
-            currentRole = role;
-            const siswaBtn = document.getElementById('role-siswa-btn');
-            const profBtn = document.getElementById('role-professor-btn');
-            const instructionText = document.getElementById('role-instruction-text');
-            const pswInput = document.getElementById('password-input');
-
-            pswInput.value = ''; // Reset input
-
-            if (role === 'siswa') {
-                siswaBtn.className = "py-3 px-4 rounded-xl font-bold border-2 border-dashed transition-all duration-300 flex flex-col items-center gap-2 bg-gradient-to-b from-purple-800 to-indigo-900 border-yellow-400 text-yellow-300 shadow-lg glow-gold";
-                profBtn.className = "py-3 px-4 rounded-xl font-bold border-2 border-dashed transition-all duration-300 flex flex-col items-center gap-2 bg-slate-800/50 border-gray-600 text-gray-400 hover:text-white hover:border-purple-400";
-                instructionText.innerHTML = `💡 <strong class="text-yellow-400">Akses Siswa Terpilih:</strong> Gunakan kata sandi manisan favorit Kepala Sekolah! (<code class="text-pink-300 font-mono">sherbetlemon</code>)`;
-            } else {
-                profBtn.className = "py-3 px-4 rounded-xl font-bold border-2 border-dashed transition-all duration-300 flex flex-col items-center gap-2 bg-gradient-to-b from-purple-800 to-indigo-900 border-yellow-400 text-yellow-300 shadow-lg glow-gold";
-                siswaBtn.className = "py-3 px-4 rounded-xl font-bold border-2 border-dashed transition-all duration-300 flex flex-col items-center gap-2 bg-slate-800/50 border-gray-600 text-gray-400 hover:text-white hover:border-purple-400";
-                instructionText.innerHTML = `🎓 <strong class="text-yellow-400">Akses Profesor Agung:</strong> Gunakan nama hantu asrama Hufflepuff yang ramah! (<code class="text-pink-300 font-mono">fatfriar</code>)`;
-            }
-        }
-
-        // Toggle Password Input Visibility
-        function togglePasswordVisibility() {
-            const pswInput = document.getElementById('password-input');
-            const eyeIcon = document.getElementById('eye-icon');
-            if (pswInput.type === 'password') {
-                pswInput.type = 'text';
-                eyeIcon.className = "fa-solid fa-eye-slash";
-            } else {
-                pswInput.type = 'password';
-                eyeIcon.className = "fa-solid fa-eye";
-            }
-        }
-
-        // Custom Notification Banner (replaces alert)
-        function showNotification(message, type = 'info', duration = 4500) {
-            const container = document.getElementById('toast-container');
+        // Toggle Hamburger Menu
+        function toggleMenu() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('overlay');
             
-            const toast = document.createElement('div');
-            toast.className = `p-4 rounded-xl shadow-2xl border-2 flex items-start gap-3 transition-all duration-500 transform translate-y-2 opacity-0 pointer-events-auto max-w-sm w-full`;
-            
-            if (type === 'success') {
-                toast.className += ' bg-emerald-950 border-emerald-500 text-emerald-100';
-                toast.innerHTML = `<span class="text-emerald-400 text-lg mt-0.5"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div><h4 class="font-bold text-emerald-300 text-sm">Mantra Berhasil!</h4><p class="text-xs mt-0.5">${message}</p></div>`;
-            } else if (type === 'error') {
-                toast.className += ' bg-red-950 border-red-500 text-red-100';
-                toast.innerHTML = `<span class="text-red-400 text-lg mt-0.5"><i class="fa-solid fa-circle-exclamation"></i></span><div><h4 class="font-bold text-red-300 text-sm">Peringatan!</h4><p class="text-xs mt-0.5">${message}</p></div>`;
+            if (drawer.classList.contains('open')) {
+                drawer.classList.remove('open');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
             } else {
-                toast.className += ' bg-indigo-950 border-indigo-500 text-indigo-100';
-                toast.innerHTML = `<span class="text-indigo-400 text-lg mt-0.5"><i class="fa-solid fa-info"></i></span><div><h4 class="font-bold text-indigo-300 text-sm">Informasi</h4><p class="text-xs mt-0.5">${message}</p></div>`;
-            }
-
-            container.appendChild(toast);
-            
-            // Trigger animation in
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            // Hide and remove after duration
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'scale-95');
-                setTimeout(() => {
-                    toast.remove();
-                }, 500);
-            }, duration);
-        }
-
-        // Login Handler
-        function handleLogin(event) {
-            event.preventDefault();
-            const password = document.getElementById('password-input').value.trim();
-
-            if (currentRole === 'siswa') {
-                if (password === 'sherbetlemon') {
-                    proceedToLibrary('Siswa Terpilih', 'siswa');
-                } else {
-                    showNotification('Mantra sandi salah! Coba petunjuk manisan favorit Dumbledore.', 'error');
-                }
-            } else if (currentRole === 'professor') {
-                if (password === 'fatfriar') {
-                    proceedToLibrary('Profesor Agung', 'professor');
-                } else {
-                    showNotification('Mantra sandi salah! Coba hantu asrama Hufflepuff.', 'error');
-                }
+                drawer.classList.add('open');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
             }
         }
 
-        // Successfully entered the library
-        function proceedToLibrary(name, role) {
-            // Hide login, show main workspace
-            document.getElementById('login-section').classList.add('hidden');
-            document.getElementById('main-app').classList.remove('hidden');
-
-            // Update user badge
-            const badgeName = document.getElementById('user-badge-name');
-            const badgeIcon = document.getElementById('user-badge-icon');
-            badgeName.innerText = name;
-            
-            if (role === 'siswa') {
-                badgeIcon.className = "text-yellow-400 text-lg";
-                badgeIcon.innerHTML = `<i class="fa-solid fa-wand-magic"></i>`;
-                showNotification('Selamat datang, Siswa Berbakat! Anda sekarang memiliki izin membaca Koleksi Buku.', 'success');
-            } else {
-                badgeIcon.className = "text-yellow-400 text-lg";
-                badgeIcon.innerHTML = `<i class="fa-solid fa-graduation-cap"></i>`;
-                showNotification('Salam Hormat, Profesor Agung! Anda memiliki hak akses penuh ke arsip perpustakaan.', 'success');
-            }
-
-            // Default to Home Tab
-            switchTab('home');
-        }
-
-        // Logout functionality
-        function logout() {
-            document.getElementById('main-app').classList.add('hidden');
-            document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('password-input').value = '';
-            showNotification('Portal perpustakaan ditutup kembali secara magis!', 'info');
-        }
-
-        // Tab Navigation
-        function switchTab(tabId) {
-            // Tab contents
-            const homeContent = document.getElementById('tab-content-home');
-            const koleksiContent = document.getElementById('tab-content-koleksi');
-
-            // Buttons
-            const homeBtn = document.getElementById('tab-home');
-            const koleksiBtn = document.getElementById('tab-koleksi');
-
-            if (tabId === 'home') {
-                homeContent.classList.remove('hidden');
-                koleksiContent.classList.add('hidden');
-
-                homeBtn.className = "py-2.5 px-5 rounded-full font-bold text-sm tracking-wider transition-all duration-300 bg-yellow-400 text-indigo-950 shadow-md";
-                koleksiBtn.className = "py-2.5 px-5 rounded-full font-bold text-sm tracking-wider transition-all duration-300 text-purple-200 hover:bg-slate-800";
-            } else if (tabId === 'koleksi') {
-                homeContent.classList.add('hidden');
-                koleksiContent.classList.remove('hidden');
-
-                koleksiBtn.className = "py-2.5 px-5 rounded-full font-bold text-sm tracking-wider transition-all duration-300 bg-yellow-400 text-indigo-950 shadow-md";
-                homeBtn.className = "py-2.5 px-5 rounded-full font-bold text-sm tracking-wider transition-all duration-300 text-purple-200 hover:bg-slate-800";
-            }
-        }
-
-        // Search Books inside the subpage
-        function searchBooks() {
-            const query = document.getElementById('book-search-input').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.book-card');
-            const emptyState = document.getElementById('empty-state');
-            let visibleCount = 0;
-
-            cards.forEach(card => {
-                const title = card.getAttribute('data-title').toLowerCase();
-                if (title.includes(query)) {
-                    card.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    card.classList.add('hidden');
-                }
+        // Single Page Application Navigation Logic
+        function navigate(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('fade-in');
             });
 
-            if (visibleCount === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
+            // Show selected page
+            const activePage = document.getElementById(pageId);
+            activePage.classList.remove('hidden');
+            
+            // Force reflow to restart animation
+            void activePage.offsetWidth; 
+            
+            activePage.classList.add('fade-in');
+
+            // Close menu if it's open
+            const drawer = document.getElementById('drawer');
+            if (drawer.classList.contains('open')) {
+                toggleMenu();
             }
-        }
 
-        // Beautiful simulated magical download
-        function triggerMagicDownload(event, filename, bookTitle) {
-            event.preventDefault(); // Stop default navigation first to run magic animations
-
-            const modal = document.getElementById('spell-modal');
-            const progressBar = document.getElementById('spell-progress');
-            const progressPercent = document.getElementById('spell-percent');
-            const progressTitle = document.getElementById('spell-title');
-            const progressDesc = document.getElementById('spell-desc');
-
-            // Set content in spell modal
-            progressTitle.innerText = "Accio " + bookTitle.split(" and ")[1].split("'")[0] + "!";
-            progressDesc.innerText = `Menyalurkan energi magis untuk memanggil file "${filename}" langsung ke dalam folder penyimpanan sistem Anda...`;
-            progressBar.style.width = "0%";
-            progressPercent.innerText = "0% MEMBACA MANTRA";
-
-            // Show modal
-            modal.classList.remove('hidden');
-            modal.classList.add('opacity-100');
-
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.floor(Math.random() * 15) + 5;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    
-                    // Final magic sound / text feedback
-                    progressPercent.innerText = "ACCIO BERHASIL!";
-                    
-                    setTimeout(() => {
-                        // Close modal beautifully
-                        modal.classList.add('opacity-0');
-                        setTimeout(() => {
-                            modal.classList.add('hidden');
-                            modal.classList.remove('opacity-100');
-                            
-                            // Trigger real download through hidden anchor
-                            const dummyAnchor = document.createElement('a');
-                            dummyAnchor.href = filename;
-                            dummyAnchor.download = filename;
-                            document.body.appendChild(dummyAnchor);
-                            dummyAnchor.click();
-                            document.body.removeChild(dummyAnchor);
-
-                            // Modified toast to help user understand the local file requirement
-                            showNotification(`<strong>Mantra selesai!</strong><br/>Jika file yang terunduh adalah .html (bukan .epub), pastikan Anda telah meletakkan file index.html ini dalam <strong>satu folder yang sama</strong> dengan file "${filename}" di komputer Anda.`, 'success', 8000);
-                        }, 300);
-                    }, 800);
-                }
-                progressBar.style.width = `${progress}%`;
-                if (progress < 100) {
-                    progressPercent.innerText = `${progress}% MERAPALKAN MANTRA ACCIO`;
-                }
-            }, 150);
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
 </html>
-
-
-```
