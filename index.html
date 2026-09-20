@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hogwarts Institute Quidditch</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-
     <script>
         tailwind.config = {
             theme: {
@@ -35,28 +32,20 @@
             }
         }
     </script>
-
     <style>
         body {
             background-color: #0a0a0f;
             color: #e2e8f0;
             overflow-x: hidden;
         }
-
+        
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         ::-webkit-scrollbar {
@@ -65,16 +54,16 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: #0a0a0f;
+            background: #0a0a0f; 
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #D4AF37;
+            background: #D4AF37; 
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #f9d77e;
+            background: #f9d77e; 
         }
 
         .drawer {
@@ -85,470 +74,17 @@
         .drawer.open {
             transform: translateX(0);
         }
-
+        
         .glass-panel {
             background: rgba(21, 21, 30, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
-
+        
         .rule-tab-btn.active {
             color: #D4AF37;
             border-bottom: 2px solid #D4AF37;
             font-weight: bold;
-        }
-
-
-        /* =========================================================
-           HALL OF FAME
-        ========================================================= */
-
-        .hof-wrap {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 10px 0 30px;
-        }
-
-        .hof-hero {
-            text-align: center;
-            padding: 45px 20px 55px;
-            position: relative;
-        }
-
-        .hof-eyebrow {
-            font-size: 10px;
-            letter-spacing: 5px;
-            color: #a99462;
-            font-weight: 700;
-            margin-bottom: 14px;
-        }
-
-        .hof-title {
-            font-family: Cinzel, serif;
-            font-size: clamp(40px, 7vw, 76px);
-            font-weight: 600;
-            letter-spacing: 7px;
-            color: #eadfca;
-            margin: 0;
-        }
-
-        .hof-subtitle {
-            font-family: Cinzel, serif;
-            font-size: 11px;
-            letter-spacing: 4px;
-            color: #82775f;
-            margin-top: 18px;
-        }
-
-        .hof-rule {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            max-width: 620px;
-            margin: 26px auto 0;
-        }
-
-        .hof-rule:before,
-        .hof-rule:after {
-            content: "";
-            height: 1px;
-            flex: 1;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(212,175,55,.5)
-            );
-        }
-
-        .hof-rule:after {
-            background: linear-gradient(
-                90deg,
-                rgba(212,175,55,.5),
-                transparent
-            );
-        }
-
-        .hof-rule span {
-            font-family: Cinzel, serif;
-            font-size: 9px;
-            letter-spacing: 3px;
-            color: #9d8b61;
-            white-space: nowrap;
-        }
-
-        .hof-section-label {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin: 48px 0 22px;
-            color: #907e55;
-            font-family: Cinzel, serif;
-            font-size: 10px;
-            letter-spacing: 4px;
-        }
-
-        .hof-section-label:before,
-        .hof-section-label:after {
-            content: "";
-            height: 1px;
-            flex: 1;
-            background: rgba(212,175,55,.18);
-        }
-
-        .hof-card {
-            position: relative;
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(27,27,34,.98),
-                    rgba(12,12,17,.98)
-                );
-            border: 1px solid rgba(212,175,55,.16);
-            box-shadow: 0 18px 50px rgba(0,0,0,.28);
-            overflow: hidden;
-            margin-bottom: 22px;
-        }
-
-        .hof-card:before {
-            content: "";
-            position: absolute;
-            inset: 8px;
-            border: 1px solid rgba(212,175,55,.055);
-            pointer-events: none;
-        }
-
-        .hof-card-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 30px 20px;
-            border-bottom: 1px solid rgba(255,255,255,.06);
-        }
-
-        .hof-code {
-            font-size: 8px;
-            letter-spacing: 3px;
-            color: #6f654f;
-            font-weight: 700;
-        }
-
-        .hof-award-name {
-            font-family: Cinzel, serif;
-            font-size: clamp(23px, 4vw, 34px);
-            letter-spacing: 1.5px;
-            color: #e8deca;
-            margin: 7px 0 0;
-            font-weight: 600;
-        }
-
-        .hof-season {
-            font-size: 9px;
-            letter-spacing: 2px;
-            color: #706955;
-        }
-
-        .hof-team-body {
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 40px;
-            align-items: center;
-            padding: 38px;
-        }
-
-        .hof-emblem {
-            width: 190px;
-            height: 190px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(212,175,55,.14);
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(212,175,55,.08),
-                    transparent 68%
-                );
-        }
-
-        .hof-emblem img {
-            width: 135px;
-            height: 135px;
-            object-fit: contain;
-            filter: drop-shadow(0 10px 24px rgba(0,0,0,.5));
-        }
-
-        .hof-winner-label {
-            font-size: 9px;
-            letter-spacing: 3px;
-            color: #a99462;
-            font-weight: 700;
-        }
-
-        .hof-winner {
-            font-family: Cinzel, serif;
-            font-size: clamp(30px, 5vw, 48px);
-            font-weight: 600;
-            letter-spacing: 3px;
-            color: #eee4d1;
-            margin: 8px 0 16px;
-        }
-
-        .hof-tagline {
-            font-family: Georgia, serif;
-            font-style: italic;
-            color: #d0c6b5;
-            font-size: 15px;
-            line-height: 1.7;
-            margin: 0 0 12px;
-        }
-
-        .hof-desc {
-            color: #85828a;
-            font-size: 13px;
-            line-height: 1.85;
-            margin: 0;
-            max-width: 700px;
-        }
-
-        .hof-player {
-            display: grid;
-            grid-template-columns: minmax(260px, 40%) 1fr;
-            min-height: 420px;
-        }
-
-        .hof-photo {
-            position: relative;
-            min-height: 420px;
-            background: #08090c;
-            overflow: hidden;
-        }
-
-        .hof-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-            display: block;
-            filter: saturate(.9) contrast(1.04);
-        }
-
-        .hof-photo:after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(
-                    180deg,
-                    transparent 45%,
-                    rgba(4,4,7,.92) 100%
-                );
-        }
-
-        .hof-role {
-            position: absolute;
-            z-index: 2;
-            left: 24px;
-            bottom: 24px;
-            border: 1px solid rgba(212,175,55,.45);
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d4af37;
-            font-family: Cinzel, serif;
-            font-size: 15px;
-        }
-
-        .hof-player-info {
-            padding: 48px 45px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hof-person-name {
-            font-family: Cinzel, serif;
-            font-size: clamp(25px, 4vw, 39px);
-            line-height: 1.2;
-            color: #e9dfcb;
-            margin: 9px 0 9px;
-            font-weight: 600;
-        }
-
-        .hof-position {
-            font-size: 8px;
-            letter-spacing: 3px;
-            color: #967f4e;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .hof-ornament {
-            width: 45px;
-            height: 1px;
-            background: #a78e55;
-            margin: 3px 0 23px;
-        }
-
-        .hof-unit {
-            padding: 35px 38px 40px;
-        }
-
-        .hof-unit-intro {
-            max-width: 800px;
-        }
-
-        .hof-members {
-            display: grid;
-            gap: 18px;
-            margin-top: 30px;
-        }
-
-        .hof-members.trio {
-            grid-template-columns: repeat(3,1fr);
-        }
-
-        .hof-members.duo {
-            grid-template-columns: repeat(2,1fr);
-            max-width: 760px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hof-member {
-            text-align: center;
-        }
-
-        .hof-member-photo {
-            height: 270px;
-            background: #08090c;
-            border: 1px solid rgba(212,175,55,.12);
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .hof-member-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-            display: block;
-            filter: saturate(.9);
-        }
-
-        .hof-member-number {
-            font-size: 8px;
-            letter-spacing: 2px;
-            color: #756a52;
-        }
-
-        .hof-member-name {
-            font-family: Cinzel, serif;
-            font-size: 16px;
-            color: #ddd3c0;
-            line-height: 1.45;
-            margin: 6px 0 5px;
-        }
-
-        .hof-member-role {
-            font-size: 8px;
-            letter-spacing: 2px;
-            color: #907c51;
-        }
-
-        .hof-footer {
-            text-align: center;
-            padding: 55px 20px 10px;
-            color: #5f594d;
-        }
-
-        .hof-footer-line {
-            width: 75px;
-            height: 1px;
-            background: #756342;
-            margin: 0 auto 20px;
-        }
-
-        .hof-footer p {
-            font-family: Georgia, serif;
-            font-style: italic;
-            font-size: 14px;
-            line-height: 1.8;
-            margin: 0 auto 12px;
-            max-width: 600px;
-        }
-
-        .hof-footer small {
-            font-size: 8px;
-            letter-spacing: 3px;
-        }
-
-        @media(max-width:700px) {
-
-            .hof-hero {
-                padding: 30px 10px 40px;
-            }
-
-            .hof-title {
-                letter-spacing: 4px;
-            }
-
-            .hof-subtitle {
-                letter-spacing: 2px;
-            }
-
-            .hof-card-head {
-                padding: 20px 20px 16px;
-            }
-
-            .hof-season {
-                display: none;
-            }
-
-            .hof-team-body {
-                grid-template-columns: 1fr;
-                gap: 25px;
-                padding: 28px 22px;
-            }
-
-            .hof-emblem {
-                width: 160px;
-                height: 160px;
-            }
-
-            .hof-emblem img {
-                width: 115px;
-                height: 115px;
-            }
-
-            .hof-player {
-                grid-template-columns: 1fr;
-            }
-
-            .hof-photo {
-                min-height: 390px;
-                max-height: 520px;
-            }
-
-            .hof-player-info {
-                padding: 34px 24px;
-            }
-
-            .hof-unit {
-                padding: 28px 20px 32px;
-            }
-
-            .hof-members.trio,
-            .hof-members.duo {
-                grid-template-columns: 1fr;
-                max-width: none;
-            }
-
-            .hof-member-photo {
-                height: 330px;
-            }
         }
     </style>
 </head>
@@ -558,2106 +94,557 @@
     <!-- Navigation Header -->
     <header class="fixed w-full top-0 z-40 glass-panel border-b-0 border-magic-gold/20">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-
-            <h1
-                class="font-cinzel text-xl md:text-2xl font-bold text-magic-gold cursor-pointer"
-                onclick="navigate('home')"
-            >
+            <h1 class="font-cinzel text-xl md:text-2xl font-bold text-magic-gold cursor-pointer" onclick="navigate('home')">
                 HI Quidditch
             </h1>
-
-            <button
-                id="menu-btn"
-                class="text-magic-gold hover:text-magic-goldHover focus:outline-none transition-colors"
-                onclick="toggleMenu()"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-8 w-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                    />
+            
+            <button id="menu-btn" class="text-magic-gold hover:text-magic-goldHover focus:outline-none transition-colors" onclick="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
-
         </div>
     </header>
 
+    <!-- Overlay & Drawer Menu -->
+    <div id="overlay" class="fixed inset-0 bg-black/60 z-40 hidden transition-opacity" onclick="toggleMenu()"></div>
 
-    <!-- Overlay -->
-    <div
-        id="overlay"
-        class="fixed inset-0 bg-black/60 z-40 hidden transition-opacity"
-        onclick="toggleMenu()"
-    ></div>
-
-
-    <!-- Drawer Menu -->
-    <div
-        id="drawer"
-        class="drawer fixed top-0 right-0 w-64 md:w-80 h-full glass-panel z-50 border-l border-magic-gold/20 shadow-2xl flex flex-col overflow-y-auto"
-    >
-
+    <div id="drawer" class="drawer fixed top-0 right-0 w-64 md:w-80 h-full glass-panel z-50 border-l border-magic-gold/20 shadow-2xl flex flex-col overflow-y-auto">
         <div class="flex justify-end p-4">
-
-            <button
-                class="text-magic-gold hover:text-magic-goldHover focus:outline-none transition-colors"
-                onclick="toggleMenu()"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-8 w-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                    />
+            <button class="text-magic-gold hover:text-magic-goldHover focus:outline-none transition-colors" onclick="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-
         </div>
 
         <nav class="flex flex-col gap-5 px-8 mt-4 pb-8">
-
-            <button
-                onclick="navigate('home')"
-                class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2"
-            >
-                Halaman Utama
-            </button>
-
-            <button
-                onclick="navigate('teams')"
-                class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2"
-            >
-                Teams
-            </button>
-
-            <button
-                onclick="navigate('rules')"
-                class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2"
-            >
-                Cara Bermain
-            </button>
-
-            <button
-                onclick="navigate('hall-of-fame')"
-                class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2"
-            >
-                Hall of Fame
-            </button>
-
-            <button
-                onclick="navigate('klasemen')"
-                class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2"
-            >
-                Klasemen
-            </button>
-
-            <button
-                onclick="navigate('jadwal')"
-                class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2"
-            >
-                Jadwal Pertandingan
-            </button>
-
-            <button
-                onclick="navigate('peraturan')"
-                class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2"
-            >
-                Peraturan
-            </button>
-
+            <button onclick="navigate('home')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Halaman Utama</button>
+            <button onclick="navigate('teams')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Teams</button>
+            <button onclick="navigate('rules')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Cara Bermain</button>
+            <button onclick="navigate('hall-of-fame')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Hall of Fame</button>
+            <button onclick="navigate('klasemen')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Klasemen</button>
+            <button onclick="navigate('jadwal')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Jadwal Pertandingan</button>
+            <button onclick="navigate('peraturan')" class="text-left font-cinzel text-lg md:text-xl text-magic-text hover:text-magic-gold transition-colors border-b border-gray-700 pb-2">Peraturan</button>
         </nav>
 
         <div class="mt-auto p-8 opacity-50">
-            <p class="text-xs text-center font-cinzel">
-                Hogwarts Institute &copy; 2026
-            </p>
+            <p class="text-xs text-center font-cinzel">Hogwarts Institute &copy; 2026</p>
         </div>
-
     </div>
 
-
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <main class="flex-grow pt-24 pb-12 px-4 max-w-5xl mx-auto w-full">
-
-
-        <!-- =========================================================
-             HOME
-        ========================================================== -->
-
+        
+        <!-- ==================== HOME SECTION ==================== -->
         <section id="home" class="page-section fade-in block">
-
             <div class="text-center mb-10">
-
-                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-magic-gold mb-4 tracking-wider">
-                    Hogwarts Institute Quidditch
-                </h2>
-
-                <h3 class="font-cinzel text-lg md:text-xl text-magic-textMuted italic">
-                    Sejarah Singkat Quidditch – Hogwarts Institute
-                </h3>
-
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-magic-gold mb-4 tracking-wider">Hogwarts Institute Quidditch</h2>
+                <h3 class="font-cinzel text-lg md:text-xl text-magic-textMuted italic">Sejarah Singkat Quidditch – Hogwarts Institute</h3>
             </div>
-
-
+            
             <div class="rounded-xl overflow-hidden shadow-gold mb-10 mx-auto border border-magic-gold/30">
-
-                <img
-                    src="https://cdnpro.eraspace.com/media/mageplaza/blog/post/g/a/gameharrypotter.jpg"
-                    alt="[Gambar Quidditch Hogwarts]"
-                    class="w-full h-auto object-cover object-center max-h-[500px]"
-                    onerror="this.src='https://placehold.co/800x400/15151e/D4AF37?text=Quidditch+Image+Not+Found'"
-                >
-
+                <img src="https://cdnpro.eraspace.com/media/mageplaza/blog/post/g/a/gameharrypotter.jpg" alt="[Gambar Quidditch Hogwarts]" class="w-full h-auto object-cover object-center max-h-[500px]" onerror="this.src='https://placehold.co/800x400/15151e/D4AF37?text=Quidditch+Image+Not+Found'">
             </div>
-
 
             <div class="space-y-6 text-base md:text-lg text-magic-text leading-relaxed text-justify bg-magic-panel p-6 md:p-10 rounded-2xl border border-white/5">
-
                 <p>
-                    Olahraga Quidditch di Hogwarts Institute pertama kali diperkenalkan oleh
-                    <span class="text-magic-gold font-semibold">Sir Hercule Poirot</span>,
-                    salah satu penyihir yang menyukai permainan menyusun strategi dan semangatnya
-                    terhadap persaingan yang adil. Melihat para siswa membutuhkan kegiatan yang
-                    dapat melatih keberanian, kerja sama, dan kepemimpinan, ia menciptakan permainan
-                    yang menggabungkan kemampuan terbang, taktik, dan keterampilan sihir.
+                    Olahraga Quidditch di Hogwarts Institute pertama kali diperkenalkan oleh <span class="text-magic-gold font-semibold">Sir Hercule Poirot</span>, salah satu penyihir yang menyukai permainan menyusun strategi dan semangatnya terhadap persaingan yang adil. Melihat para siswa membutuhkan kegiatan yang dapat melatih keberanian, kerja sama, dan kepemimpinan, ia menciptakan permainan yang menggabungkan kemampuan terbang, taktik, dan keterampilan sihir.
                 </p>
-
                 <p>
-                    Pada awalnya, pertandingan Quidditch hanya dimainkan sebagai latihan antar
-                    kelompok kecil. Seiring waktu, popularitasnya terus meningkat hingga akhirnya
-                    menjadi kompetisi resmi antarrumah di Hogwarts Institute. Setiap musim, para
-                    pemain bertanding untuk memperebutkan Piala Quidditch, yang menjadi simbol
-                    kehormatan, sportivitas, dan kebanggaan rumah masing-masing.
+                    Pada awalnya, pertandingan Quidditch hanya dimainkan sebagai latihan antar kelompok kecil. Seiring waktu, popularitasnya terus meningkat hingga akhirnya menjadi kompetisi resmi antarrumah di Hogwarts Institute. Setiap musim, para pemain bertanding untuk memperebutkan Piala Quidditch, yang menjadi simbol kehormatan, sportivitas, dan kebanggaan rumah masing-masing.
                 </p>
-
                 <p>
-                    Hingga saat ini, Quidditch tetap menjadi salah satu tradisi paling bergengsi
-                    di Hogwarts Institute, mengajarkan bahwa kemenangan bukan hanya ditentukan
-                    oleh bakat, tetapi juga oleh keberanian, kerja sama tim, dan tekad yang kuat.
+                    Hingga saat ini, Quidditch tetap menjadi salah satu tradisi paling bergengsi di Hogwarts Institute, mengajarkan bahwa kemenangan bukan hanya ditentukan oleh bakat, tetapi juga oleh keberanian, kerja sama tim, dan tekad yang kuat.
                 </p>
-
             </div>
-
         </section>
 
-
-        <!-- =========================================================
-             TEAMS
-        ========================================================== -->
-
+        <!-- ==================== TEAMS SECTION ==================== -->
         <section id="teams" class="page-section hidden">
-
             <div class="text-center mb-12">
-
-                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">
-                    The Teams
-                </h2>
-
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">The Teams</h2>
                 <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
-
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Gryffindor -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-red-900/50 shadow-lg hover:shadow-red-900/50 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://i.pinimg.com/736x/39/b2/12/39b2126bca6d09b6afb740baf7084aca.jpg" alt="[Lambang Gryffindor]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-red-500 mb-3">Gryffindor</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Mengutamakan keberanian, kegigihan, dan jiwa ksatria di atas segalanya. Tim Gryffindor dikenal dengan gaya permainan mereka yang berani mengambil risiko, tak kenal takut, dan selalu siap menghadapi tantangan terberat di lapangan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Hufflepuff -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-yellow-900/50 shadow-lg hover:shadow-yellow-900/30 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://i.pinimg.com/736x/7d/93/4e/7d934eac2b8e3e0c9b8e0f9d2f5d1c1f.jpg" alt="[Lambang Hufflepuff]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-yellow-500 mb-3">Hufflepuff</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Menjunjung tinggi kesetiaan, kerja keras, dan kebersamaan. Tim Hufflepuff mengandalkan koordinasi yang solid dan semangat pantang menyerah untuk menghadapi setiap pertandingan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ravenclaw -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-blue-900/50 shadow-lg hover:shadow-blue-900/30 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://i.pinimg.com/736x/0d/77/55/0d7755e2cb5cbb7d7e1dbf8b2e6f2f8e.jpg" alt="[Lambang Ravenclaw]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-blue-500 mb-3">Ravenclaw</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Mengandalkan kecerdasan, kreativitas, dan strategi. Tim Ravenclaw dikenal mampu membaca situasi dengan cepat dan memanfaatkan setiap celah di lapangan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slytherin -->
+                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-green-900/50 shadow-lg hover:shadow-green-900/30 transition-shadow duration-300">
+                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
+                        <img src="https://i.pinimg.com/736x/1d/4a/2f/1d4a2f7f5f9d4b8d0c2e3b5f6a7d8e9f.jpg" alt="[Lambang Slytherin]" class="w-full h-full object-contain drop-shadow-2xl">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-cinzel text-2xl font-bold text-green-500 mb-3">Slytherin</h3>
+                        <p class="text-sm text-magic-textMuted">
+                            Mengutamakan ambisi, kecerdikan, dan ketepatan strategi. Tim Slytherin dikenal dengan permainan yang terukur, disiplin, dan penuh perhitungan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== RULES SECTION ==================== -->
+        <section id="rules" class="page-section hidden">
+            <div class="text-center mb-10">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Cara Bermain</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
+            </div>
+
+            <div class="bg-magic-panel rounded-2xl border border-white/10 overflow-hidden shadow-xl">
+                <div class="flex overflow-x-auto border-b border-white/10">
+                    <button onclick="switchRuleTab('seeker-rule')" class="rule-tab-btn active flex-1 min-w-[120px] px-4 py-4 font-cinzel text-sm md:text-base text-magic-textMuted transition-colors">Seeker</button>
+                    <button onclick="switchRuleTab('chaser-rule')" class="rule-tab-btn flex-1 min-w-[120px] px-4 py-4 font-cinzel text-sm md:text-base text-magic-textMuted transition-colors">Chaser</button>
+                    <button onclick="switchRuleTab('beater-rule')" class="rule-tab-btn flex-1 min-w-[120px] px-4 py-4 font-cinzel text-sm md:text-base text-magic-textMuted transition-colors">Beater</button>
+                    <button onclick="switchRuleTab('keeper-rule')" class="rule-tab-btn flex-1 min-w-[120px] px-4 py-4 font-cinzel text-sm md:text-base text-magic-textMuted transition-colors">Keeper</button>
+                </div>
+
+                <div class="p-6 md:p-8">
+                    <div id="seeker-rule" class="rule-content block">
+                        <h3 class="font-cinzel text-2xl text-magic-gold font-bold mb-5">Seeker</h3>
+                        <div class="space-y-4 text-magic-text text-justify leading-relaxed">
+                            <p>Seeker bertugas menemukan Golden Snitch melalui pilihan angka yang diberikan oleh Wasit Quidditch.</p>
+                            <p>Seeker hanya diperbolehkan memilih satu angka pada setiap ronde.</p>
+                            <p>Apabila angka yang dipilih sesuai dengan angka Snitch, Seeker berhasil menangkap Snitch dan pertandingan berakhir.</p>
+                            <p>Seeker tidak boleh menerima bantuan dari pemain lain.</p>
+                            <p>Jika tidak memberikan pilihan, pemain dianggap <strong>tidak melakukan aksi</strong> pada ronde tersebut.</p>
+                        </div>
+                    </div>
+
+                    <div id="chaser-rule" class="rule-content hidden">
+                        <h3 class="font-cinzel text-2xl text-magic-gold font-bold mb-5">Chaser</h3>
+                        <div class="space-y-4 text-magic-text text-justify leading-relaxed">
+                            <p>Chaser bertugas membawa Quaffle dan berusaha mencetak poin ke gawang lawan.</p>
+                            <p>Setiap ronde, Chaser akan menentukan pilihan berdasarkan opsi yang diberikan oleh Wasit Quidditch.</p>
+                            <p>Keberhasilan serangan ditentukan berdasarkan keputusan Keeper lawan.</p>
+                            <p>Jika Chaser berhasil mencetak gol, tim mendapatkan poin sesuai sistem pertandingan.</p>
+                            <p>Jika tidak memberikan pilihan, pemain dianggap <strong>tidak melakukan aksi</strong> pada ronde tersebut.</p>
+                        </div>
+                    </div>
+
+                    <div id="beater-rule" class="rule-content hidden">
+                        <h3 class="font-cinzel text-2xl text-magic-gold font-bold mb-5">Beater</h3>
+                        <div class="space-y-4 text-magic-text text-justify leading-relaxed">
+                            <p>Beater bertugas mengendalikan Bludger dan memberikan tekanan terhadap pemain lawan.</p>
+                            <p>Setiap ronde, Beater menentukan target dan tindakan berdasarkan pilihan yang tersedia.</p>
+                            <p>Keberhasilan aksi Beater dapat memengaruhi jalannya permainan dan pemain yang menjadi target.</p>
+                            <p>Koordinasi antar Beater menjadi salah satu faktor penting dalam menjaga keseimbangan permainan.</p>
+                            <p>Jika tidak memberikan pilihan, pemain dianggap <strong>tidak melakukan aksi</strong> pada ronde tersebut.</p>
+                        </div>
+                    </div>
+
+                    <div id="keeper-rule" class="rule-content hidden">
+                        <h3 class="font-cinzel text-2xl text-magic-gold font-bold mb-5">Keeper</h3>
+                        <div class="space-y-4 text-magic-text text-justify leading-relaxed">
+                            <p>Keeper bertugas menjaga tiga ring dari serangan Chaser lawan.</p>
+                            <p>Keeper harus menentukan ring yang akan dijaga pada setiap ronde.</p>
+                            <p>Jika pilihan Keeper berbeda dengan arah serangan Chaser, gol berhasil dicetak.</p>
+                            <p>Jika pilihan Keeper sesuai dengan arah serangan Chaser, serangan berhasil dihentikan.</p>
+                            <p>Jika tidak memberikan pilihan, pemain dianggap <strong>tidak melakukan aksi</strong> pada ronde tersebut.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HALL OF FAME SECTION ==================== -->
+        <section id="hall-of-fame" class="page-section hidden">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Hall of Fame</h2>
+                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
+                <p class="text-magic-textMuted mt-4 italic">Sejarah gemilang pencapaian para atlet Quidditch Hogwarts Institute.</p>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-
-                <!-- Gryffindor -->
-
-                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-red-900/50 shadow-lg hover:shadow-red-900/50 transition-shadow duration-300">
-
-                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
-
-                        <img
-                            src="https://i.pinimg.com/736x/39/b2/12/39b2126bca6d09b6afb740baf7084aca.jpg"
-                            alt="[Lambang Gryffindor]"
-                            class="w-full h-full object-contain drop-shadow-2xl"
-                        >
-
+                <!-- THE CHAMPIONSHIP CUP -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
+                    <div class="flex items-center gap-3 mb-5 min-w-0">
+                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">♕</span>
+                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE CHAMPIONSHIP CUP</h3>
                     </div>
 
-                    <div class="p-6 text-center">
-
-                        <h3 class="font-cinzel text-2xl font-bold text-red-500 mb-3">
-                            Gryffindor
-                        </h3>
-
-                        <p class="text-sm text-magic-textMuted">
-                            Mengutamakan keberanian, kegigihan, dan jiwa ksatria di atas segalanya.
-                            Tim Gryffindor dikenal dengan gaya permainan mereka yang berani mengambil
-                            risiko, tak kenal takut, dan selalu siap menghadapi tantangan terberat di lapangan.
-                        </p>
-
+                    <div class="flex justify-center mb-6">
+                        <img src="Gryffindor.png" alt="Gryffindor" class="w-56 h-56 md:w-64 md:h-64 object-contain rounded-xl bg-black/40 border border-white/10 p-3">
                     </div>
 
+                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
+                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Gryffindor</h4>
+                        <p>Untuk House yang berhasil menjadi yang terbaik. Diberikan kepada House yang berhasil menjadi juara House Broom Tournament pada musim tersebut.</p>
+                    </div>
                 </div>
 
-
-                <!-- Hufflepuff -->
-
-                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-yellow-600/50 shadow-lg hover:shadow-yellow-600/50 transition-shadow duration-300">
-
-                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
-
-                        <img
-                            src="https://sw6.elbenwald.de/media/80/b0/59/1695768417/E1078690_2.jpg"
-                            alt="[Lambang Hufflepuff]"
-                            class="w-full h-full object-contain drop-shadow-2xl"
-                        >
-
+                <!-- THE RISING HOUSE -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
+                    <div class="flex items-center gap-3 mb-5 min-w-0">
+                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">↗</span>
+                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE RISING HOUSE</h3>
                     </div>
 
-                    <div class="p-6 text-center">
-
-                        <h3 class="font-cinzel text-2xl font-bold text-yellow-500 mb-3">
-                            Hufflepuff
-                        </h3>
-
-                        <p class="text-sm text-magic-textMuted">
-                            Mengedepankan kerja sama tim yang solid, kesetiaan, dan sportivitas tinggi.
-                            Tim Hufflepuff adalah tim yang paling konsisten dan tangguh dalam bertahan,
-                            menjadikan mereka lawan yang pantang menyerah hingga peluit akhir berbunyi.
-                        </p>
-
+                    <div class="flex justify-center mb-6">
+                        <img src="Ravenclaw.jpg" alt="Ravenclaw" class="w-56 h-56 md:w-64 md:h-64 object-contain rounded-xl bg-black/40 border border-white/10 p-3">
                     </div>
 
+                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
+                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Ravenclaw</h4>
+                        <p>Untuk House yang berkembang melampaui ekspektasi. Diberikan kepada House yang menunjukkan perkembangan paling signifikan sepanjang House Broom Tournament, baik dari segi performa, strategi, kerja sama tim, maupun hasil pertandingan.</p>
+                    </div>
                 </div>
 
-
-                <!-- Slytherin -->
-
-                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-green-800/50 shadow-lg hover:shadow-green-800/50 transition-shadow duration-300">
-
-                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
-
-                        <img
-                            src="https://i.pinimg.com/736x/c8/6d/f4/c86df485a96c6b4d21371f324e22eea6.jpg"
-                            alt="[Lambang Slytherin]"
-                            class="w-full h-full object-contain drop-shadow-2xl"
-                        >
-
+                <!-- THE SEEKER'S CROWN -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
+                    <div class="flex items-center gap-3 mb-5 min-w-0">
+                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">♛</span>
+                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE SEEKER'S CROWN</h3>
                     </div>
 
-                    <div class="p-6 text-center">
-
-                        <h3 class="font-cinzel text-2xl font-bold text-green-500 mb-3">
-                            Slytherin
-                        </h3>
-
-                        <p class="text-sm text-magic-textMuted">
-                            Bermain dengan ambisi, kecerdikan, dan taktik yang tajam. Tim Slytherin
-                            seringkali menggunakan strategi yang sulit ditebak namun brilian,
-                            mengutamakan kemenangan mutlak dengan memanfaatkan setiap kelemahan lawan.
-                        </p>
-
+                    <div class="flex justify-center mb-6">
+                        <img src="Zenith.png" alt="Zenith Azure Stark" class="w-56 h-56 md:w-64 md:h-64 object-contain rounded-xl bg-black/40 border border-white/10 p-3">
                     </div>
 
+                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
+                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Zenith Azure Stark</h4>
+                        <p>Untuk Seeker yang menguasai perburuan Snitch. Diberikan kepada Seeker dengan performa paling menonjol sepanjang House Broom Tournament, berdasarkan kemampuan menangkap Snitch, ketepatan waktu, konsistensi, serta kontribusinya terhadap tim.</p>
+                    </div>
                 </div>
 
-
-                <!-- Ravenclaw -->
-
-                <div class="bg-magic-panel rounded-2xl overflow-hidden border border-blue-800/50 shadow-lg hover:shadow-blue-800/50 transition-shadow duration-300">
-
-                    <div class="aspect-square bg-black/40 p-6 flex justify-center items-center">
-
-                        <img
-                            src="https://image-cdn.neatoshop.com/styleimg/56134/none/navy/default/346204-20;1487588570y.jpg"
-                            alt="[Lambang Ravenclaw]"
-                            class="w-full h-full object-contain drop-shadow-2xl"
-                        >
-
+                <!-- THE QUAFFLE TRINITY -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
+                    <div class="flex items-center gap-3 mb-5 min-w-0">
+                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">◈</span>
+                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE QUAFFLE TRINITY</h3>
                     </div>
 
-                    <div class="p-6 text-center">
-
-                        <h3 class="font-cinzel text-2xl font-bold text-blue-400 mb-3">
-                            Ravenclaw
-                        </h3>
-
-                        <p class="text-sm text-magic-textMuted">
-                            Mengandalkan kecerdasan, analisis permainan, dan taktik terbang yang kreatif.
-                            Ravenclaw dikenal sebagai tim yang strategis dan inovatif, selalu selangkah
-                            lebih maju dari lawan-lawannya dengan perencanaan yang matang.
-                        </p>
-
+                    <div class="flex justify-center mb-6">
+                        <img src="SlyChaser.png" alt="SlyChaser" class="w-56 h-56 md:w-64 md:h-64 object-contain rounded-xl bg-black/40 border border-white/10 p-3">
                     </div>
 
+                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
+                        <ol class="list-none space-y-1 mb-4 text-left">
+                            <li>1. Sylla Luthariél</li>
+                            <li>2. De Broglie White Jaechas</li>
+                            <li>3. Melly Candies Rosier Malfoy</li>
+                        </ol>
+                        <p>Untuk tiga Chaser yang bermain sebagai satu kesatuan. Diberikan kepada trio Chaser dengan koordinasi, kerja sama, permainan menyerang, passing, dan kemampuan mencetak poin yang paling menonjol sepanjang House Broom Tournament.</p>
+                    </div>
+                </div>
+
+                <!-- THE BLUDGER SENTINELS -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
+                    <div class="flex items-center gap-3 mb-5 min-w-0">
+                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">◆</span>
+                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE BLUDGER SENTINELS</h3>
+                    </div>
+
+                    <div class="flex justify-center mb-6">
+                        <img src="HuffBeater.png" alt="HuffBeater" class="w-56 h-56 md:w-64 md:h-64 object-contain rounded-xl bg-black/40 border border-white/10 p-3">
+                    </div>
+
+                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
+                        <ol class="list-none space-y-1 mb-4 text-left">
+                            <li>1. Sera Serenity</li>
+                            <li>2. Elion Lysander Zephyr</li>
+                        </ol>
+                        <p>Untuk duo yang mampu mengendalikan kekacauan di lapangan. Diberikan kepada pasangan Beater dengan koordinasi, kontrol Bludger, kemampuan bertahan, dan pengaruh terhadap jalannya pertandingan yang paling menonjol sepanjang House Broom Tournament.</p>
+                    </div>
+                </div>
+
+                <!-- THE IRON HOOPS -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
+                    <div class="flex items-center gap-3 mb-5 min-w-0">
+                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">⬡</span>
+                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE IRON HOOPS</h3>
+                    </div>
+
+                    <div class="flex justify-center mb-6">
+                        <img src="Stella.png" alt="Stella Lucyanna Celeste" class="w-56 h-56 md:w-64 md:h-64 object-contain rounded-xl bg-black/40 border border-white/10 p-3">
+                    </div>
+
+                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
+                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Stella Lucyanna Celeste</h4>
+                        <p>Untuk Keeper yang berdiri di antara tim dan kekalahan. Diberikan kepada Keeper dengan kemampuan penyelamatan, positioning, konsistensi, dan kontribusi pertahanan yang paling menonjol sepanjang House Broom Tournament.</p>
+                    </div>
                 </div>
 
             </div>
-
         </section>
 
-
-        <!-- =========================================================
-             CARA BERMAIN
-        ========================================================== -->
-
-        <section id="rules" class="page-section hidden">
-
-            <div class="text-center mb-8">
-
-                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-magic-gold mb-2 tracking-wider">
-                    Cara Bermain Quidditch
-                </h2>
-
-                <div class="h-1 w-24 bg-magic-gold mx-auto rounded mb-4"></div>
-
-            </div>
-
-
-            <div class="flex overflow-x-auto gap-2 md:gap-6 pb-3 mb-8 border-b border-white/10 no-scrollbar whitespace-nowrap px-2">
-
-                <button
-                    onclick="switchRuleTab('rule-intro')"
-                    class="rule-tab-btn active text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors"
-                >
-                    Pengenalan
-                </button>
-
-                <button
-                    onclick="switchRuleTab('rule-roles')"
-                    class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors"
-                >
-                    Role Pemain
-                </button>
-
-                <button
-                    onclick="switchRuleTab('rule-system')"
-                    class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors"
-                >
-                    Sistem Permainan
-                </button>
-
-                <button
-                    onclick="switchRuleTab('rule-flow')"
-                    class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors"
-                >
-                    Urutan Ronde
-                </button>
-
-                <button
-                    onclick="switchRuleTab('rule-terms')"
-                    class="rule-tab-btn text-magic-text hover:text-magic-gold px-4 py-2 font-cinzel text-sm md:text-lg transition-colors"
-                >
-                    Ketentuan
-                </button>
-
-            </div>
-
-
-            <!-- Pengenalan -->
-
-            <div
-                id="rule-intro"
-                class="rule-content fade-in block bg-magic-panel p-6 md:p-8 rounded-2xl border border-white/5 shadow-lg"
-            >
-
-                <h3 class="font-cinzel text-2xl text-magic-gold mb-4">
-                    Quidditch Hogwarts Institute
-                </h3>
-
-                <p class="text-magic-text mb-4 leading-relaxed">
-                    Quidditch Hogwarts Institute adalah permainan berbasis
-                    <em class="text-magic-gold">choice-based</em>
-                    yang mengadaptasi sistem permainan <strong>Werewolf</strong>.
-                </p>
-
-                <p class="text-magic-text mb-6 leading-relaxed">
-                    Setiap pemain akan diberikan pilihan aksi sesuai dengan role masing-masing.
-                    Seluruh jalannya pertandingan dipandu oleh <strong>Wasit Quidditch</strong>,
-                    yang bertugas memberikan pilihan, memproses aksi pemain, serta mengumumkan hasil pertandingan.
-                </p>
-
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-
-                    <div class="bg-black/40 p-5 rounded-xl border border-white/10">
-
-                        <h4 class="font-cinzel text-lg text-white mb-3 border-b border-gray-700 pb-2">
-                            Komposisi Tim
-                        </h4>
-
-                        <p class="text-sm text-gray-400 mb-2">
-                            Setiap tim terdiri dari 7 pemain:
-                        </p>
-
-                        <ul class="list-disc list-inside space-y-1 text-magic-gold font-bold">
-                            <li>1 Seeker</li>
-                            <li>3 Chasers</li>
-                            <li>2 Beaters</li>
-                            <li>1 Keeper</li>
-                        </ul>
-
-                    </div>
-
-
-                    <div class="bg-black/40 p-5 rounded-xl border border-white/10">
-
-                        <h4 class="font-cinzel text-lg text-white mb-3 border-b border-gray-700 pb-2">
-                            Akhir Pertandingan
-                        </h4>
-
-                        <p class="text-sm text-gray-400 mb-2">
-                            Pertandingan berlangsung sampai:
-                        </p>
-
-                        <ul class="list-disc list-inside space-y-2 text-white">
-
-                            <li>
-                                Seeker berhasil menangkap
-                                <span class="text-magic-gold">Golden Snitch</span>,
-                                <strong class="text-gray-500 italic">atau</strong>
-                            </li>
-
-                            <li>
-                                Batas ronde pertandingan
-                                (maksimal 10 ronde) telah berakhir.
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Role Pemain -->
-
-            <div
-                id="rule-roles"
-                class="rule-content hidden fade-in space-y-6"
-            >
-
-                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-yellow-500 shadow-md">
-
-                    <h3 class="font-cinzel text-2xl font-bold text-yellow-500 mb-2">
-                        Seeker
-                    </h3>
-
-                    <p class="text-magic-text mb-4">
-                        Bertugas mencari dan menangkap <strong>Golden Snitch</strong>.
-                    </p>
-
-                    <div class="text-sm text-magic-textMuted space-y-3 mb-4">
-
-                        <p>
-                            Berbeda dengan role lainnya, Seeker tidak ikut dalam permainan lapangan.
-                            Seeker hanya fokus mencari Golden Snitch melalui website khusus yang telah
-                            disediakan. Sebelum pertandingan dimulai, Wasit memberikan akses website
-                            pencarian Golden Snitch kepada Seeker.
-                        </p>
-
-                        <p>
-                            Jika berhasil menemukan Golden Snitch, Seeker wajib memberitahu Wasit.
-                            Wasit kemudian akan mengumumkan:
-                            <br>
-                            <em class="text-magic-gold block mt-2">
-                                «"Golden Snitch telah berhasil ditangkap!"»
-                            </em>
-                        </p>
-
-                        <p>
-                            Tim tersebut mendapatkan
-                            <strong class="text-yellow-400">+150 poin</strong>
-                            dan pertandingan dihentikan untuk menghitung skor akhir.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-red-500 shadow-md">
-
-                    <h3 class="font-cinzel text-2xl font-bold text-red-500 mb-2">
-                        Chaser
-                    </h3>
-
-                    <p class="text-magic-text mb-4">
-                        Bertugas menyerang dan mencetak poin melalui Quaffle.
-                    </p>
-
-                    <div class="text-sm text-magic-textMuted space-y-3">
-
-                        <p>
-                            Chaser akan diberikan pilihan aksi berdasarkan situasi permainan.
-                            Setiap keberhasilan dalam menyerang dapat menghasilkan poin.
-                        </p>
-
-                        <p>
-                            Chaser harus bekerja sama untuk menciptakan peluang,
-                            membaca pertahanan lawan, dan memanfaatkan momentum.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-gray-400 shadow-md">
-
-                    <h3 class="font-cinzel text-2xl font-bold text-gray-300 mb-2">
-                        Beater
-                    </h3>
-
-                    <p class="text-magic-text mb-4">
-                        Bertugas menggunakan Bludger untuk mengganggu permainan lawan.
-                    </p>
-
-                    <div class="text-sm text-magic-textMuted space-y-3">
-
-                        <p>
-                            Beater berperan menjaga pemain sendiri dan mengganggu pemain lawan
-                            melalui pilihan aksi yang tersedia.
-                        </p>
-
-                        <p>
-                            Dua Beater dalam satu tim dapat mengatur strategi bersama untuk
-                            mengendalikan jalannya pertandingan.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="bg-magic-panel p-6 rounded-xl border-l-4 border-blue-500 shadow-md">
-
-                    <h3 class="font-cinzel text-2xl font-bold text-blue-400 mb-2">
-                        Keeper
-                    </h3>
-
-                    <p class="text-magic-text mb-4">
-                        Bertugas mempertahankan tiga ring dari serangan lawan.
-                    </p>
-
-                    <div class="text-sm text-magic-textMuted space-y-3">
-
-                        <p>
-                            Keeper akan menjadi garis pertahanan terakhir ketika lawan mencoba
-                            mencetak poin.
-                        </p>
-
-                        <p>
-                            Positioning, pengambilan keputusan, dan kemampuan membaca pilihan
-                            lawan menjadi faktor penting dalam menjalankan role ini.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Sistem Permainan -->
-
-            <div
-                id="rule-system"
-                class="rule-content hidden fade-in space-y-6"
-            >
-
-                <div class="bg-magic-panel p-6 md:p-8 rounded-2xl border border-white/5">
-
-                    <h3 class="font-cinzel text-2xl text-magic-gold mb-5">
-                        Sistem Pertandingan
-                    </h3>
-
-                    <p class="text-magic-text leading-relaxed mb-6">
-                        Pertandingan menggunakan sistem berbasis pilihan.
-                        Setiap ronde, pemain mendapatkan kesempatan menjalankan aksi sesuai
-                        dengan role masing-masing.
-                    </p>
-
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                        <div class="bg-black/40 p-5 rounded-xl border border-white/10">
-
-                            <h4 class="font-cinzel text-lg text-white mb-3">
-                                Tim Menyerang
-                            </h4>
-
-                            <p class="text-sm text-gray-400">
-                                Chaser dari tim yang sedang menyerang menjalankan aksi ofensif,
-                                sementara Keeper lawan bertugas mempertahankan ring.
-                            </p>
-
-                        </div>
-
-
-                        <div class="bg-black/40 p-5 rounded-xl border border-white/10">
-
-                            <h4 class="font-cinzel text-lg text-white mb-3">
-                                Tim Bertahan
-                            </h4>
-
-                            <p class="text-sm text-gray-400">
-                                Keeper menjadi pertahanan utama dan seluruh role lainnya
-                                menjalankan tugas berdasarkan pilihan yang diberikan Wasit.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="bg-magic-panel p-6 md:p-8 rounded-2xl border border-magic-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
-
-                    <h3 class="font-cinzel text-2xl text-magic-gold mb-5">
-                        Pergantian Posisi
-                    </h3>
-
-                    <p class="text-magic-text leading-relaxed">
-                        Posisi menyerang dan bertahan akan bergantian setiap ronde.
-                        Sistem ini memastikan kedua tim mendapatkan kesempatan yang seimbang
-                        untuk menyerang maupun bertahan.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- Urutan Ronde -->
-
-            <div
-                id="rule-flow"
-                class="rule-content hidden fade-in space-y-6"
-            >
-
-                <div class="bg-magic-panel p-6 md:p-8 rounded-2xl border border-white/5">
-
-                    <h3 class="font-cinzel text-2xl text-magic-gold mb-5">
-                        Urutan Permainan
-                    </h3>
-
-                    <div class="space-y-5">
-
-                        <div>
-                            <h4 class="font-cinzel text-lg text-white">
-                                Ronde 1
-                            </h4>
-
-                            <p class="text-gray-400 text-sm mt-1">
-                                Tim pertama menyerang dan tim kedua bertahan.
-                            </p>
-                        </div>
-
-
-                        <div>
-                            <h4 class="font-cinzel text-lg text-white">
-                                Ronde 2
-                            </h4>
-
-                            <p class="text-gray-400 text-sm mt-1">
-                                Tim kedua menyerang dan tim pertama bertahan.
-                            </p>
-                        </div>
-
-
-                        <div>
-                            <h4 class="font-cinzel text-lg text-white">
-                                Ronde Berikutnya
-                            </h4>
-
-                            <p class="text-gray-400 text-sm mt-1">
-                                Posisi akan bergantian setiap ronde.
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-
-                        <div class="bg-black/40 p-4 rounded-xl border border-gray-700">
-
-                            <h4 class="font-cinzel font-bold text-white mb-2 text-lg">
-                                Contoh Ronde 1
-                            </h4>
-
-                            <p class="text-red-400 font-bold text-sm">
-                                Gryffindor → Menyerang
-                            </p>
-
-                            <p class="text-green-500 font-bold text-sm mb-2">
-                                Slytherin → Bertahan
-                            </p>
-
-                            <ul class="text-sm text-gray-400 space-y-1">
-                                <li>- Chasers Gryffindor menyerang.</li>
-                                <li>- Keeper Slytherin bertahan.</li>
-                            </ul>
-
-                        </div>
-
-
-                        <div class="bg-black/40 p-4 rounded-xl border border-gray-700">
-
-                            <h4 class="font-cinzel font-bold text-white mb-2 text-lg">
-                                Contoh Ronde 2
-                            </h4>
-
-                            <p class="text-green-500 font-bold text-sm">
-                                Slytherin → Menyerang
-                            </p>
-
-                            <p class="text-red-400 font-bold text-sm mb-2">
-                                Gryffindor → Bertahan
-                            </p>
-
-                            <ul class="text-sm text-gray-400 space-y-1">
-                                <li>- Chasers Slytherin menyerang.</li>
-                                <li>- Keeper Gryffindor bertahan.</li>
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="bg-magic-panel p-6 md:p-8 rounded-2xl border border-magic-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
-
-                    <h3 class="font-cinzel text-2xl text-magic-gold mb-4">
-                        Bonus Momentum
-                    </h3>
-
-                    <p class="text-magic-text leading-relaxed">
-                        Momentum dapat memberikan pengaruh tambahan terhadap jalannya permainan
-                        dan menjadi salah satu faktor yang harus diperhatikan oleh kedua tim.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- Ketentuan -->
-
-            <div
-                id="rule-terms"
-                class="rule-content hidden fade-in space-y-6"
-            >
-
-                <div class="bg-magic-panel p-6 md:p-8 rounded-2xl border border-white/5">
-
-                    <h3 class="font-cinzel text-2xl text-magic-gold mb-5">
-                        Ketentuan Umum
-                    </h3>
-
-                    <ul class="list-disc list-inside space-y-3 text-magic-text">
-
-                        <li>
-                            Setiap tim terdiri dari <strong>7 pemain</strong>.
-                        </li>
-
-                        <li>
-                            Setiap pemain hanya menjalankan tugas sesuai
-                            <strong>role yang dimiliki</strong>.
-                        </li>
-
-                        <li>
-                            Semua pilihan dikirim secara <strong>pribadi</strong>
-                            kepada Wasit Quidditch.
-                        </li>
-
-                        <li>
-                            Setiap ronde memiliki batas waktu
-                            <strong>1 menit</strong>.
-                        </li>
-
-                        <li>
-                            Pemain yang tidak mengirim pilihan dianggap
-                            <strong>tidak melakukan aksi</strong>.
-                        </li>
-
-                        <li>
-                            Keputusan Wasit Quidditch bersifat
-                            <strong>mutlak</strong>.
-                        </li>
-
-                        <li>
-                            Permainan berakhir ketika Golden Snitch berhasil
-                            <strong>ditemukan oleh Seeker</strong>.
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================================================
-             HALL OF FAME
-        ========================================================== -->
-
-        <section id="hall-of-fame" class="page-section hidden">
-
-            <div class="hof-wrap">
-
-
-                <!-- HERO -->
-
-                <div class="hof-hero">
-
-                    <div class="hof-eyebrow">
-                        HOGWARTS INSTITUTE QUIDDITCH
-                    </div>
-
-                    <h2 class="hof-title">
-                        HALL OF FAME
-                    </h2>
-
-                    <div class="hof-subtitle">
-                        HOUSE BROOM TOURNAMENT · SEASON I · 2026
-                    </div>
-
-                    <div class="hof-rule">
-                        <span>THE HONOURS OF THE SEASON</span>
-                    </div>
-
-                </div>
-
-
-                <!-- TEAM HONOURS -->
-
-                <div class="hof-section-label">
-                    <span>TEAM HONOURS</span>
-                </div>
-
-
-                <!-- CHAMPIONSHIP -->
-
-                <article class="hof-card">
-
-                    <div class="hof-card-head">
-
-                        <div>
-
-                            <div class="hof-code">
-                                HONOUR I
-                            </div>
-
-                            <h3 class="hof-award-name">
-                                THE CHAMPIONSHIP CUP
-                            </h3>
-
-                        </div>
-
-                        <div class="hof-season">
-                            SEASON I
-                        </div>
-
-                    </div>
-
-
-                    <div class="hof-team-body">
-
-                        <div class="hof-emblem">
-
-                            <img
-                                src="Gryffindor.png"
-                                alt="Gryffindor"
-                            >
-
-                        </div>
-
-
-                        <div>
-
-                            <div class="hof-winner-label">
-                                CHAMPIONS
-                            </div>
-
-                            <h4 class="hof-winner">
-                                GRYFFINDOR
-                            </h4>
-
-                            <p class="hof-tagline">
-                                Untuk House yang berhasil menjadi yang terbaik.
-                            </p>
-
-                            <p class="hof-desc">
-                                Diberikan kepada House yang berhasil menjadi juara
-                                House Broom Tournament pada musim tersebut.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- RISING HOUSE -->
-
-                <article class="hof-card">
-
-                    <div class="hof-card-head">
-
-                        <div>
-
-                            <div class="hof-code">
-                                HONOUR II
-                            </div>
-
-                            <h3 class="hof-award-name">
-                                THE RISING HOUSE
-                            </h3>
-
-                        </div>
-
-                        <div class="hof-season">
-                            SEASON I
-                        </div>
-
-                    </div>
-
-
-                    <div class="hof-team-body">
-
-                        <div class="hof-emblem">
-
-                            <img
-                                src="Ravenclaw.png"
-                                alt="Ravenclaw"
-                            >
-
-                        </div>
-
-
-                        <div>
-
-                            <div class="hof-winner-label">
-                                RAVENCLAW
-                            </div>
-
-                            <h4 class="hof-winner">
-                                RAVENCLAW
-                            </h4>
-
-                            <p class="hof-tagline">
-                                Untuk House yang berkembang melampaui ekspektasi.
-                            </p>
-
-                            <p class="hof-desc">
-                                Diberikan kepada House yang menunjukkan perkembangan
-                                paling signifikan sepanjang House Broom Tournament,
-                                baik dari segi performa, strategi, kerja sama tim,
-                                maupun hasil pertandingan.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- INDIVIDUAL -->
-
-                <div class="hof-section-label">
-                    <span>INDIVIDUAL &amp; UNIT HONOURS</span>
-                </div>
-
-
-                <!-- SEEKER -->
-
-                <article class="hof-card hof-player">
-
-                    <div class="hof-photo">
-
-                        <img
-                            src="Zenith.png"
-                            alt="Zenith Azure Stark"
-                        >
-
-                        <div class="hof-role">
-                            S
-                        </div>
-
-                    </div>
-
-
-                    <div class="hof-player-info">
-
-                        <div class="hof-code">
-                            HONOUR III
-                        </div>
-
-                        <h3 class="hof-award-name">
-                            THE SEEKER'S CROWN
-                        </h3>
-
-                        <div class="hof-ornament"></div>
-
-                        <h4 class="hof-person-name">
-                            Zenith Azure Stark
-                        </h4>
-
-                        <div class="hof-position">
-                            SEEKER
-                        </div>
-
-                        <p class="hof-tagline">
-                            Untuk Seeker yang menguasai perburuan Snitch.
-                        </p>
-
-                        <p class="hof-desc">
-                            Diberikan kepada Seeker dengan performa paling menonjol
-                            sepanjang House Broom Tournament, berdasarkan kemampuan
-                            menangkap Snitch, ketepatan waktu, konsistensi, serta
-                            kontribusinya terhadap tim.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <!-- CHASER TRIO -->
-
-                <article class="hof-card hof-unit">
-
-                    <div
-                        class="hof-card-head"
-                        style="padding:0 0 22px;border-bottom:1px solid rgba(255,255,255,.06)"
-                    >
-
-                        <div>
-
-                            <div class="hof-code">
-                                HONOUR IV
-                            </div>
-
-                            <h3 class="hof-award-name">
-                                THE QUAFFLE TRINITY
-                            </h3>
-
-                        </div>
-
-                        <div class="hof-season">
-                            III CHASERS
-                        </div>
-
-                    </div>
-
-
-                    <div class="hof-unit-intro">
-
-                        <p class="hof-tagline">
-                            Untuk tiga Chaser yang bermain sebagai satu kesatuan.
-                        </p>
-
-                        <p class="hof-desc">
-                            Diberikan kepada trio Chaser dengan koordinasi,
-                            kerja sama, permainan menyerang, passing, dan kemampuan
-                            mencetak poin yang paling menonjol sepanjang
-                            House Broom Tournament.
-                        </p>
-
-                    </div>
-
-
-                    <div class="hof-members trio">
-
-
-                        <!-- Sylla -->
-
-                        <div class="hof-member">
-
-                            <div class="hof-member-photo">
-
-                                <img
-                                    src="SlyChaser.png"
-                                    alt="Sylla Luthariél"
-                                >
-
-                            </div>
-
-                            <div class="hof-member-number">
-                                01
-                            </div>
-
-                            <h4 class="hof-member-name">
-                                Sylla Luthariél
-                            </h4>
-
-                            <div class="hof-member-role">
-                                CHASER
-                            </div>
-
-                        </div>
-
-
-                        <!-- De Broglie -->
-
-                        <div class="hof-member">
-
-                            <div class="hof-member-photo">
-
-                                <img
-                                    src="SlyChaser.png"
-                                    alt="De Broglie White Jaechas"
-                                >
-
-                            </div>
-
-                            <div class="hof-member-number">
-                                02
-                            </div>
-
-                            <h4 class="hof-member-name">
-                                De Broglie White Jaechas
-                            </h4>
-
-                            <div class="hof-member-role">
-                                CHASER
-                            </div>
-
-                        </div>
-
-
-                        <!-- Melly -->
-
-                        <div class="hof-member">
-
-                            <div class="hof-member-photo">
-
-                                <img
-                                    src="SlyChaser.png"
-                                    alt="Melly Candies Rosier Malfoy"
-                                >
-
-                            </div>
-
-                            <div class="hof-member-number">
-                                03
-                            </div>
-
-                            <h4 class="hof-member-name">
-                                Melly Candies Rosier Malfoy
-                            </h4>
-
-                            <div class="hof-member-role">
-                                CHASER
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- BEATER DUO -->
-
-                <article class="hof-card hof-unit">
-
-                    <div
-                        class="hof-card-head"
-                        style="padding:0 0 22px;border-bottom:1px solid rgba(255,255,255,.06)"
-                    >
-
-                        <div>
-
-                            <div class="hof-code">
-                                HONOUR V
-                            </div>
-
-                            <h3 class="hof-award-name">
-                                THE BLUDGER SENTINELS
-                            </h3>
-
-                        </div>
-
-                        <div class="hof-season">
-                            II BEATERS
-                        </div>
-
-                    </div>
-
-
-                    <div class="hof-unit-intro">
-
-                        <p class="hof-tagline">
-                            Untuk duo yang mampu mengendalikan kekacauan di lapangan.
-                        </p>
-
-                        <p class="hof-desc">
-                            Diberikan kepada pasangan Beater dengan koordinasi,
-                            kontrol Bludger, kemampuan bertahan, dan pengaruh terhadap
-                            jalannya pertandingan yang paling menonjol sepanjang
-                            House Broom Tournament.
-                        </p>
-
-                    </div>
-
-
-                    <div class="hof-members duo">
-
-
-                        <!-- Sera -->
-
-                        <div class="hof-member">
-
-                            <div class="hof-member-photo">
-
-                                <img
-                                    src="HuffBeater.png"
-                                    alt="Sera Serenity"
-                                >
-
-                            </div>
-
-                            <div class="hof-member-number">
-                                01
-                            </div>
-
-                            <h4 class="hof-member-name">
-                                Sera Serenity
-                            </h4>
-
-                            <div class="hof-member-role">
-                                BEATER
-                            </div>
-
-                        </div>
-
-
-                        <!-- Elion -->
-
-                        <div class="hof-member">
-
-                            <div class="hof-member-photo">
-
-                                <img
-                                    src="HuffBeater.png"
-                                    alt="Elion Lysander Zephyr"
-                                >
-
-                            </div>
-
-                            <div class="hof-member-number">
-                                02
-                            </div>
-
-                            <h4 class="hof-member-name">
-                                Elion Lysander Zephyr
-                            </h4>
-
-                            <div class="hof-member-role">
-                                BEATER
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- KEEPER -->
-
-                <article class="hof-card hof-player">
-
-                    <div class="hof-photo">
-
-                        <img
-                            src="Stella.png"
-                            alt="Stella Lucyanna Celeste"
-                        >
-
-                        <div class="hof-role">
-                            K
-                        </div>
-
-                    </div>
-
-
-                    <div class="hof-player-info">
-
-                        <div class="hof-code">
-                            HONOUR VI
-                        </div>
-
-                        <h3 class="hof-award-name">
-                            THE IRON HOOPS
-                        </h3>
-
-                        <div class="hof-ornament"></div>
-
-                        <h4 class="hof-person-name">
-                            Stella Lucyanna Celeste
-                        </h4>
-
-                        <div class="hof-position">
-                            KEEPER
-                        </div>
-
-                        <p class="hof-tagline">
-                            Untuk Keeper yang berdiri di antara tim dan kekalahan.
-                        </p>
-
-                        <p class="hof-desc">
-                            Diberikan kepada Keeper dengan kemampuan penyelamatan,
-                            positioning, konsistensi, dan kontribusi pertahanan
-                            yang paling menonjol sepanjang House Broom Tournament.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <!-- HALL OF FAME FOOTER -->
-
-                <div class="hof-footer">
-
-                    <div class="hof-footer-line"></div>
-
-                    <p>
-                        Nama-nama ini bukan sekadar pemenang,
-                        melainkan bagian dari sejarah House Broom Tournament.
-                    </p>
-
-                    <small>
-                        HOGWARTS INSTITUTE · 2026
-                    </small>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================================================
-             KLASEMEN
-        ========================================================== -->
-
+        <!-- ==================== KLASEMEN SECTION ==================== -->
         <section id="klasemen" class="page-section hidden">
-
             <div class="text-center mb-10">
-
-                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">
-                    Klasemen
-                </h2>
-
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Klasemen</h2>
                 <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
-
             </div>
-
 
             <div class="bg-magic-panel border border-white/10 rounded-2xl p-4 md:p-8 shadow-xl max-w-3xl mx-auto">
-
                 <div class="space-y-4">
-
-
-                    <!-- Gryffindor -->
-
+                    
+                    <!-- Tim 1 (Contoh) -->
                     <div class="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-magic-gold/50 shadow-gold">
-
-                        <div class="font-cinzel text-2xl text-magic-gold font-bold w-8 text-center">
-                            1
-                        </div>
-
-                        <img
-                            src="https://i.pinimg.com/736x/39/b2/12/39b2126bca6d09b6afb740baf7084aca.jpg"
-                            alt="[Lambang Gryffindor]"
-                            class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1"
-                        >
-
+                        <div class="font-cinzel text-2xl text-magic-gold font-bold w-8 text-center">1</div>
+                        <img src="https://i.pinimg.com/736x/39/b2/12/39b2126bca6d09b6afb740baf7084aca.jpg" alt="[Lambang Gryffindor]" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full">
                         <div class="flex-grow">
-
-                            <h3 class="font-cinzel text-xl text-white font-bold">
-                                Gryffindor
-                            </h3>
-
-                            <p class="text-xs text-magic-textMuted">
-                                Pertandingan: 0 | Menang: 0
-                            </p>
-
+                            <h3 class="font-cinzel text-lg md:text-xl font-bold">Gryffindor</h3>
+                            <p class="text-sm text-magic-textMuted">Points: -</p>
                         </div>
-
-                        <div class="text-right">
-
-                            <span class="block font-bold text-2xl text-magic-gold">
-                                0
-                            </span>
-
-                            <span class="text-xs text-magic-textMuted uppercase">
-                                Points
-                            </span>
-
-                        </div>
-
                     </div>
 
-
-                    <!-- Ravenclaw -->
-
-                    <div class="flex items-center gap-4 bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition-colors">
-
-                        <div class="font-cinzel text-2xl text-gray-400 font-bold w-8 text-center">
-                            2
+                    <!-- Tim 2 -->
+                    <div class="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5">
+                        <div class="font-cinzel text-2xl text-magic-textMuted font-bold w-8 text-center">2</div>
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                            <span class="font-cinzel text-xl text-gray-500">H</span>
                         </div>
-
-                        <img
-                            src="https://image-cdn.neatoshop.com/styleimg/56134/none/navy/default/346204-20;1487588570y.jpg"
-                            alt="[Lambang Ravenclaw]"
-                            class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1"
-                        >
-
                         <div class="flex-grow">
-
-                            <h3 class="font-cinzel text-xl text-white font-bold">
-                                Ravenclaw
-                            </h3>
-
-                            <p class="text-xs text-magic-textMuted">
-                                Pertandingan: 0 | Menang: 0
-                            </p>
-
+                            <h3 class="font-cinzel text-lg md:text-xl font-bold">Hufflepuff</h3>
+                            <p class="text-sm text-magic-textMuted">Points: -</p>
                         </div>
-
-                        <div class="text-right">
-
-                            <span class="block font-bold text-2xl text-white">
-                                0
-                            </span>
-
-                            <span class="text-xs text-magic-textMuted uppercase">
-                                Points
-                            </span>
-
-                        </div>
-
                     </div>
 
-
-                    <!-- Hufflepuff -->
-
-                    <div class="flex items-center gap-4 bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition-colors">
-
-                        <div class="font-cinzel text-2xl text-yellow-700 font-bold w-8 text-center">
-                            3
+                    <!-- Tim 3 -->
+                    <div class="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5">
+                        <div class="font-cinzel text-2xl text-magic-textMuted font-bold w-8 text-center">3</div>
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                            <span class="font-cinzel text-xl text-gray-500">R</span>
                         </div>
-
-                        <img
-                            src="https://sw6.elbenwald.de/media/80/b0/59/1695768417/E1078690_2.jpg"
-                            alt="[Lambang Hufflepuff]"
-                            class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1"
-                        >
-
                         <div class="flex-grow">
-
-                            <h3 class="font-cinzel text-xl text-white font-bold">
-                                Hufflepuff
-                            </h3>
-
-                            <p class="text-xs text-magic-textMuted">
-                                Pertandingan: 0 | Menang: 0
-                            </p>
-
+                            <h3 class="font-cinzel text-lg md:text-xl font-bold">Ravenclaw</h3>
+                            <p class="text-sm text-magic-textMuted">Points: -</p>
                         </div>
-
-                        <div class="text-right">
-
-                            <span class="block font-bold text-2xl text-white">
-                                0
-                            </span>
-
-                            <span class="text-xs text-magic-textMuted uppercase">
-                                Points
-                            </span>
-
-                        </div>
-
                     </div>
 
-
-                    <!-- Slytherin -->
-
-                    <div class="flex items-center gap-4 bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition-colors">
-
-                        <div class="font-cinzel text-2xl text-gray-500 font-bold w-8 text-center">
-                            4
+                    <!-- Tim 4 -->
+                    <div class="flex items-center gap-4 bg-black/40 p-4 rounded-xl border border-white/5">
+                        <div class="font-cinzel text-2xl text-magic-textMuted font-bold w-8 text-center">4</div>
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                            <span class="font-cinzel text-xl text-gray-500">S</span>
                         </div>
-
-                        <img
-                            src="https://i.pinimg.com/736x/c8/6d/f4/c86df485a96c6b4d21371f324e22eea6.jpg"
-                            alt="[Lambang Slytherin]"
-                            class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-full bg-black/50 p-1"
-                        >
-
                         <div class="flex-grow">
-
-                            <h3 class="font-cinzel text-xl text-white font-bold">
-                                Slytherin
-                            </h3>
-
-                            <p class="text-xs text-magic-textMuted">
-                                Pertandingan: 0 | Menang: 0
-                            </p>
-
+                            <h3 class="font-cinzel text-lg md:text-xl font-bold">Slytherin</h3>
+                            <p class="text-sm text-magic-textMuted">Points: -</p>
                         </div>
-
-                        <div class="text-right">
-
-                            <span class="block font-bold text-2xl text-white">
-                                0
-                            </span>
-
-                            <span class="text-xs text-magic-textMuted uppercase">
-                                Points
-                            </span>
-
-                        </div>
-
                     </div>
 
                 </div>
-
             </div>
-
         </section>
 
-
-        <!-- =========================================================
-             JADWAL
-        ========================================================== -->
-
+        <!-- ==================== JADWAL SECTION ==================== -->
         <section id="jadwal" class="page-section hidden">
-
             <div class="text-center mb-10">
-
-                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">
-                    Jadwal Pertandingan
-                </h2>
-
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Jadwal Pertandingan</h2>
                 <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
-
-                <p class="text-magic-textMuted mt-4 italic">
-                    Turnamen Antar Asrama (Sistem Knockout)
-                </p>
-
             </div>
 
+            <div class="max-w-4xl mx-auto space-y-8">
 
-            <div class="max-w-4xl mx-auto bg-magic-panel border border-white/10 rounded-2xl p-6 md:p-10 shadow-xl">
+                <div class="bg-magic-panel rounded-2xl border border-white/10 p-6 md:p-8">
+                    <h3 class="font-cinzel text-2xl font-bold text-magic-gold border-b border-magic-gold/30 pb-2 mb-8">Match 1</h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                    <div class="bg-black/60 border border-white/10 rounded-lg p-6">
+                        <p class="text-xs text-magic-gold text-center mb-4">House Broom Tournament - [Tanggal]</p>
 
-
-                    <!-- Semi Final -->
-
-                    <div class="space-y-8">
-
-                        <h3 class="font-cinzel text-xl text-magic-gold text-center border-b border-magic-gold/30 pb-2">
-                            Semi Final
-                        </h3>
-
-
-                        <div class="bg-black/40 border border-gray-700 rounded-lg p-4">
-
-                            <p class="text-xs text-magic-textMuted mb-2">
-                                Match 1 - [Tanggal]
-                            </p>
-
-                            <div class="flex justify-between items-center mb-2">
-
-                                <span class="font-bold text-white">
-                                    Tim A
-                                </span>
-
-                                <span class="text-gray-500">
-                                    -
-                                </span>
-
-                            </div>
-
-                            <div class="flex justify-between items-center">
-
-                                <span class="font-bold text-white">
-                                    Tim B
-                                </span>
-
-                                <span class="text-gray-500">
-                                    -
-                                </span>
-
-                            </div>
-
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-white">Gryffindor</span>
+                            <span class="font-cinzel text-magic-gold text-xl">VS</span>
+                            <span class="font-bold text-lg text-white">Hufflepuff</span>
                         </div>
-
-
-                        <div class="bg-black/40 border border-gray-700 rounded-lg p-4">
-
-                            <p class="text-xs text-magic-textMuted mb-2">
-                                Match 2 - [Tanggal]
-                            </p>
-
-                            <div class="flex justify-between items-center mb-2">
-
-                                <span class="font-bold text-white">
-                                    Tim C
-                                </span>
-
-                                <span class="text-gray-500">
-                                    -
-                                </span>
-
-                            </div>
-
-                            <div class="flex justify-between items-center">
-
-                                <span class="font-bold text-white">
-                                    Tim D
-                                </span>
-
-                                <span class="text-gray-500">
-                                    -
-                                </span>
-
-                            </div>
-
-                        </div>
-
                     </div>
+                </div>
 
+                <div class="bg-magic-panel rounded-2xl border border-white/10 p-6 md:p-8">
+                    <h3 class="font-cinzel text-2xl font-bold text-magic-gold border-b border-magic-gold/30 pb-2 mb-8">Match 2</h3>
 
-                    <!-- Final -->
+                    <div class="bg-black/60 border border-white/10 rounded-lg p-6">
+                        <p class="text-xs text-magic-gold text-center mb-4">House Broom Tournament - [Tanggal]</p>
 
-                    <div class="flex flex-col justify-center">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-white">Ravenclaw</span>
+                            <span class="font-cinzel text-magic-gold text-xl">VS</span>
+                            <span class="font-bold text-lg text-white">Slytherin</span>
+                        </div>
+                    </div>
+                </div>
 
-                        <h3 class="font-cinzel text-xl text-magic-gold text-center border-b border-magic-gold/30 pb-2 mb-8">
-                            Grand Final
-                        </h3>
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 md:p-8 shadow-gold">
+                    <h3 class="font-cinzel text-2xl font-bold text-magic-gold border-b border-magic-gold/30 pb-2 mb-8">Grand Final</h3>
+                    
+                    <div class="bg-black/60 border-2 border-magic-gold/50 shadow-gold rounded-lg p-6">
+                        <p class="text-xs text-magic-gold text-center mb-4">Ultimate Match - [Tanggal]</p>
 
-
-                        <div class="bg-black/60 border-2 border-magic-gold/50 shadow-gold rounded-lg p-6">
-
-                            <p class="text-xs text-magic-gold text-center mb-4">
-                                Ultimate Match - [Tanggal]
-                            </p>
-
-                            <div class="flex justify-between items-center mb-3">
-
-                                <span class="font-bold text-lg text-white">
-                                    Pemenang Match 1
-                                </span>
-
-                                <span class="text-gray-500">
-                                    -
-                                </span>
-
-                            </div>
-
-                            <div class="flex justify-between items-center">
-
-                                <span class="font-bold text-lg text-white">
-                                    Pemenang Match 2
-                                </span>
-
-                                <span class="text-gray-500">
-                                    -
-                                </span>
-
-                            </div>
-
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bold text-lg text-white">Pemenang Match 1</span>
+                            <span class="text-gray-500">-</span>
                         </div>
 
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-white">Pemenang Match 2</span>
+                            <span class="text-gray-500">-</span>
+                        </div>
                     </div>
-
                 </div>
 
             </div>
-
         </section>
 
-
-        <!-- =========================================================
-             PERATURAN
-        ========================================================== -->
-
+        <!-- ==================== PERATURAN SECTION ==================== -->
         <section id="peraturan" class="page-section hidden">
-
             <div class="text-center mb-10">
-
-                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">
-                    Peraturan Resmi
-                </h2>
-
+                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Peraturan Resmi</h2>
                 <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
-
             </div>
-
 
             <div class="max-w-3xl mx-auto space-y-8">
-
-
-                <!-- List -->
-
+                
+                <!-- List Peraturan Umum -->
                 <div class="bg-magic-panel border border-white/10 rounded-2xl p-6 md:p-8 shadow-lg">
-
                     <ul class="space-y-4 text-magic-text text-base md:text-lg">
-
                         <li class="flex items-start gap-3">
-
-                            <svg
-                                class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                ></path>
-                            </svg>
-
-                            <span>
-                                Setiap tim terdiri dari <strong>7 pemain</strong>.
-                            </span>
-
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Setiap tim terdiri dari <strong>7 pemain</strong>.</span>
                         </li>
 
-
                         <li class="flex items-start gap-3">
-
-                            <svg
-                                class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                ></path>
-                            </svg>
-
-                            <span>
-                                Setiap pemain hanya boleh menjalankan tugas sesuai
-                                <strong>role yang dimiliki</strong>.
-                            </span>
-
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Setiap pemain hanya boleh menjalankan tugas sesuai <strong>role yang dimiliki</strong>.</span>
                         </li>
 
-
                         <li class="flex items-start gap-3">
-
-                            <svg
-                                class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                ></path>
-                            </svg>
-
-                            <span>
-                                Semua pilihan dikirim secara <strong>pribadi</strong>
-                                kepada Wasit Quidditch.
-                            </span>
-
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Semua pilihan dikirim secara <strong>pribadi</strong> kepada Wasit Quidditch.</span>
                         </li>
 
-
                         <li class="flex items-start gap-3">
-
-                            <svg
-                                class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                ></path>
-                            </svg>
-
-                            <span>
-                                Setiap ronde memiliki batas waktu <strong>1 menit</strong>.
-                            </span>
-
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Setiap ronde memiliki batas waktu <strong>1 menit</strong>.</span>
                         </li>
 
-
                         <li class="flex items-start gap-3">
-
-                            <svg
-                                class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                ></path>
-                            </svg>
-
-                            <span>
-                                Pemain yang tidak mengirim pilihan dianggap
-                                <strong>tidak melakukan aksi</strong>.
-                            </span>
-
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Pemain yang tidak mengirim pilihan dianggap <strong>tidak melakukan aksi</strong>.</span>
                         </li>
 
-
                         <li class="flex items-start gap-3">
-
-                            <svg
-                                class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                ></path>
-                            </svg>
-
-                            <span>
-                                Keputusan Wasit Quidditch bersifat
-                                <strong>mutlak</strong> dan tidak dapat diganggu gugat.
-                            </span>
-
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Keputusan Wasit Quidditch bersifat <strong>mutlak</strong> dan tidak dapat diganggu gugat.</span>
                         </li>
 
-
                         <li class="flex items-start gap-3">
-
-                            <svg
-                                class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"
-                                ></path>
-                            </svg>
-
-                            <span>
-                                Permainan berakhir ketika Golden Snitch berhasil
-                                <strong>ditemukan oleh Seeker</strong>.
-                            </span>
-
+                            <svg class="w-6 h-6 text-magic-gold flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Permainan berakhir ketika Golden Snitch berhasil <strong>ditemukan oleh Seeker</strong>.</span>
                         </li>
-
                     </ul>
-
                 </div>
 
-
-                <!-- Aturan Mutlak -->
-
+                <!-- Aturan Mutlak Box -->
                 <div class="bg-red-950/40 border-2 border-red-600 rounded-2xl p-6 md:p-8 shadow-red relative overflow-hidden">
-
                     <div class="absolute top-0 right-0 p-4 opacity-10">
-
-                        <svg
-                            class="w-32 h-32 text-red-500"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                clip-rule="evenodd"
-                            ></path>
+                        <svg class="w-32 h-32 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
-
                     </div>
-
 
                     <div class="relative z-10">
-
                         <h3 class="font-cinzel text-2xl font-bold text-red-500 mb-4 flex items-center gap-2">
-
-                            <svg
-                                class="w-8 h-8"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                                ></path>
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                             </svg>
-
                             Aturan Mutlak
-
                         </h3>
 
-
                         <p class="text-white text-lg leading-relaxed font-semibold">
-
-                            Seeker
-                            <span class="text-red-400 underline">
-                                harus bekerja mencari snitch sendirian
-                            </span>,
-                            dan tidak boleh dibantu oleh siapapun.
-
-                            Apabila ada tindak kecurangan yang dilakukan,
-                            maka asrama tersebut akan
-                            <span class="text-red-400">
-                                didiskualifikasi selama 3 season
-                            </span>,
-                            dan mendapatkan
-                            <span class="text-red-400">
-                                pengurangan poin asrama sebesar 300 points
-                            </span>.
-
+                            Seeker <span class="text-red-400 underline">harus bekerja mencari snitch sendirian</span>, dan tidak boleh dibantu oleh siapapun. Apabila ada tindak kecurangan yang dilakukan, maka asrama tersebut akan <span class="text-red-400">didiskualifikasi selama 3 season</span>, dan mendapatkan <span class="text-red-400">pengurangan poin asrama sebesar 300 points</span>.
                         </p>
-
                     </div>
-
                 </div>
 
-
                 <div class="text-center pt-8">
-
-                    <p
-                        class="font-cinzel text-2xl md:text-3xl text-magic-gold tracking-widest uppercase"
-                        style="text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);"
-                    >
+                    <p class="font-cinzel text-2xl md:text-3xl text-magic-gold tracking-widest uppercase" style="text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);">
                         "Junjung Tinggi Permainan Adil dan Sportif!"
                     </p>
-
                 </div>
 
             </div>
-
         </section>
 
     </main>
 
-
     <!-- Footer -->
-
     <footer class="mt-auto py-6 text-center border-t border-magic-gold/20 bg-magic-panel">
-
-        <p class="font-cinzel text-magic-textMuted text-sm">
-            &copy; 2026 Hogwarts Institute. Hak Cipta Dilindungi.
-        </p>
-
+        <p class="font-cinzel text-magic-textMuted text-sm">&copy; 2026 Hogwarts Institute. Hak Cipta Dilindungi.</p>
     </footer>
 
-
-    <!-- =========================================================
-         JAVASCRIPT
-    ========================================================== -->
-
+    <!-- Script for Navigation and Drawer -->
     <script>
-
-        /* =========================================================
-           MENU
-        ========================================================== */
-
+        // Toggle Hamburger Menu
         function toggleMenu() {
-
             const drawer = document.getElementById('drawer');
             const overlay = document.getElementById('overlay');
-
+            
             if (drawer.classList.contains('open')) {
-
                 drawer.classList.remove('open');
                 overlay.classList.add('hidden');
                 document.body.style.overflow = '';
-
             } else {
-
                 drawer.classList.add('open');
                 overlay.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
-
             }
-
         }
 
-
-        /* =========================================================
-           NAVIGATION
-        ========================================================== */
-
+        // Single Page Application Navigation Logic
         function navigate(pageId) {
-
             const pages = document.querySelectorAll('.page-section');
 
             pages.forEach(page => {
-
                 page.classList.add('hidden');
                 page.classList.remove('fade-in');
-
             });
 
-
             const activePage = document.getElementById(pageId);
-
-            if (!activePage) {
-                return;
-            }
-
-
             activePage.classList.remove('hidden');
 
-            void activePage.offsetWidth;
-
+            void activePage.offsetWidth; 
+            
             activePage.classList.add('fade-in');
-
 
             const drawer = document.getElementById('drawer');
 
@@ -2665,30 +652,17 @@
                 toggleMenu();
             }
 
-
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-
-        /* =========================================================
-           RULE TABS
-        ========================================================== */
-
+        // Inner Rules Tab Logic
         function switchRuleTab(tabId) {
-
             const contents = document.querySelectorAll('.rule-content');
 
             contents.forEach(content => {
-
                 content.classList.add('hidden');
                 content.classList.remove('block');
-
             });
-
 
             const buttons = document.querySelectorAll('.rule-tab-btn');
 
@@ -2696,30 +670,16 @@
                 btn.classList.remove('active');
             });
 
-
             const activeContent = document.getElementById(tabId);
+            activeContent.classList.remove('hidden');
+            activeContent.classList.add('block');
 
-            if (activeContent) {
-
-                activeContent.classList.remove('hidden');
-                activeContent.classList.add('block');
-
-            }
-
-
-            const activeButton =
-                document.querySelector(
-                    `button[onclick="switchRuleTab('${tabId}')"]`
-                );
-
+            const activeButton = document.querySelector(`button[onclick="switchRuleTab('${tabId}')"]`);
 
             if (activeButton) {
                 activeButton.classList.add('active');
             }
-
         }
-
     </script>
-
 </body>
 </html>
