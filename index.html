@@ -25,7 +25,8 @@
                         }
                     },
                     boxShadow: {
-                        'gold': '0 4px 14px 0 rgba(212, 175, 55, 0.39)',
+                        'gold': '0 4px 20px 0 rgba(212, 175, 55, 0.25)',
+                        'goldStrong': '0 0 25px 5px rgba(212, 175, 55, 0.4)',
                         'red': '0 4px 14px 0 rgba(185, 28, 28, 0.39)',
                     }
                 }
@@ -44,7 +45,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -285,122 +286,158 @@
             </div>
         </section>
 
-        <!-- ==================== HALL OF FAME SECTION ==================== -->
-        <section id="hall-of-fame" class="page-section hidden">
-            <div class="text-center mb-12">
-                <h2 class="font-cinzel text-4xl font-bold text-magic-gold mb-2 tracking-wider">Hall of Fame</h2>
-                <div class="h-1 w-24 bg-magic-gold mx-auto rounded"></div>
-                <p class="text-magic-textMuted mt-4 italic">Sejarah gemilang pencapaian para atlet Quidditch Hogwarts Institute.</p>
+        <!-- ==================== HALL OF FAME SECTION (UPDATED) ==================== -->
+        <section id="hall-of-fame" class="page-section hidden relative">
+            
+            <!-- Elemen Latar Belakang Dekoratif -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-magic-gold/10 blur-[100px] pointer-events-none rounded-full"></div>
+
+            <div class="text-center mb-16 relative z-10">
+                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-magic-gold via-yellow-200 to-magic-gold mb-4 tracking-widest uppercase drop-shadow-lg">
+                    Hall of Fame
+                </h2>
+                <div class="h-1 w-32 bg-gradient-to-r from-transparent via-magic-gold to-transparent mx-auto rounded"></div>
+                <p class="text-magic-text mt-4 italic text-lg md:text-xl font-light tracking-wide drop-shadow-md">Sejarah gemilang pencapaian para atlet Quidditch Hogwarts Institute.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 relative z-10">
 
                 <!-- THE CHAMPIONSHIP CUP -->
-                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-5 min-w-0">
-                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">♕</span>
-                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE CHAMPIONSHIP CUP</h3>
+                <div class="relative bg-gradient-to-b from-magic-panel to-[#050508] rounded-2xl border border-magic-gold/20 p-8 flex flex-col overflow-hidden group hover:border-magic-gold/60 transition-all duration-500 shadow-lg hover:shadow-goldStrong">
+                    <div class="absolute top-0 inset-x-0 h-32 bg-magic-gold/5 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-50"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center text-center mb-8">
+                        <span class="text-4xl text-magic-gold mb-3 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">♕</span>
+                        <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Championship Cup</h3>
+                        <div class="h-px w-24 bg-magic-gold/40 mt-4"></div>
                     </div>
 
-                    <div class="w-full mb-6">
-                        <img src="Gryffindor.png" alt="Gryffindor" class="w-full h-64 md:h-72 object-cover rounded-xl shadow-md">
+                    <div class="relative z-10 flex justify-center mb-8 w-full h-64 md:h-80">
+                        <img src="Gryffindor.png" alt="Gryffindor" class="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transition-transform duration-500 group-hover:scale-105">
                     </div>
 
-                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
-                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Gryffindor</h4>
-                        <p>Untuk House yang berhasil menjadi yang terbaik. Diberikan kepada House yang berhasil menjadi juara House Broom Tournament pada musim tersebut.</p>
+                    <div class="relative z-10 mt-auto text-center">
+                        <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold mb-4 tracking-wide">Gryffindor</h4>
+                        <p class="text-magic-textMuted text-sm md:text-base leading-relaxed">
+                            Untuk House yang berhasil menjadi yang terbaik. Diberikan kepada House yang berhasil menjadi juara House Broom Tournament pada musim tersebut.
+                        </p>
                     </div>
                 </div>
 
                 <!-- THE RISING HOUSE -->
-                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-5 min-w-0">
-                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">↗</span>
-                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE RISING HOUSE</h3>
+                <div class="relative bg-gradient-to-b from-magic-panel to-[#050508] rounded-2xl border border-magic-gold/20 p-8 flex flex-col overflow-hidden group hover:border-magic-gold/60 transition-all duration-500 shadow-lg hover:shadow-goldStrong">
+                    <div class="absolute top-0 inset-x-0 h-32 bg-magic-gold/5 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-50"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center text-center mb-8">
+                        <span class="text-4xl text-magic-gold mb-3 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">↗</span>
+                        <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Rising House</h3>
+                        <div class="h-px w-24 bg-magic-gold/40 mt-4"></div>
                     </div>
 
-                    <div class="w-full mb-6">
-                        <img src="Ravenclaw.jpg" alt="Ravenclaw" class="w-full h-64 md:h-72 object-cover rounded-xl shadow-md">
+                    <div class="relative z-10 flex justify-center mb-8 w-full h-64 md:h-80">
+                        <img src="Ravenclaw.jpg" alt="Ravenclaw" class="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transition-transform duration-500 group-hover:scale-105">
                     </div>
 
-                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
-                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Ravenclaw</h4>
-                        <p>Untuk House yang berkembang melampaui ekspektasi. Diberikan kepada House yang menunjukkan perkembangan paling signifikan sepanjang House Broom Tournament, baik dari segi performa, strategi, kerja sama tim, maupun hasil pertandingan.</p>
+                    <div class="relative z-10 mt-auto text-center">
+                        <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold mb-4 tracking-wide">Ravenclaw</h4>
+                        <p class="text-magic-textMuted text-sm md:text-base leading-relaxed">
+                            Untuk House yang berkembang melampaui ekspektasi. Diberikan kepada House yang menunjukkan perkembangan paling signifikan sepanjang House Broom Tournament.
+                        </p>
                     </div>
                 </div>
 
                 <!-- THE SEEKER'S CROWN -->
-                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-5 min-w-0">
-                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">♛</span>
-                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE SEEKER'S CROWN</h3>
+                <div class="relative bg-gradient-to-b from-magic-panel to-[#050508] rounded-2xl border border-magic-gold/20 p-8 flex flex-col overflow-hidden group hover:border-magic-gold/60 transition-all duration-500 shadow-lg hover:shadow-goldStrong">
+                    <div class="absolute top-0 inset-x-0 h-32 bg-magic-gold/5 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-50"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center text-center mb-8">
+                        <span class="text-4xl text-magic-gold mb-3 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">♛</span>
+                        <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Seeker's Crown</h3>
+                        <div class="h-px w-24 bg-magic-gold/40 mt-4"></div>
                     </div>
 
-                    <div class="w-full mb-6">
-                        <img src="Zenith.png" alt="Zenith Azure Stark" class="w-full h-64 md:h-72 object-cover rounded-xl shadow-md">
+                    <div class="relative z-10 flex justify-center mb-8 w-full h-64 md:h-80">
+                        <img src="Zenith.png" alt="Zenith Azure Stark" class="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transition-transform duration-500 group-hover:scale-105">
                     </div>
 
-                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
-                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Zenith Azure Stark</h4>
-                        <p>Untuk Seeker yang menguasai perburuan Snitch. Diberikan kepada Seeker dengan performa paling menonjol sepanjang House Broom Tournament, berdasarkan kemampuan menangkap Snitch, ketepatan waktu, konsistensi, serta kontribusinya terhadap tim.</p>
+                    <div class="relative z-10 mt-auto text-center">
+                        <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold mb-4 tracking-wide">Zenith Azure Stark</h4>
+                        <p class="text-magic-textMuted text-sm md:text-base leading-relaxed">
+                            Untuk Seeker yang menguasai perburuan Snitch. Diberikan kepada Seeker dengan performa paling menonjol sepanjang House Broom Tournament.
+                        </p>
                     </div>
                 </div>
 
                 <!-- THE QUAFFLE TRINITY -->
-                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-5 min-w-0">
-                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">◈</span>
-                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE QUAFFLE TRINITY</h3>
+                <div class="relative bg-gradient-to-b from-magic-panel to-[#050508] rounded-2xl border border-magic-gold/20 p-8 flex flex-col overflow-hidden group hover:border-magic-gold/60 transition-all duration-500 shadow-lg hover:shadow-goldStrong">
+                    <div class="absolute top-0 inset-x-0 h-32 bg-magic-gold/5 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-50"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center text-center mb-8">
+                        <span class="text-4xl text-magic-gold mb-3 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">◈</span>
+                        <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Quaffle Trinity</h3>
+                        <div class="h-px w-24 bg-magic-gold/40 mt-4"></div>
                     </div>
 
-                    <div class="w-full mb-6">
-                        <img src="SlyChaser.png" alt="SlyChaser" class="w-full h-64 md:h-72 object-cover rounded-xl shadow-md">
+                    <div class="relative z-10 flex justify-center mb-8 w-full h-64 md:h-80">
+                        <img src="SlyChaser.png" alt="SlyChaser" class="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transition-transform duration-500 group-hover:scale-105">
                     </div>
 
-                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
-                        <ol class="list-none space-y-1 mb-4 text-left">
-                            <li>1. Sylla Luthariél</li>
-                            <li>2. De Broglie White Jaechas</li>
-                            <li>3. Melly Candies Rosier Malfoy</li>
-                        </ol>
-                        <p>Untuk tiga Chaser yang bermain sebagai satu kesatuan. Diberikan kepada trio Chaser dengan koordinasi, kerja sama, permainan menyerang, passing, dan kemampuan mencetak poin yang paling menonjol sepanjang House Broom Tournament.</p>
+                    <div class="relative z-10 mt-auto text-center">
+                        <div class="mb-5 space-y-2">
+                            <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold tracking-wide">Sylla Luthariél</h4>
+                            <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold tracking-wide">De Broglie White Jaechas</h4>
+                            <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold tracking-wide">Melly Candies Rosier Malfoy</h4>
+                        </div>
+                        <p class="text-magic-textMuted text-sm md:text-base leading-relaxed">
+                            Untuk tiga Chaser yang bermain sebagai satu kesatuan. Diberikan kepada trio Chaser dengan koordinasi dan kemampuan menyerang paling menonjol.
+                        </p>
                     </div>
                 </div>
 
                 <!-- THE BLUDGER SENTINELS -->
-                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-5 min-w-0">
-                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">◆</span>
-                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE BLUDGER SENTINELS</h3>
+                <div class="relative bg-gradient-to-b from-magic-panel to-[#050508] rounded-2xl border border-magic-gold/20 p-8 flex flex-col overflow-hidden group hover:border-magic-gold/60 transition-all duration-500 shadow-lg hover:shadow-goldStrong">
+                    <div class="absolute top-0 inset-x-0 h-32 bg-magic-gold/5 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-50"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center text-center mb-8">
+                        <span class="text-4xl text-magic-gold mb-3 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">◆</span>
+                        <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Bludger Sentinels</h3>
+                        <div class="h-px w-24 bg-magic-gold/40 mt-4"></div>
                     </div>
 
-                    <div class="w-full mb-6">
-                        <img src="HuffBeater.png" alt="HuffBeater" class="w-full h-64 md:h-72 object-cover rounded-xl shadow-md">
+                    <div class="relative z-10 flex justify-center mb-8 w-full h-64 md:h-80">
+                        <img src="HuffBeater.png" alt="HuffBeater" class="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transition-transform duration-500 group-hover:scale-105">
                     </div>
 
-                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
-                        <ol class="list-none space-y-1 mb-4 text-left">
-                            <li>1. Sera Serenity</li>
-                            <li>2. Elion Lysander Zephyr</li>
-                        </ol>
-                        <p>Untuk duo yang mampu mengendalikan kekacauan di lapangan. Diberikan kepada pasangan Beater dengan koordinasi, kontrol Bludger, kemampuan bertahan, dan pengaruh terhadap jalannya pertandingan yang paling menonjol sepanjang House Broom Tournament.</p>
+                    <div class="relative z-10 mt-auto text-center">
+                        <div class="mb-5 space-y-2">
+                            <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold tracking-wide">Sera Serenity</h4>
+                            <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold tracking-wide">Elion Lysander Zephyr</h4>
+                        </div>
+                        <p class="text-magic-textMuted text-sm md:text-base leading-relaxed">
+                            Untuk duo yang mampu mengendalikan kekacauan di lapangan. Diberikan kepada pasangan Beater dengan koordinasi dan kontrol Bludger paling mematikan.
+                        </p>
                     </div>
                 </div>
 
                 <!-- THE IRON HOOPS -->
-                <div class="bg-magic-panel rounded-2xl border border-magic-gold/30 p-6 flex flex-col">
-                    <div class="flex items-center gap-3 mb-5 min-w-0">
-                        <span class="text-2xl text-magic-gold leading-none flex-shrink-0">⬡</span>
-                        <h3 class="font-cinzel text-sm sm:text-base md:text-xl text-magic-gold font-bold whitespace-nowrap tracking-wide">THE IRON HOOPS</h3>
+                <div class="relative bg-gradient-to-b from-magic-panel to-[#050508] rounded-2xl border border-magic-gold/20 p-8 flex flex-col overflow-hidden group hover:border-magic-gold/60 transition-all duration-500 shadow-lg hover:shadow-goldStrong">
+                    <div class="absolute top-0 inset-x-0 h-32 bg-magic-gold/5 blur-3xl rounded-full pointer-events-none transition-opacity group-hover:opacity-100 opacity-50"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center text-center mb-8">
+                        <span class="text-4xl text-magic-gold mb-3 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">⬡</span>
+                        <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Iron Hoops</h3>
+                        <div class="h-px w-24 bg-magic-gold/40 mt-4"></div>
                     </div>
 
-                    <div class="w-full mb-6">
-                        <img src="Stella.png" alt="Stella Lucyanna Celeste" class="w-full h-64 md:h-72 object-cover rounded-xl shadow-md">
+                    <div class="relative z-10 flex justify-center mb-8 w-full h-64 md:h-80">
+                        <img src="Stella.png" alt="Stella Lucyanna Celeste" class="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] transition-transform duration-500 group-hover:scale-105">
                     </div>
 
-                    <div class="text-magic-text leading-relaxed text-justify text-sm md:text-base">
-                        <h4 class="font-cinzel text-lg text-white font-semibold mb-3 text-left">Stella Lucyanna Celeste</h4>
-                        <p>Untuk Keeper yang berdiri di antara tim dan kekalahan. Diberikan kepada Keeper dengan kemampuan penyelamatan, positioning, konsistensi, dan kontribusi pertahanan yang paling menonjol sepanjang House Broom Tournament.</p>
+                    <div class="relative z-10 mt-auto text-center">
+                        <h4 class="font-cinzel text-xl md:text-2xl text-white font-semibold mb-4 tracking-wide">Stella Lucyanna Celeste</h4>
+                        <p class="text-magic-textMuted text-sm md:text-base leading-relaxed">
+                            Untuk Keeper yang berdiri di antara tim dan kekalahan. Diberikan kepada Keeper dengan kemampuan penyelamatan dan kontribusi pertahanan paling luar biasa.
+                        </p>
                     </div>
                 </div>
 
