@@ -83,7 +83,6 @@
             transform: translate3d(0, 0, 0);
         }
         
-        /* Ringan tanpa backdrop-filter blur yang membuat lag di HP */
         .glass-panel {
             background: rgba(21, 21, 30, 0.95);
             border: 1px solid rgba(212, 175, 55, 0.2);
@@ -92,12 +91,6 @@
         .rule-tab-btn.active {
             color: #D4AF37;
             border-bottom: 2px solid #D4AF37;
-            font-weight: bold;
-        }
-
-        .bracket-tab-btn.active {
-            background-color: #D4AF37;
-            color: #0a0a0f;
             font-weight: bold;
         }
     </style>
@@ -134,14 +127,26 @@
             </button>
         </div>
 
-        <nav class="flex flex-col gap-3 px-6 mt-4 pb-8">
-            <button onclick="navigate('home')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-2 border-b border-gray-800">Halaman Utama</button>
-            <button onclick="navigate('teams')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-2 border-b border-gray-800">Teams</button>
-            <button onclick="navigate('rules')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-2 border-b border-gray-800">Cara Bermain</button>
-            <button onclick="navigate('hall-of-fame')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-2 border-b border-gray-800">Hall of Fame</button>
-            <button onclick="navigate('klasemen')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-2 border-b border-gray-800">Klasemen</button>
-            <button onclick="navigate('jadwal')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-2 border-b border-gray-800">Jadwal Pertandingan</button>
-            <button onclick="navigate('peraturan')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-2 border-b border-gray-800">Peraturan</button>
+        <nav class="flex flex-col px-6 mt-4 pb-8">
+            <button onclick="navigate('home')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-3 border-b border-gray-800">Halaman Utama</button>
+            <button onclick="navigate('teams')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-3 border-b border-gray-800">Teams</button>
+            <button onclick="navigate('rules')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-3 border-b border-gray-800">Cara Bermain</button>
+            
+            <!-- Hall of Fame Menu with Dropdown -->
+            <div class="border-b border-gray-800 flex flex-col">
+                <button onclick="handleHoFClick()" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-3 flex justify-between items-center w-full">
+                    <span>Hall of Fame</span>
+                    <svg id="hof-nav-icon" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="hof-submenu" class="hidden flex-col pl-4 pb-2">
+                    <button onclick="navigate('main-awards')" class="text-left font-cinzel text-sm md:text-base text-magic-textMuted hover:text-magic-gold transition-colors py-2 border-l border-magic-gold/30 pl-3">Main Awards</button>
+                    <button onclick="navigate('honourable-mentions')" class="text-left font-cinzel text-sm md:text-base text-magic-textMuted hover:text-magic-gold transition-colors py-2 border-l border-magic-gold/30 pl-3">Honourable Mention</button>
+                </div>
+            </div>
+
+            <button onclick="navigate('klasemen')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-3 border-b border-gray-800">Klasemen</button>
+            <button onclick="navigate('jadwal')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-3 border-b border-gray-800">Jadwal Pertandingan</button>
+            <button onclick="navigate('peraturan')" class="text-left font-cinzel text-base md:text-lg text-magic-text hover:text-magic-gold transition-colors py-3 border-b border-gray-800">Peraturan</button>
         </nav>
 
         <div class="mt-auto p-6 opacity-60 text-center">
@@ -334,22 +339,66 @@
             </div>
         </section>
 
-        <!-- HALL OF FAME SECTION -->
-        <section id="hall-of-fame" class="page-section hidden">
-            <div class="text-center mb-12">
+        <!-- HALL OF FAME (HOME) SECTION -->
+        <section id="hall-of-fame-home" class="page-section hidden">
+            <div class="text-center mb-10">
                 <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-magic-gold mb-3 tracking-widest uppercase">
                     Hall of Fame
+                </h2>
+                <h3 class="font-cinzel text-base md:text-xl text-magic-textMuted italic">Sebuah ruang kehormatan bagi mereka yang telah mencapai keunggulan di lapangan.</h3>
+            </div>
+
+            <div class="rounded-xl overflow-hidden shadow-gold mb-10 mx-auto border border-magic-gold/30 max-w-4xl bg-magic-panel">
+                <img src="https://raw.githubusercontent.com/hogwartsacademy3/hoggyworthy/main/HoF.png" 
+                     alt="Hall of Fame Quidditch" 
+                     loading="lazy"
+                     decoding="async"
+                     class="w-full h-auto object-cover object-center max-h-[500px]" 
+                     onerror="handleRepoImgError(this, 'HoF')">
+            </div>
+
+            <div class="space-y-6 text-base md:text-lg text-magic-text leading-relaxed text-justify bg-magic-panel p-6 md:p-10 rounded-2xl border border-white/5 shadow-lg">
+                <p>
+                    Hall of Fame Quidditch Hogwarts Institute menghimpun nama-nama pemain, penghargaan, serta pencapaian yang telah memperoleh pengakuan dalam kompetisi Quidditch. Setiap nama yang tercantum di dalamnya merepresentasikan sebuah pencapaian—hasil dari kemampuan, dedikasi, dan kontribusi yang telah membawa arti tersendiri bagi permainan.
+                </p>
+                <p>
+                    Setiap penghargaan yang tercatat merupakan bagian dari catatan resmi Quidditch Hogwarts Institute. Gelar, prestasi, dan pencapaian yang terhimpun di sini memberikan gambaran mengenai mereka yang telah mencapai standar keunggulan dalam kompetisi, baik melalui performa individual maupun kontribusi bagi House yang diwakili.
+                </p>
+                <p>
+                    Hall of Fame hadir sebagai ruang untuk menghimpun dan memberikan tempat yang layak bagi pencapaian-pencapaian tersebut. Seiring bertambahnya musim, penghargaan, dan prestasi, daftar ini akan terus berkembang sebagai catatan mengenai mereka yang telah memperoleh kehormatan dalam Quidditch Hogwarts Institute.
+                </p>
+                
+                <div class="my-8 py-6 text-center font-cinzel text-magic-gold text-lg md:text-xl space-y-3 italic bg-black/20 rounded-xl border border-magic-gold/10">
+                    <p>Setiap nama membawa sebuah pencapaian.</p>
+                    <p>Setiap penghargaan menandai sebuah keunggulan.</p>
+                    <p>Dan setiap kehormatan memiliki tempatnya di Hall of Fame.</p>
+                </div>
+
+                <div class="text-right pt-2">
+                    <p class="text-sm text-magic-textMuted italic mb-2">Atas kurasi dan pengawasan yang dipercayakan kepada</p>
+                    <p class="font-cinzel text-magic-gold font-bold text-xl md:text-2xl">Sir Hercule Poirot</p>
+                    <p class="font-cinzel text-sm text-magic-textMuted tracking-wider mt-1">Hogwarts Institute</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN AWARDS SECTION -->
+        <section id="main-awards" class="page-section hidden">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-magic-gold mb-3 tracking-widest uppercase">
+                    Main Awards
                 </h2>
                 <div class="h-1 w-32 bg-magic-gold mx-auto rounded"></div>
                 <p class="text-magic-textMuted mt-4 italic text-base md:text-lg">Sejarah gemilang pencapaian para atlet Quidditch Hogwarts Institute.</p>
             </div>
 
+            <!-- Main Awards Content -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
 
                 <!-- 1. CHAMPIONSHIP CUP -->
                 <div class="bg-magic-panel rounded-2xl border border-magic-gold/20 p-6 md:p-8 flex flex-col shadow-lg hover:border-magic-gold/60 transition-colors">
                     <div class="flex flex-col items-center text-center mb-6">
-                        <span class="text-3xl text-magic-gold mb-2">♕</span>
+                        <span class="text-3xl text-magic-gold mb-2">🏆</span>
                         <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Championship Cup</h3>
                         <div class="h-px w-20 bg-magic-gold/40 mt-3"></div>
                     </div>
@@ -450,10 +499,10 @@
                     </div>
                 </div>
 
-                <!-- 5. BLUDGER SENTINELS -->
+                <!-- 5. BLUDGER'S VANGUARD (BEATER) - UPDATED TO HUFFBEATER -->
                 <div class="bg-magic-panel rounded-2xl border border-magic-gold/20 p-6 md:p-8 flex flex-col shadow-lg hover:border-magic-gold/60 transition-colors">
                     <div class="flex flex-col items-center text-center mb-6">
-                        <span class="text-3xl text-magic-gold mb-2">◆</span>
+                        <span class="text-3xl text-magic-gold mb-2">✣</span>
                         <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">The Bludger Sentinels</h3>
                         <div class="h-px w-20 bg-magic-gold/40 mt-3"></div>
                     </div>
@@ -478,7 +527,7 @@
                     </div>
                 </div>
 
-                <!-- 6. IRON HOOPS -->
+                <!-- 6. IRON HOOPS (KEEPER) -->
                 <div class="bg-magic-panel rounded-2xl border border-magic-gold/20 p-6 md:p-8 flex flex-col shadow-lg hover:border-magic-gold/60 transition-colors">
                     <div class="flex flex-col items-center text-center mb-6">
                         <span class="text-3xl text-magic-gold mb-2">⬡</span>
@@ -503,6 +552,48 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- HONOURABLE MENTIONS SECTION -->
+        <section id="honourable-mentions" class="page-section hidden">
+            <div class="text-center mb-12">
+                <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-magic-gold mb-3 tracking-widest uppercase">
+                    Honourable Mention
+                </h2>
+                <div class="h-1 w-32 bg-magic-gold mx-auto rounded"></div>
+                <p class="text-magic-textMuted mt-4 italic text-base md:text-lg">Penghargaan khusus untuk pemain yang memberikan dedikasi luar biasa.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+                
+                <!-- SPECIAL RECOGNITION - ORION (Posisi object-top agar kepala terlihat utuh & gradien menyamarkan watermark) -->
+                <div class="bg-magic-panel rounded-2xl border border-magic-gold/20 p-6 md:p-8 flex flex-col shadow-lg hover:border-magic-gold/60 transition-colors">
+                    <div class="flex flex-col items-center text-center mb-6">
+                        <span class="text-3xl text-magic-gold mb-2">✦</span>
+                        <h3 class="font-cinzel text-lg md:text-xl text-magic-gold font-bold tracking-widest uppercase">Special Recognition</h3>
+                        <div class="h-px w-20 bg-magic-gold/40 mt-3"></div>
+                    </div>
+
+                    <div class="flex justify-center items-center mb-6 w-full aspect-square bg-black/20 rounded-xl overflow-hidden p-0 relative">
+                        <img src="https://raw.githubusercontent.com/hogwartsacademy3/hoggyworthy/main/Orion.png" 
+                             alt="Orion Augustus Belloir" 
+                             loading="lazy"
+                             decoding="async"
+                             class="w-full h-full object-cover object-top filter drop-shadow-md" 
+                             onerror="handleRepoImgError(this, 'Orion')">
+                        <!-- Overlay gradien halus di pojok atas untuk menyamarkan watermark -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-black/85 via-transparent to-transparent pointer-events-none"></div>
+                    </div>
+
+                    <div class="mt-auto text-center">
+                        <h4 class="font-cinzel text-lg md:text-xl text-white font-semibold mb-3 tracking-wide truncate">Orion Augustus Belloir</h4>
+                        <p class="text-magic-textMuted text-sm leading-relaxed text-justify">
+                            Diberikan sebagai bentuk penghargaan atas kontribusi dan dedikasinya sebagai Seeker Ravenclaw selama menjadi bagian dari Hogwarts Institute. Perannya dalam tim menjadi bagian dari catatan perjalanan Ravenclaw di kompetisi Quidditch Hogwarts Institute
+                        </p>
+                    </div>
+                </div>
+                
             </div>
         </section>
 
@@ -800,9 +891,29 @@
                 document.body.style.overflow = 'hidden';
             }
         }
+        
+        // Handle Hall of Fame Nav Click
+        function handleHoFClick() {
+            // Langsung masuk ke Halaman Utama Hall of Fame
+            navigate('hall-of-fame-home', false); 
+            
+            // Toggle drop-down submenu untuk pilihan Honourable Mention & Main Awards
+            const submenu = document.getElementById('hof-submenu');
+            const icon = document.getElementById('hof-nav-icon');
+            
+            if (submenu.classList.contains('hidden')) {
+                submenu.classList.remove('hidden');
+                submenu.classList.add('flex');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                submenu.classList.add('hidden');
+                submenu.classList.remove('flex');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
 
         // Fast Single Page Navigation (Ringan tanpa reflow berlebih)
-        function navigate(pageId) {
+        function navigate(pageId, closeDrawer = true) {
             const pages = document.querySelectorAll('.page-section');
             pages.forEach(page => {
                 if (page.id === pageId) {
@@ -814,9 +925,12 @@
                 }
             });
 
-            const drawer = document.getElementById('drawer');
-            if (drawer.classList.contains('open')) {
-                toggleMenu();
+            // Tutup drawer jika di-klik dari menu biasa, biarkan terbuka jika dari Hall of Fame parent nav
+            if (closeDrawer) {
+                const drawer = document.getElementById('drawer');
+                if (drawer.classList.contains('open')) {
+                    toggleMenu();
+                }
             }
 
             window.scrollTo({ top: 0, behavior: 'instant' });
@@ -825,6 +939,10 @@
         // Switch Rule Tabs
         function switchRuleTab(tabId) {
             const contents = document.querySelectorAll('.rule-content');
+            contents.exports = contents.forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('block');
+            });
             contents.forEach(content => {
                 content.classList.add('hidden');
                 content.classList.remove('block');
@@ -846,6 +964,7 @@
                 activeButton.classList.add('active');
             }
         }
+
     </script>
 </body>
 </html>
